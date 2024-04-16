@@ -18,10 +18,22 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'cin',
+        'fname',
+        'lname',
+        'doj',
+        'departement_id',
+        'position',
+        'salary',
+        'phone',
+        'address',
+        'role',
         'email',
         'password',
     ];
+    public function departement(){
+        return $this->hasOne(Departement::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -30,7 +42,9 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'email_verified_at',
         'remember_token',
+        'updated_at'
     ];
 
     /**
