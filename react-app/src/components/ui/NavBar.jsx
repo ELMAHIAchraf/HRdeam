@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 
 export const NavBar = () => {
+
     const data = useSelector(state => state.user);
     const dojStr = data.doj
     const doj = new Date(dojStr);
@@ -8,14 +9,13 @@ export const NavBar = () => {
         month: 'long',
         year: 'numeric' 
     });
+
   return (
     
     <>
     <div className="bg-white w-full h-16 fixed top-0 flex items-center border-2 border-[#ebebeb]">
-        
-        <div className="flex ml-80 w-full justify-between">
-
-            <div className="bg-[#fafafa] w-1/3 rounded-md border-2 border-[#e0e0e0] px-3 flex justify-between ml-8">
+        <div className="flex ml-10 w-full justify-between lg:ml-84">
+            <div className="bg-[#fafafa] w-1/2 md:w-1/2  lg:w-1/3 rounded-md border-2 border-[#e0e0e0] px-3 flex justify-between ">
                 <input className="bg-[#fafafa] outline-none text-sm w-full" type="text" placeholder="Search"/>
                 <button><i className="fa-solid fa-magnifying-glass text-[#737373]"></i></button>
             </div>

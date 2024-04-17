@@ -14,5 +14,9 @@ class Departement extends Model
     public function users(){
         return $this->hasMany(User::class);
     }
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+    ];
 
 }

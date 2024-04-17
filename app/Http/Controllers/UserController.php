@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ResponseHelper;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,21 +21,15 @@ class UserController extends Controller
                 $user=Auth::user();
                 $user->avatar=asset("Avatars/".$user->id.".jpg");
                 $token=$user->createToken('hr_token')->plainTextToken;
-                return response()->json([
-                    'message'=>'You are now logged in',
-                    'data'=>[
-                        'user'=>$user,
-                        'token'=>$token
-                    ]
-                    ], 200);
+                return ResponseHelper::success('You are now logged in', [
+                    'user' => $user,
+                    'token' => $token
+                ], 200);
             }else{
-                return response()->json([
-                    'message'=>"Invalid email or password"
-                ], 401);
+                return ResponseHelper::error('Invalid credentials', 401);
             }
         }catch(Exception $e){
             return response()->json([
-                'success'=>false,
                 'message'=>$e->getMessage()
             ], 500);
         }
@@ -43,9 +38,7 @@ class UserController extends Controller
     public function logout(Request $request){
         $user = $request->user();
         $user->currentAccessToken()->delete();
-        return response()->json([
-            'message' => 'Successfully logged out',
-        ], 200);
+        return ResponseHelper::success('You are now logged out', null, 200);
     }
 
     /**

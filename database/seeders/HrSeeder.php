@@ -19,7 +19,7 @@ class HrSeeder extends Seeder
             'fname' => 'Achraf',
             'lname' => 'Elmahi',
             'doj' => '2021-01-01',
-            'departement_id' => 3,
+            'departement_id' => 1,
             'position' => 'HR Manager',
             'salary' => 1200,
             'phone' => '0658852014',

@@ -2,18 +2,36 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Authentication } from '@/Views/Authentication'
 import { Home } from '@/Views/Home'
 import { PrivateRoutes } from "../Router/PrivateRoutes"
+import { NavBar } from '@/components/ui/NavBar'
+import { SideBar } from '@/components/ui/SideBar'
+import { Applicant } from '@/Views/Applicant'
+import { Employees } from '@/Views/Employees'
+import { WhosAway } from '@/Views/WhosAway'
 
 
 function App() {
 
   return (
     <BrowserRouter>
-      <Routes path="/">
-        <Route index element={<Authentication/>} />
-        <Route element={<PrivateRoutes/>}>
-            <Route path="home" element={<Home />} />
-        </Route> 
-      </Routes>
+      <Routes>
+        <Route path="/" element={<Authentication/>} />
+        <Route path="/*" element={
+          <>
+            <NavBar />
+            <SideBar />
+            <Routes>
+              <Route element={<PrivateRoutes/>}>
+                <Route path="home" element={<Home />} />
+                <Route path="applicant" element={<Applicant/>} />
+                <Route path="employees" element={<Employees/>} />
+                <Route path="away" element={<WhosAway/>} />
+              </Route>
+            </Routes>
+          </>
+        }
+
+        />
+        </Routes>
     </BrowserRouter>
   )
 }

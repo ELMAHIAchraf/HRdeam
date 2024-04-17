@@ -13,8 +13,6 @@ class DepartementSeeder extends Seeder
      */
     public function run(): void
     {
-        Departement::create(['name' => 'IT']);
-        Departement::create(['name' => 'Finance']);
-        Departement::create(['name' => 'Human Resources']);
+        Departement::create(['name' => 'HR']);
     }
 }
