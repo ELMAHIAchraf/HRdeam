@@ -32,7 +32,7 @@ class User extends Authenticatable
         'password',
     ];
     public function departement(){
-        return $this->hasOne(Departement::class);
+        return $this->belongsTo(Departement::class, 'departement_id');
     }
 
     /**
@@ -42,6 +42,8 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'departement_id',
+        'created_at',
         'email_verified_at',
         'remember_token',
         'updated_at'

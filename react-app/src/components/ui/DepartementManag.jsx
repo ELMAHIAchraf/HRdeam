@@ -47,6 +47,7 @@ export const DepartementManag = () => {
         dispatch(removeDepartment(id));
         toast.success(response.data.message);
     }catch(error){
+        console.log(error.response);
         toast.error(error.response.data.message);
     }
     setIsDepModalOpen(false);
@@ -58,7 +59,7 @@ export const DepartementManag = () => {
     <>
       
             <DropdownMenu>
-            <DropdownMenuTrigger className=" px-3 py-1"><i className="fa-regular fa-ellipsis-vertical"></i></DropdownMenuTrigger>
+            <DropdownMenuTrigger className=" px-3 py-1 hover:bg-[#eeeeee] rounded-md"><i className="fa-regular fa-ellipsis-vertical"></i></DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>Departments management</DropdownMenuLabel>
                 <DropdownMenuSeparator />

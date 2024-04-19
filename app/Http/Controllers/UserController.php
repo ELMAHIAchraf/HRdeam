@@ -2,13 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ResponseHelper;
+use App\Helpers\DepartmentHelper;
+use Error;
 use Exception;
+use App\Models\User;
+use App\Helpers\MailHelper;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseHelper;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Departement;
+
 
 class UserController extends Controller
 {
+    public function count() 
+    {    
+        try {
+            $count = User::where('role', 'employee')->count();
+            return ResponseHelper::success(null, $count, 200);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 
     public function login(Request $request){
         $credentials=$request->validate([
@@ -44,9 +62,18 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
+    public function index() 
+    {    
+        $page = request()->input('page', 1);
+        $employees=User::where('role', 'employee')->with('departement')->paginate(6, ['*'], 'page', $page);
+
+        $count = User::where('role', 'employee')->count();
+
+        foreach($employees as $employee){
+            $employee->departement->color=DepartmentHelper::getColor($employee->departement->id);
+            $employee->avatar=asset("storage/Avatars/{$employee->id}.jpg");
+        }
+        return ResponseHelper::success(null, ['employees'=>$employees, 'count'=>$count], 200);
     }
 
     /**
@@ -54,7 +81,44 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $validatedData=$request->validate([
+                    'cin' => ['required', 'min:7'],
+                    'fname' => ['required', 'min:3'],
+                    'lname' => ['required', 'min:3'],
+                    'departement_id' => ['required'],
+                    'position' => ['required'],
+                    'salary' => ['required', 'numeric'],
+                    'phone' => ['required'],
+                    'address' => ['required', 'min:10'],
+                    'email' => ['required', 'email'],
+                    'avatar' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048']
+            ]);
+    
+            $password=Str::random(10);
+            $validatedData['password']=bcrypt($password);
+            $validatedData['role']='employee';
+            $validatedData['doj']=now();
+            unset($validatedData['avatar']);
+    
+            $employee=User::create($validatedData);
+            $request->file('avatar')->storeAs('public/Avatars', $employee->id.'.jpg');
+    
+            $employee->avatar=asset("storage/Avatars/".$employee->id.".jpg");
+
+            $departement=Departement::find($employee->departement_id);
+            $departement->color=DepartmentHelper::getColor($departement->id);
+            if($departement){
+                $employee->departement=$departement;
+            }
+    
+            $message=Storage::disk('local')->get('Data/WelcomingEmail.txt');
+            $message=str_replace('[Fname]', $employee->fname, $message);
+            $message=str_replace('[Lname]', $employee->lname, $message);
+            $message=str_replace('[Password]', $password, $message);
+            MailHelper::sendEmail($employee->email, "Dev's Empire", $message);
+
+            return ResponseHelper::success('The employee was created successfully', $employee, 201);
+
     }
 
     /**
@@ -62,7 +126,14 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $employees=User::find($id);
+        if($employees){
+            $employees->avatar=asset("storage/Avatars/".$employees->id.".jpg");
+            return ResponseHelper::success(null, $employees, 200);
+        }else{
+            return ResponseHelper::error('Employee not found', 404);
+        }
+
     }
 
     /**
@@ -70,14 +141,53 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+       try {
+        $employee=User::find($id);
+        if($employee){
+            $validatedData=$request->validate([
+                'cin' => ['required', 'min:7'],
+                'fname' => ['required', 'min:3'],
+                'lname' => ['required', 'min:3'],
+                'departement' => ['required'],
+                'position' => ['required'],
+                'salary' => ['required', 'numeric'],
+                'phone' => ['required'],
+                'address' => ['required', 'min:10'],
+                'email' => ['required', 'email'],
+            ]);
+            $departement_id=Departement::where('name', $request->departement)->first();
 
+            if ($departement_id) {
+                $validatedData['departement_id'] = $departement_id->id;
+            } else {
+                return ResponseHelper::error('The departement was not found', 404);
+            }
+
+            $employee->update($validatedData);
+
+            $employee->departement->color=DepartmentHelper::getColor($employee->departement->id);
+            $employee->avatar=asset("storage/Avatars/".$employee->id.".jpg");
+            return ResponseHelper::success('The employee was updated successfully', $employee, 200);
+        }else{
+            return ResponseHelper::error('The employee was not found', 404);
+        }
+       } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 404);
+
+       }
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $employee=User::find($id);
+        if($employee){
+            $employee->delete();
+            Storage::disk('local')->delete("public/Avatars/$id.jpg");
+            return ResponseHelper::success('The employee was deleted successfully', null, 200);
+        }else{
+            return ResponseHelper::error('The employee was not found', 404);
+        }
     }
 }

@@ -42,14 +42,14 @@ class DepartementController extends Controller
             'name'=>$validatedData['name']
         ]);
 
-        $jsonData=Storage::disk('local')->get('Json/DepartmentColor.json');
+        $jsonData=Storage::disk('local')->get('Data/DepartmentColor.json');
         $jsonData=json_decode($jsonData, true);
 
         foreach($jsonData as $key=>$item){
             if($item['departmentId']==0){
                 $jsonData[$key]['departmentId']=$departement->id;
                 $departement->color=$item['color'];
-                Storage::disk('local')->put('Json/DepartmentColor.json', json_encode($jsonData, JSON_PRETTY_PRINT));
+                Storage::disk('local')->put('Data/DepartmentColor.json', json_encode($jsonData, JSON_PRETTY_PRINT));
                 break;
             }
         }
@@ -65,7 +65,12 @@ class DepartementController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $departement=Departement::find($id);
+        if($departement){
+            return ResponseHelper::success(null, $departement, 200);
+        }else{
+            return ResponseHelper::error('The department was not found', 404);
+        }
     }
 
     /**

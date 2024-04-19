@@ -27,6 +27,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource("/departments", DepartementController::class)->only([
         'index', 'show', 'store', 'update', 'destroy'
     ]);
+
+    Route::resource("/employees", UserController::class)->only([
+        'index', 'show', 'store', 'update', 'destroy'
+    ]);
+    Route::get('/count', [UserController::class, 'count']);
+
 });
 
 

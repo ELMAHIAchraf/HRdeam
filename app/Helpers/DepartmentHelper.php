@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 class DepartmentHelper
 {
     public static function getColor($id){
-        $jsonData=Storage::disk('local')->get('Json/DepartmentColor.json');
+        $jsonData=Storage::disk('local')->get('Data/DepartmentColor.json');
         $jsonData=json_decode($jsonData, true);
         foreach($jsonData as $value){
             if($value['departmentId']==$id){
@@ -16,7 +16,7 @@ class DepartmentHelper
         return null;
     }
     public static function removeId($id){
-        $jsonData=Storage::disk('local')->get('Json/DepartmentColor.json');
+        $jsonData=Storage::disk('local')->get('Data/DepartmentColor.json');
         $jsonData=json_decode($jsonData, true);
         foreach($jsonData as $key=>$value){
             if($value['departmentId']==$id){

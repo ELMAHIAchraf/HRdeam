@@ -16,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         style: {
           background: '#fff',
           color: '#000',
+          width: 'auto'
         },
       }}
     />

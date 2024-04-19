@@ -19,6 +19,7 @@ module.exports = {
     extend: {
       spacing: {
         '84': '21rem',
+        '170' : '42.5rem',
         '43/100': '43%',
       },
       colors: {
