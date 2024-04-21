@@ -23,16 +23,16 @@ export const Employees = () => {
     }, [])
     const count = useSelector((state) => state.count.count);
   return (
-    <div className="fixed left-80 top-16 w-full h-full">
-        <p className="font-bold text-2xl ml-6 mt-6">Employees</p>
+    <div className="md:ml-80 mt-16 w-79 h-166">
+        <p className="font-bold text-2xl ml-6 pt-4">Employees</p>
         <p className="text-[#737373] text-sm mt-2 ml-6">{count} Personnel</p>
-        <div className="flex w-9/12 justify-end ml-4">
+        <div className="flex justify-end mr-2">
           <AddEmployee />
         </div>
         <div>
           <EmployeesTable />
         </div>
-        <div className="flex w-9/12 ml-4 fixed bottom-8">
+        <div className="flex ml-4 mt-4 ">
           <EmployeePagination />
         </div>
     </div>

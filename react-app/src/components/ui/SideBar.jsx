@@ -11,8 +11,8 @@ export const SideBar = () => {
    const [selection, setSelection] = useState('Dashboard');
    const [open, setOpen] = useState(null);
 //    const [toggleState, setToggleState] = useState(false);
-   const [isLargeWidth, setIsLargeWidth] = useState(window.innerWidth > 1024 ? true : false );
-   const changeWidth = () => window.innerWidth > 1024 ? setIsLargeWidth(true) : setIsLargeWidth(false)
+   const [isLargeWidth, setIsLargeWidth] = useState(window.innerWidth > 786 ? true : false );
+   const changeWidth = () => window.innerWidth > 786 ? setIsLargeWidth(true) : setIsLargeWidth(false)
    const changeStat = () => isLargeWidth ? setOpen(true) : setOpen(false) 
    useEffect(() => {
       changeStat();
@@ -61,32 +61,32 @@ export const SideBar = () => {
             <img src="Logo.svg" alt="logo" className="w-10"/>
             <p className="font-semibold ml-3 text-2xl">HRdream</p>
         </div>
-      <ul className="relative space-y-2 font-medium ">
+      <ul className="relative  font-medium ">
          <li className="mt-8">
             <Link to="/home" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group h-14 cursor-pointer ${selection =='Dashboard' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`} onClick={()=>setSelection('Dashboard')}>
                <i className={`fa-sharp fa-regular fa-grid-2 fa-lg ${selection=='Dashboard'? 'text-[#007cff]' : 'text-[#081321]'}  ml-2`}></i>
                <span className={`ms-3 ${selection=='Dashboard'? 'text-[#007cff]' : 'text-[#081321]'}`}>Dashboard</span>
             </Link>
          </li>
-         <li>
+         <li className="mt-2">
             <Link to="/applicant" className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group h-14 cursor-pointer ${selection =='Applicant' ? 'bg-gray-100 border-[#007cff] border-2' : ''} `}  onClick={()=>setSelection('Applicant')}>
                <i className={`fa-sharp fa-solid fa-chart-mixed fa-lg  ${selection=='Applicant'? 'text-[#007cff]' : 'text-[#081321]'} ml-2`}></i>
                <span className={`ms-3 ${selection=='Applicant'? 'text-[#007cff]' : 'text-[#081321]'}`}>Applicant Tracker</span>
             </Link>
          </li>
-         <li>
+         <li className="mt-2">
             <Link to="/employees" className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group h-14 cursor-pointer ${selection =='Employees' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`}  onClick={()=>setSelection('Employees')}>
             <i className={`fa-regular fa-user-group fa-lg ${selection=='Employees'? 'text-[#007cff]' : 'text-[#081321]'} ml-2`}></i>           
                <span className={`ms-3 ${selection=='Employees'? 'text-[#007cff]' : 'text-[#081321]'}`}>Employees</span>
             </Link>
          </li>
-         <li>
+         <li className="mt-2">
             <Link to="/away" className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group h-14 cursor-pointer ${selection =='Away' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`}  onClick={()=>setSelection('Away')}>
             <i className={` fa-regular fa-hand-wave fa-flip-horizontal fa-lg ${selection=='Away'? 'text-[#007cff]' : 'text-[#081321]'} ml-2`}></i>           
                <span className={`ms-3 ${selection=='Away'? 'text-[#007cff]' : 'text-[#081321]'}`}>Who&apos;s away</span>
             </Link>
          </li>
-         <li className="pt-72" onClick={logout}>
+         <li className="mt-72" onClick={logout}>
             <a href="#" className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group h-14 cursor-pointer ${selection =='Logout' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`}  onClick={()=>setSelection('Logout')}>
             <i className={`fa-solid fa-arrow-right-from-bracket fa-lg ${selection=='Logout'? 'text-[#007cff]' : 'text-[#081321]'} ml-2`}></i>           
                <span className={`ms-3 ${selection=='Logout'? 'text-[#007cff]' : 'text-[#081321]'}`}>Log out</span>

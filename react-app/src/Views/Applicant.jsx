@@ -1,8 +1,8 @@
 
 export const Applicant = () => {
   return (
-    <div className="fixed left-80 top-16 bg-green-100 w-full h-full">
-        Applicant Tracker
+    <div className="md:ml-80 mt-16 w-79 h-166 ">
+        <p className="font-bold text-2xl ml-6 pt-4">Applicant tracker</p>
     </div>
   )
 }

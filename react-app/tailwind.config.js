@@ -19,8 +19,14 @@ module.exports = {
     extend: {
       spacing: {
         '84': '21rem',
+        '166' : '42rem',
         '170' : '42.5rem',
-        '43/100': '43%',
+        '111' : '27rem',
+        '55/100': '55%',
+        '79': '79%',
+        '44' : '44%',
+        '95' : '95%'
+
       },
       colors: {
         border: "hsl(var(--border))",
@@ -78,5 +84,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require('tailwind-scrollbar-hide')],
 }

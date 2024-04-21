@@ -34,6 +34,9 @@ class User extends Authenticatable
     public function departement(){
         return $this->belongsTo(Departement::class, 'departement_id');
     }
+    public function absences(){
+        return $this->hasMany(Absence::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,9 +46,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'departement_id',
-        'created_at',
         'email_verified_at',
         'remember_token',
+        'created_at',
         'updated_at'
     ];
 

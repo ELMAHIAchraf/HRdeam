@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DepartementSeeder::class,
             HrSeeder::class,
+            EmployeeSeeder::class,
+            AbsenceSeeder::class
         ]);
     }
 }

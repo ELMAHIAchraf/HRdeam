@@ -27,6 +27,15 @@ class UserController extends Controller
             echo $e->getMessage();
         }
     }
+    public function getEmployees() 
+    {    
+        try {
+            $employees = User::where('role', 'employee')->select('id', 'fname', 'lname')->get();
+            return ResponseHelper::success(null, $employees, 200);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 
     public function login(Request $request){
         $credentials=$request->validate([
@@ -37,7 +46,7 @@ class UserController extends Controller
         try{
             if(Auth::attempt($credentials)){
                 $user=Auth::user();
-                $user->avatar=asset("Avatars/".$user->id.".jpg");
+                $user->avatar=asset("storage/Avatars/".$user->id.".jpg");
                 $token=$user->createToken('hr_token')->plainTextToken;
                 return ResponseHelper::success('You are now logged in', [
                     'user' => $user,

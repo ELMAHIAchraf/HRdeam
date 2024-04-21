@@ -23,7 +23,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "./button"
 import { axiosInstance } from "@/Axios"
 import { useEffect, useRef } from "react"
@@ -124,7 +124,7 @@ export const EmployeesTable = () => {
             {
               employees.slice(0, 6).map((employee) => (
                 <TableRow key={employee.id}>
-                    <TableCell className="w-1/3">
+                    <TableCell className="w-44">
                         <div className="flex items-center">
                             <img className="w-12 h-12 rounded-full" src={employee.avatar} alt=""/>
                             <div className="ml-3">
@@ -133,12 +133,12 @@ export const EmployeesTable = () => {
                             </div>
                         </div>
                     </TableCell>
-                    <TableCell className="w-1/3">
+                    <TableCell >
                         <p className="font-medium">Joined in {convertDate(employee.doj)}</p>
                         <p className="text-xs font-light">{calculateDaysPassed(employee.doj)} days</p>
                     </TableCell>
-                    <TableCell className=" flex justify-start">
-                        <div className=" w-32 flex justify-end">
+                    <TableCell>
+                        <div className="flex justify-end">
                         <div className={`py-2 px-3 inline-block rounded-md`} style={{backgroundColor : employee.departement.color}}>
                             <p className="text-[#fafafa]">{employee.departement.name}</p>
                         </div>
