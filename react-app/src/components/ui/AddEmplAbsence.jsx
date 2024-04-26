@@ -41,7 +41,6 @@ export const AddEmplAbsence = () => {
                 }
             
             })
-            console.log(response.data.data)
             dispatch(AddAbsence(response.data.data))
             toast.success(response.data.message)
         } catch (error) {

@@ -53,7 +53,7 @@ export const CalendarPages = () => {
     const fetchAbsData = async (page) => {
         try {
             const response = await axiosInstance.get(`absences?page=${page}`, {timeout: 5000});
-            dispatch(SetAbsence(response.data.data.data));
+            dispatch(SetAbsence(response.data.data));
         } catch (error) {
             console.error('Failed to fetch data:', error);
         }

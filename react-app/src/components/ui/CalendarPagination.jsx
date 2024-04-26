@@ -7,9 +7,10 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination"
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { CalendarPages } from "./CalendarPages";
+
 
 export const CalendarPagination = () => {
 
@@ -18,12 +19,18 @@ export const CalendarPagination = () => {
     const monthLength=new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
     const totalPages = monthLength;
 
+    const [isOpen, setIsOpen] = useState(false);
+
+
     const handleClick = (page) => {
         setCurrentPage(page);
         handlePaginationClickScroll(page);
     }
 
-    const employees = useSelector((state) => state.absence);
+
+
+    const state = useSelector((state) => state.absence);
+    const employees = useMemo(() => state.employees ? state.employees.data : [], [state]);
 
     const createPaginationItems = () => {
         const items = [];
@@ -69,8 +76,7 @@ export const CalendarPagination = () => {
         return weekends;
     }
     
-    const generateDiv = (id)=>{
-
+    const generateDiv = (id, employeeID)=>{
         const div=[]
         for(let i=1;i<=monthLength;i++){
             if(getWeekends(now.getFullYear(), now.getMonth()).includes(i)){
@@ -82,14 +88,40 @@ export const CalendarPagination = () => {
         employees[id].absences.forEach(abs=>{
             let width = 40*(new Date(abs.end_date).getDate() - new Date(abs.start_date).getDate()+1);
             let leftMargin = 40*(new Date(abs.start_date).getDate()-1);
-            div.push(<div key={abs.id} style={{width : width+"px", position : "absolute", top : "25px", left: leftMargin+"px"}} className={`bg-[#ffd0d0] flex-none h-8 rounded-lg flex items-center`}><p className="text-[#b34949] ml-2 text-sm font-semibold">Away</p></div>)
+            div.push(
+            <div>
+
+            <div onClick={()=>{setIsOpen(true)}} key={abs.id} style={{width : width+"px", position : "absolute", top : "25px", left: leftMargin+"px"}} className="cursor-pointer bg-[#ffd0d0] flex-none h-8 rounded-lg flex items-center">
+                <p className="text-[#b34949] ml-2 text-sm font-semibold">Away</p>    
+            </div>
+            <div className={`${isOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#00000007]`} >
+                <div className="relative p-4 w-full max-w-2xl max-h-2xl">
+                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Attachment</h3>
+                                <button type="button" className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={()=>setIsOpen(false)}>
+                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor"  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span className="sr-only">Close modal</span>
+                                </button>
+                                </div>
+                        <div className="p-4 md:p-5">
+                            <iframe src={`http://127.0.0.1:8000/storage/Attachments/${employeeID}.pdf#zoom=50`} width="600px" height="610px"  className="rounded-lg"/>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            </div>
+            
+        )
         })
         return div;
     }
     const generateParentDiv = ()=>{
         const div=[]
         for(let i=1;i<=employees.length;i++){
-            div.push(<div key={`employee${i}`} className="h-[81.5px] w-[920px] relative  border-b-2 bg-[#fafafa] flex items-center overflow-x-auto overflow-y-hidden scrollbar-hide" ref={awayDivScroll[i-1]} >{generateDiv(i-1)}</div>)
+            div.push(<div key={`employee${i}`} className="h-[81.5px] w-[920px] relative  border-b-[1px] bg-[#fafafa] flex items-center overflow-x-auto overflow-y-hidden scrollbar-hide" ref={awayDivScroll[i-1]} >{generateDiv(i-1, employees[i-1].id)}</div>)
         }
         return div;
     }
@@ -97,7 +129,7 @@ export const CalendarPagination = () => {
   return (
     <div className="flex flex-col">
 
-        <div className="w-95 ml-8  border-[#e5e5e5] border-t-2 border-b-2 flex items-center py-2">
+        <div className="w-95 ml-8  border-[#e5e5e5] border-t-[1px] border-b-[1px] flex items-center py-2">
             <p className="font-bold">{ new Date().toLocaleString('default', { month: 'long' })}</p>
             <Pagination className="ml-12">
                 <PaginationContent>
@@ -114,11 +146,11 @@ export const CalendarPagination = () => {
             </Pagination>
         </div>
         
-        <div className="flex">
+        <div className="flex h-[410px]">
             <div>
                 {
                     employees.map((employee) => (
-                        <div className="flex items-center w-[180px] ml-8 py-4 border-b-2" key={employee.id}>
+                        <div className="flex items-center w-[180px] mt-[1px] ml-8 py-4 border-b-[1px]" key={employee.id}>
                             <img className="w-12 h-12 rounded-full" src={`http://127.0.0.1:8000/storage/Avatars/${employee.id}.jpg`} alt=""/>
                             <div className="ml-3">
                                 <p className="font-bold truncate">{employee.fname} {employee.lname}</p>
@@ -132,9 +164,9 @@ export const CalendarPagination = () => {
                 {generateParentDiv()}
             </div>
         </div>
-        <dir>
+        <div className="mt-4">
             <CalendarPages />
-        </dir>
+        </div>
     </div>
   )
 }

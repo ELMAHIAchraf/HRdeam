@@ -37,6 +37,9 @@ class User extends Authenticatable
     public function absences(){
         return $this->hasMany(Absence::class);
     }
+    public function announcements(){
+        return $this->hasMany(Announcement::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

@@ -37,6 +37,7 @@ export const Authentication = () => {
             const response = await axiosInstance.post('/login', getData());
             localStorage.setItem("token" , response.data.data.token);
             dispatch(addUser(response.data.data.user))
+            sessionStorage.setItem("user", JSON.stringify(response.data.data.user))
             toast.success(response.data.message)
             navigate('/home')
         }catch(e){

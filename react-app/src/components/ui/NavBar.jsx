@@ -1,8 +1,7 @@
-import { useSelector } from "react-redux"
 
 export const NavBar = () => {
 
-    const data = useSelector(state => state.user);
+    const data = JSON.parse(sessionStorage.getItem('user'));
     const dojStr = data.doj
     const doj = new Date(dojStr);
     const formattedDoj = doj.toLocaleDateString('en-GB', {

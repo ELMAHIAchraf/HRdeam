@@ -10,7 +10,8 @@ import { addDepartment } from '@/State/departmentSlice';
 
 
 export const DepartmentComp = () => {
-    
+  const departments = useSelector(state => state.department);
+
       const dispatch = useDispatch();
       const getData = async () => {
         try {
@@ -22,22 +23,23 @@ export const DepartmentComp = () => {
             console.error(error);
         }
       }
-    
+      
     useEffect(() => {
         if(departments.length === 0){
             getData();
         }
     }, []);
 
-    const departments = useSelector(state => state.department);
     const names = departments.map(department => department.name);
     const colors = departments.map(department => department.color);
+    const employeesCount = departments.map(department => department.total_employees);
+
     
     const data = {
         labels: names,
         datasets: [
           {
-            data: [4, 8, 13, 6, 8],
+            data: employeesCount,
             backgroundColor: colors,
         
           }
@@ -77,7 +79,7 @@ export const DepartmentComp = () => {
 
 
   return (
-    <div className="bg-white h-96 shadow-slate-300 shadow-md ml-6 mt-6 w-55/100 rounded-md p-4 ">
+    <div className="bg-white h-[430px] shadow-slate-300 shadow-md ml-6 mt-6 w-55/100 rounded-md p-4 ">
        <div className="flex justify-between items-center">
         <p className="font-bold">Employees by department</p>
           <DepartementManag />

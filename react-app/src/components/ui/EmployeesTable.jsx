@@ -26,7 +26,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "./button"
 import { axiosInstance } from "@/Axios"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addEmployee, removeEmployee, modifyEmployee } from "@/State/EmployeeSlice"
 import toast from 'react-hot-toast'
@@ -35,6 +35,8 @@ import { decrementCount } from "@/State/countSlice"
 
 
 export const EmployeesTable = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
     const dispatch = useDispatch();
 
     const getData = async()=>{
@@ -53,12 +55,20 @@ export const EmployeesTable = () => {
 
     const employees = useSelector((state) => state.employee)
 
-    const convertDate = (date) =>{
+    const convertDate = (date, full) =>{
         const doj = new Date(date);
-        return doj.toLocaleDateString('en-GB', {
-        month: 'long',
-        year: 'numeric' 
-    });
+        if(full){
+            return doj.toLocaleString('en-US', {
+                month: 'long',
+                day: '2-digit',
+                year: 'numeric'
+              });
+        }else{
+            return doj.toLocaleDateString('en-GB', {
+                month: 'long',
+                year: 'numeric' 
+            });
+        }
     }
     const calculateDaysPassed = (date) =>{
         const doj = new Date(date);
@@ -116,6 +126,13 @@ export const EmployeesTable = () => {
             toast.error(error.response.data.message);
         }
     }
+    const differenceInDays = (start_date, end_date) =>{
+        const start = new Date(start_date);
+        const end = new Date(end_date);
+        const difference=end.getTime()-start.getTime();
+        console.log(Math.floor(difference/(1000*3600*24)));
+        return Math.floor(difference/(1000*3600*24));
+    }
 
     return (
        <>
@@ -134,7 +151,7 @@ export const EmployeesTable = () => {
                         </div>
                     </TableCell>
                     <TableCell >
-                        <p className="font-medium">Joined in {convertDate(employee.doj)}</p>
+                        <p className="font-medium">Joined in {convertDate(employee.doj, false)}</p>
                         <p className="text-xs font-light">{calculateDaysPassed(employee.doj)} days</p>
                     </TableCell>
                     <TableCell>
@@ -161,70 +178,102 @@ export const EmployeesTable = () => {
                                     </AlertDialogCancel> 
                                     <img className="w-32 h-32 rounded-2xl  ml-1" src={employee.avatar} alt=""/>
                                     <Tabs defaultValue="account" className=" flex flex-col items-center w-10/12">
-                                    <TabsList className="bg-[#007bff0a]">
+                                    <TabsList className="bg-[#f1f2f5]">
                                         <TabsTrigger value="account">Account</TabsTrigger>
                                         <TabsTrigger value="vacancies">Vacancies</TabsTrigger>
                                     </TabsList>
 
                                     <TabsContent value="account" className="w-full ">
-                                        <div className="flex justify-between mt-4">
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={fname} type="text" name="fname"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.fname} />
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
+                                        <div className="flex justify-between mt-2">
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>
+                                                <input ref={fname} defaultValue={employee.fname} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={lname} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.lname}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
-                                            </div>
-                                        </div>
-                                        <div className="flex justify-between mt-4">
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={cin} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.cin}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">CIN</label>
-                                            </div>
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={doj} type="date"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.doj}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date of join</label>
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last name</label>
+                                                <input ref={lname} defaultValue={employee.lname} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
                                         </div>
-                                        <div className="flex justify-between mt-4">
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={position} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.position}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Position</label>
+                                        <div className="flex justify-between mt-2">
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CIN</label>
+                                                <input ref={cin} defaultValue={employee.cin} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={salary} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.salary}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Salary</label>
-                                            </div>
-                                        </div>
-                                        <div className="flex justify-between mt-4">
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={email} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.email}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
-                                            </div>
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={phone} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.phone}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone</label>
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of join</label>
+                                                <input ref={doj} defaultValue={employee.doj} type="date" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
                                         </div>
-                                        <div className="flex justify-between mt-4">
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={departement} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.departement.name}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Department</label>
+                                        <div className="flex justify-between mt-2">
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
+                                                <input ref={position} defaultValue={employee.position} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
-                                            <div className="relative z-0 w-48 mb-5 group">
-                                                <input ref={address} type="text"  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-[#007cff] appearance-none focus:outline-none focus:ring-0 focus:border-[#007cff] peer" defaultValue={employee.address}/>
-                                                <label  className="peer-focus:font-medium absolute text-sm text-[#007cff] dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Address</label>
+                                            <dv className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salary</label>
+                                                <input ref={salary} defaultValue={employee.salary} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
+                                            </dv>
+                                        </div>
+                                        <div className="flex justify-between mt-2">
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                                <input ref={email} defaultValue={employee.email} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
+                                            </div>
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+                                                <input ref={phone} defaultValue={employee.phone} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
                                         </div>
-                                        <div className="flex justify-end mt-2">
+                                        <div className="flex justify-between mt-2">
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
+                                                <input ref={departement} defaultValue={employee.departement.name} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
+                                            </div>
+                                            <div className="w-52">
+                                                <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
+                                                <input ref={address} defaultValue={employee.address} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
+                                            </div>
+                                        </div>
+                                        <div className="flex justify-end mt-4">
                                             <Button className="bg-[#007cff] hover:bg-[#085ec5]" onClick={()=>{updateEmployee(employee.id) ; cancel.current.click()}}><i className="fa-regular fa-arrows-rotate pr-2"></i> Update
                                                 <AlertDialogCancel ref={cancel} className="hidden" onClick={(e)=>e.stopPropagation()}></AlertDialogCancel>
                                             </Button>
                                         </div>
 
                                     </TabsContent>
-                                    <TabsContent value="vacancies">Vacancies</TabsContent>
+                                    <TabsContent value="vacancies" className="h-[420px] mt-8 overflow-auto space-y-2 custom-scrollbar">
+                                        {
+                                            employee.absences.map((absence) => (
+                                                <div key={`absence${absence.id}`} className="bg-[#f9fafb] hover:bg-[#e5e7eb] border-[#d1d5db] border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-between items-center" onClick={()=>{setIsOpen(true)}}>
+                                                    <p>{convertDate(absence.start_date, true)}</p>
+                                                    <div className="ml-24 w-[200px] ">
+                                                        <p>{absence.type}</p>
+                                                        <p className="font-light text-sm">{absence.reason}</p>
+                                                    </div>
+                                                    <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>
+                                                    
+                                                    <div className={`${isOpen==false? "hidden" : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 -mt-8 justify-center items-center w-full md:inset-0 h-screen`} key={`popups${employee.id}`} >
+                                                        <div className="relative p-4 w-full max-w-2xl max-h-2xl">
+                                                            <div className="relative bg-white rounded-lg">
+                                                                <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                                                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Attachment</h3>
+                                                                    <button type="button" className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={(event)=>{event.stopPropagation(); setIsOpen(false);}}> 
+                                                                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                            <path stroke="currentColor"  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                        </svg>
+                                                                        <span className="sr-only">Close modal</span>
+                                                                        </button>
+                                                                </div>
+                                                            <div className="p-4 md:p-5">
+                                                                <iframe src={`http://127.0.0.1:8000/storage/Attachments/${absence.id}.pdf#zoom=45`} width="500px" height="550px"  className="rounded-lg"/>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            ))
+                                        }
+                                    </TabsContent>
                                     </Tabs>
 
                                 </AlertDialogContent>
@@ -259,10 +308,10 @@ export const EmployeesTable = () => {
                 </TableRow>
             ))  
             }
+
           
         </TableBody>
       </Table>
-      
 
        </> 
     )

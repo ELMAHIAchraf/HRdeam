@@ -4,13 +4,85 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Models\Absence;
+use App\Models\Departement;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AbsenceController extends Controller
 {
+
+
+    public function dashboard(){
+
+        $employees = User::where('role', 'employee')->get();
+        
+        foreach ($employees as $employee) {
+            $currentMonthAbsences = Absence::where('user_id', $employee->id)
+                ->whereMonth('start_date', '=', date('m'))
+                ->whereYear('start_date', '=', date('Y'))
+                ->get();
+        
+            $currentMonthAbsenceDays = 0;
+            foreach ($currentMonthAbsences as $absence) {
+                $start = Carbon::parse($absence->start_date);
+                $end = Carbon::parse($absence->end_date);
+                $currentMonthAbsenceDays += $start->diffInDays($end);
+            }
+        
+            $previousMonthAbsences = Absence::where('user_id', $employee->id)
+                ->whereMonth('start_date', '=', date('m', strtotime("-1 month")))
+                ->whereYear('start_date', '=', date('Y', strtotime("-1 month")))
+                ->get();
+        
+            $previousMonthAbsenceDays = 0;
+            foreach ($previousMonthAbsences as $absence) {
+                $start = Carbon::parse($absence->start_date);
+                $end = Carbon::parse($absence->end_date);
+                $previousMonthAbsenceDays += $start->diffInDays($end);
+            }
+        
+            $employeeAbsenceData[] = [
+                'employee_id' => $employee->id,
+                'salary' => $employee->salary,
+                'current_month_absence_days' => $currentMonthAbsenceDays,
+                'previous_month_absence_days' => $previousMonthAbsenceDays,
+            ];
+
+            $currentMonthAbsenceRate=0;
+            $lastMonthAbsenceRate=0;
+            $currentMonthAbsenceHours=0;
+            $lastMonthAbsenceHours=0;
+            $currentMonthAbsenceCost=0;
+            $lastMonthAbsenceCost=0;
+            foreach($employeeAbsenceData as $data){
+                $currentMonthAbsenceRate+=$data['current_month_absence_days']/count($employeeAbsenceData)*100;
+                $lastMonthAbsenceRate+=$data['previous_month_absence_days']/count($employeeAbsenceData)*100;
+                $currentMonthAbsenceHours+=$data['current_month_absence_days']*8;
+                $lastMonthAbsenceHours+=$data['previous_month_absence_days']*8;
+                $currentMonthAbsenceCost+=$data['current_month_absence_days']*$data['salary'];
+                $lastMonthAbsenceCost+=$data['previous_month_absence_days']*$data['salary'];
+            }
+            $absenceRate=$currentMonthAbsenceRate-$lastMonthAbsenceRate;
+            $absenceHours=$currentMonthAbsenceHours-$lastMonthAbsenceHours;
+            $absenceCost=$currentMonthAbsenceCost-$lastMonthAbsenceCost;
+
+            $response=[
+                'absenceRate'=>$absenceRate,
+                'absenceHours'=>$absenceHours,
+                'absenceCost'=>$absenceCost
+            ];
+            
+        }   
+
+
+        return ResponseHelper::success(null, $response, 200);
+        
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -24,8 +96,18 @@ class AbsenceController extends Controller
                           ->whereYear('start_date', '=', date('Y'));
                 }])
                 ->paginate(5, ['*'], 'page', $page);
+
+                //TODO add it to response
+                $absentCount = User::where('role', 'employee')
+                ->whereHas('absences', function ($query) {
+                    $query->whereMonth('start_date', '=', date('m'))
+                          ->whereYear('start_date', '=', date('Y'));
+                })
+                ->count();
             
-                return ResponseHelper::success(null, $employees, 200);
+                // return ResponseHelper::success(null, $employees, 200);
+                return ResponseHelper::success(null, ["employees"=>$employees, "absentCount"=> $absentCount], 200);
+
         } catch (Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);
         }

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Psr7\Response;
 use App\Helpers\ResponseHelper;
 use App\Helpers\DepartmentHelper;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class DepartementController extends Controller
@@ -21,12 +22,16 @@ class DepartementController extends Controller
 
     public function index()
     {
-        $departements=Departement::all();
-       
-        foreach($departements as $value){
-            $value->color=DepartmentHelper::getColor($value->id);
+        $departments = DB::select("SELECT d.id AS departement_id, d.name AS name, COUNT(u.id) AS total_employees 
+        FROM users u
+        JOIN departements d ON u.departement_id = d.id
+        GROUP BY d.id, d.name");
+
+        foreach($departments as $department){
+            $department->color=DepartmentHelper::getColor($department->departement_id);
         }
-        return ResponseHelper::success(null, $departements, 200);
+        
+        return ResponseHelper::success(null, $departments, 200);
     }
 
     /**

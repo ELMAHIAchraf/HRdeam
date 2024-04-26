@@ -7,6 +7,7 @@ import { SideBar } from '@/components/ui/SideBar'
 import { Applicant } from '@/Views/Applicant'
 import { Employees } from '@/Views/Employees'
 import { WhosAway } from '@/Views/WhosAway'
+import { Announcements } from '@/Views/Announcements'
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Authentication/>} />
+        <Route path="/announcements" element={<Announcements/>} />
         <Route path="/*" element={
           <>
             <NavBar />

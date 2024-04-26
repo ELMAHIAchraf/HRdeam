@@ -8,7 +8,7 @@ const absenceSlice = createSlice({
             return action.payload;
         },
         AddAbsence: (state, action) => {
-            const employee = state.find(emp => emp.id == action.payload.user_id);
+            const employee = state.employees.data.find(emp => emp.id == action.payload.user_id);
             employee && employee.absences.push(action.payload);
         }
     },
