@@ -6,6 +6,7 @@ import countSlice from './countSlice';
 import absenceSlice from './absenceSlice';
 import announcementsSlice from './announcementsSlice';
 import applicantsSlice from './applicantsSlice';
+import HrAnnouncement from './HrAnnouncement';
 
 export const store = configureStore({
     reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
         absence : absenceSlice,
         announcements : announcementsSlice,
         applicants : applicantsSlice,
+        HrAnnouncement : HrAnnouncement
     },
 });

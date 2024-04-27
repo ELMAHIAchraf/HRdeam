@@ -20,6 +20,32 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function search(){
+       try {
+        $name=request()->input('name');
+        $employees = User::where('role', 'employee')
+                         ->where(function($query) use ($name) {
+                             $query->where('fname', 'like', "%$name%")
+                                   ->orWhere('lname', 'like', "%$name%");
+                         })->with('departement')
+                         ->get();
+
+        foreach($employees as $employee){
+            $employee->departement->color=DepartmentHelper::getColor($employee->departement->id);
+            $employee->avatar=asset("storage/Avatars/{$employee->id}.jpg");
+
+            $absences = Absence::where('user_id', $employee->id)
+                ->whereMonth('start_date', '=', date('m'))
+                ->whereYear('start_date', '=', date('Y'))
+                ->get();
+            $employee->absences = $absences;
+        }
+        return ResponseHelper::success(null, $employees, 200);
+       } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 404);
+       }
+    }
+
     public function count() 
     {    
         try {

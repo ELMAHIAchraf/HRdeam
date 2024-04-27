@@ -71,7 +71,7 @@ export const AddEmployee = () => {
   return (
     <>
         <button className="text-sm font-bold hover:bg-gray-200 p-2 rounded-md" onClick={()=>{setIsOpen(true)}}>
-          <i className="fa-regular fa-plus pr-2"></i>Add Department
+          <i className="fa-regular fa-plus pr-2"></i>Add Employee
         </button>
         
         <div className={`${isOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >

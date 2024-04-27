@@ -35,7 +35,8 @@ class AnnouncementController extends Controller
                 'salary' => 'required|string',
                 'user_id' => 'required|integer',
             ]);
-            $announcement = Announcement::create($validatedData);  
+            $announcement = Announcement::create($validatedData); 
+            $announcement->load('departement');
             return ResponseHelper::success('Announcement created successfully', $announcement, 201);  
            } catch (Exception $e) {
              echo $e->getMessage();

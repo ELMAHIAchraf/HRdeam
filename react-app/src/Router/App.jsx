@@ -8,6 +8,7 @@ import { Applicant } from '@/Views/Applicant'
 import { Employees } from '@/Views/Employees'
 import { WhosAway } from '@/Views/WhosAway'
 import { Announcements } from '@/Views/Announcements'
+import { HrAnnouncements } from '@/Views/HrAnnouncements'
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Routes>
               <Route element={<PrivateRoutes/>}>
                 <Route path="home" element={<Home />} />
+                <Route path="announcement" element={<HrAnnouncements />} />
                 <Route path="applicant" element={<Applicant/>} />
                 <Route path="employees" element={<Employees/>} />
                 <Route path="away" element={<WhosAway/>} />

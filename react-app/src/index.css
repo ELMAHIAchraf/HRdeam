@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .animate-loading {
+    animation: loading 1s infinite;
+  }
+}
+
+@keyframes loading {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
   body{
     background-color: #fafafa;
     font-family: "Manrope", sans-serif;

@@ -35,13 +35,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/search', [UserController::class, 'search']);
     
     Route::resource("/departments", DepartementController::class)->only([
         'index', 'show', 'store', 'update', 'destroy'
     ]);
 
     Route::resource("/employees", UserController::class)->only([
-        'index', 'show', 'store', 'update', 'destroy'
+        'index', 'show', 'store', 'update', 'destroy', 
     ]);
     Route::get('/count', [UserController::class, 'count']);
     

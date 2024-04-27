@@ -209,10 +209,10 @@ export const EmployeesTable = () => {
                                                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
                                                 <input ref={position} defaultValue={employee.position} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
                                             </div>
-                                            <dv className="w-52">
+                                            <div className="w-52">
                                                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salary</label>
                                                 <input ref={salary} defaultValue={employee.salary} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5"/>
-                                            </dv>
+                                            </div>
                                         </div>
                                         <div className="flex justify-between mt-2">
                                             <div className="w-52">

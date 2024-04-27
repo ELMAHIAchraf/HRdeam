@@ -1,6 +1,8 @@
 import { axiosInstance } from "@/Axios"
 import { AbscenceCard } from "@/components/ui/AbscenceCard"
 import { DepartmentComp } from "@/components/ui/DepartmentComp"
+import { Request } from "@/components/ui/Request";
+import { notify } from "@/components/ui/notify";
 import { useEffect, useState } from "react";
 
 export const Home = () => {
@@ -16,8 +18,14 @@ export const Home = () => {
     }
     useEffect(() => {
       getData();
+      notify("Welcome to your dashboard!")
     }, []);
 
+    const todayDate = () => {
+      const today = new Date();
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return `Today, ${today.toLocaleDateString('en-US', options)}`;
+    }
   return (
     <div className="md:ml-80 mt-16 w-79 h-166">
         <p className="font-bold text-2xl ml-6 pt-4">Dashboard</p>
@@ -27,6 +35,21 @@ export const Home = () => {
           <AbscenceCard title="Absence cost" value={absenceData.absenceCost} metric="MAD" status={`${absenceData.absenceCost > 0 ? "up" : "down"}`}/>
         </div>
         <DepartmentComp />
+        <div className="bg-[#f4f4f4] border-l-2 w-[32.5%] h-[670px] fixed top-16 right-0">
+          <div className="flex justify-between items-end h-12">
+              <p className="font-bold  ml-4 text-lg">Vacation Requests</p>
+              <p className="bg-[#c5e0ff] rounded-md h-8 px-2 flex justify-center items-center font-semibold text-sm mr-4">{todayDate()}</p>
+          </div>
+          <p className="text-[#737373] text-sm ml-4 mt-2">2 active requests</p>
+          <div className="h-[560px] overflow-auto custom-scrollbar">
+            <Request pending={true}/>
+            <Request pending={false}/> 
+            <Request pending={false}/>
+            <Request pending={false}/>
+            <Request pending={false}/>
+
+          </div>
+        </div>
     </div>
   )
 }
