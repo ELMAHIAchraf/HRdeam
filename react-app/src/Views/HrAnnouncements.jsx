@@ -1,12 +1,14 @@
 import { axiosInstance } from "@/Axios";
 import { addAnnouncement, setAnnouncements } from "@/State/HrAnnouncement";
 import { AnnoucementCard } from "@/components/ui/AnnoucementCard"
+import { Loading } from "@/components/ui/Loading";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 export const HrAnnouncements = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const title = useRef(null);
@@ -38,28 +40,34 @@ export const HrAnnouncements = () => {
         toast.error("Failed to create announcement");
       }
     }
+    const announcements=useSelector(state=>state.HrAnnouncement);
     const dispatch = useDispatch();
     const getAnnouncements=async()=>{
+      setIsLoading(true)
         try {
             const response=await axiosInstance.get('/announcements')
             dispatch(setAnnouncements((response.data.data)));
         } catch (error) {
             console.log(error)
+        }finally{
+            setIsLoading(false)
         }
     }
     useEffect(()=>{
-        getAnnouncements()
+      if(announcements.length==0) getAnnouncements()
     },[])
-    const announcements=useSelector(state=>state.HrAnnouncement);
 
 
   return (
+    isLoading?
+    <Loading/>:
+    
     <div className="md:ml-80 mt-16 w-79 h-166">
          <p className="font-bold text-2xl ml-6 pt-4">Announcements</p>
-        <p className="text-[#737373] text-sm mt-2 ml-6">5 Announcements</p>
+        <p className="text-[#737373] text-sm mt-2 ml-6">{announcements.length} Announcements</p>
         <div className="flex justify-end -mt-2">
-          <button className="text-sm font-bold px-2 py-3 rounded-md bg-[#007cff] hover:bg-[#085ec5] text-white mr-6" onClick={()=>setIsOpen(true)}>
-            <i className="fa-regular fa-plus pr-2"></i>Add Announcement
+          <button className="text-sm font-bold hover:bg-gray-200 p-2 rounded-md mr-4" onClick={()=>setIsOpen(true)}>
+          <i className="fa-regular fa-plus pr-2"></i>Add Announcement
           </button>
 
           <div className={`${isOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >
@@ -121,7 +129,7 @@ export const HrAnnouncements = () => {
         </div> 
           
         </div>
-        <div className=" h-[550px] border-t-2 mt-2 grid grid-cols-4 gap-6 w-[97%] m-auto overflow-auto custom-scrollbar py-4 px-6">
+        <div className=" h-[550px] border-t-2 grid grid-cols-4 gap-x-6  w-[99%] m-auto overflow-auto custom-scrollbar py-4 px-6">
             {
                 announcements?.map((announcement)=>(
                     <AnnoucementCard key={announcement.id} announcement={announcement}/>

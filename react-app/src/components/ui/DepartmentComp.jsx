@@ -5,7 +5,7 @@ import { DepartementManag } from "./DepartementManag";
 import { axiosInstance } from '@/Axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { addDepartment } from '@/State/departmentSlice';
+import { addDepartment, clearDepartments } from '@/State/departmentSlice';
 
 
 
@@ -25,9 +25,8 @@ export const DepartmentComp = () => {
       }
       
     useEffect(() => {
-        if(departments.length === 0){
-            getData();
-        }
+          dispatch(clearDepartments());
+          getData();
     }, []);
 
     const names = departments.map(department => department.name);
@@ -46,6 +45,7 @@ export const DepartmentComp = () => {
         ],
       };
       const options = {
+        
         scales: {
           y: {
             ticks: {
@@ -85,7 +85,7 @@ export const DepartmentComp = () => {
           <DepartementManag />
 
        </div>
-       <Bar className="mt-4" data={data} options={options}/>
+       <Bar className="mt-4" data={data} options={options} />
 
     </div>
   )

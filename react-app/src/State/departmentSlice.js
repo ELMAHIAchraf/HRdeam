@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = [];
+
 const departmentSlice = createSlice({
     name: 'department',
     initialState : [],
@@ -9,9 +11,11 @@ const departmentSlice = createSlice({
         },
         removeDepartment: (state, action) => {
             return state.filter(department => department.id !== action.payload);
-        }
+        },
+        clearDepartments: () => initialState,
+
     },
 });
 
-export const { addDepartment, removeDepartment} = departmentSlice.actions;
+export const { addDepartment, removeDepartment, clearDepartments } = departmentSlice.actions;
 export default departmentSlice.reducer;

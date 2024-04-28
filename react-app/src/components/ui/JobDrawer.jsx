@@ -59,8 +59,8 @@ export const JobDrawer = ({announcement}) => {
                 <div className="w-2/3 ">
                     <p className="font-bold text-4xl text-center mt-4">{announcement.title}</p>
                     <div className="w-[390px] flex justify-between">
-                        <p className="font-bold  text-[#6e7582] mt-2"><i className="fa-regular fa-building-user pr-2 text-lg"></i>{announcement.departement.name} department</p>
-                        <p className="font-bold  text-[#6e7582] mt-2 ml-2"><i className="fa-regular fa-calendar  pr-2 text-lg"></i>Posted {timeSince(new Date(announcement.created_at))}</p>
+                        <p className="font-bold  text-[#007cff] mt-2"><i className="fa-regular fa-building-user pr-2 text-lg"></i>{announcement.departement.name} department</p>
+                        <p className="font-bold  text-yellow-500 mt-2 ml-2"><i className="fa-regular fa-calendar  pr-2 text-lg"></i>Posted {timeSince(new Date(announcement.created_at))}</p>
                     </div>
                     <div className="h-[470px] overflow-auto custom-scrollbar mt-4">
                         <p className="font-bold text-xl">Job Description</p>
@@ -71,17 +71,17 @@ export const JobDrawer = ({announcement}) => {
                         </ul>
                         <p className="font-bold text-xl mt-4">Social Advantages & others</p>
                         <p className="text-lg mt-4">{announcement.advantages}</p>
-                        <p className="font-semibold">Salaire: {announcement.salary} MAD</p>
+                        <p className="font-semibold text-green-600">Salaire: {announcement.salary} MAD</p>
                     </div>
                 </div>
-                <button className="py-1 px-12 rounded-md border-[#e5e7eb] border font-semibold mt-1" onClick={()=>setIsOpen(true)}>Apply for this job</button>
+                <button className="py-1 px-12 rounded-md border-[#e5e7eb] border font-semibold mt-1 text-white bg-[#007cff]" onClick={()=>setIsOpen(true)}>Apply for this job</button>
 
                 
                 <div className={`${isOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >
                     <div className="relative p-4 w-full max-w-lg max-h-full  -mt-32">
                         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                             <div className="flex items-center justify-between p-4 border-b rounded-t">
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                <h3 className="text-lg font-semibold text-gray-900">
                                     Apply for this job
                                 </h3>
                                 <button type="button" className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={()=>setIsOpen(false)}>
@@ -115,7 +115,7 @@ export const JobDrawer = ({announcement}) => {
                                             <input ref={resume} accept=".pdf" className="hidden w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="multiple_files" type="file" onChange={()=>{setAvatar(1), setFileName(getFileName())}}/>
                                         </div>                               
                                         </div>                    
-                                    <button type="button" className="w-full mt-4 text-white bg-[#111827] hover:bg-[#092342] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={()=>{apply(); setIsOpen(false)}}><i className={`fa-solid fa-arrow-up-right-from-square mr-2`}></i>Apply</button>    
+                                    <button type="button" className="w-full mt-4 text-white bg-[#007cff] hover:bg-[#085ec5] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onClick={()=>{apply(); setIsOpen(false)}}><i className={`fa-solid fa-arrow-up-right-from-square mr-2`}></i>Apply</button>    
                             </div>
                         </div>
                     </div>

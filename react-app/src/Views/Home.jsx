@@ -1,24 +1,29 @@
 import { axiosInstance } from "@/Axios"
 import { AbscenceCard } from "@/components/ui/AbscenceCard"
 import { DepartmentComp } from "@/components/ui/DepartmentComp"
+import { Loading } from "@/components/ui/Loading";
 import { Request } from "@/components/ui/Request";
 import { notify } from "@/components/ui/notify";
 import { useEffect, useState } from "react";
 
 export const Home = () => {
     const [absenceData, setAbsenceData] = useState({absenceRate: 0, absenceHours: 0, absenceCost: 0});
+    const [isLoading, setIsLoading] = useState(false);
 
     const getData = async () => {
         try {
+          setIsLoading(true)
           const response = await axiosInstance.get('/dashboard')
           setAbsenceData(response.data.data)
         } catch (error) {
           console.error(error)
+        }finally {
+          setIsLoading(false)
         }
     }
     useEffect(() => {
       getData();
-      notify("Welcome to your dashboard!")
+      // notify("Welcome to your dashboard!")
     }, []);
 
     const todayDate = () => {
@@ -27,6 +32,9 @@ export const Home = () => {
       return `Today, ${today.toLocaleDateString('en-US', options)}`;
     }
   return (
+    isLoading?
+    <Loading />:
+
     <div className="md:ml-80 mt-16 w-79 h-166">
         <p className="font-bold text-2xl ml-6 pt-4">Dashboard</p>
         <div className="flex justify-between ml-6 mt-4 w-55/100">

@@ -22,7 +22,8 @@ export const PrivateRoutes = () => {
       checkAuth();
     }, []);
     
-    if(isAuth === null) return <div className='w-screen h-screen flex justify-center items-center'><i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i></div>
+    if(isAuth === null) return <div className='w-screen h-screen flex justify-center items-center bg-[#0000005e] fixed top-0 '><i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i></div>
+
   
 return (isAuth ? <Outlet/> : <Navigate to='/'/>)
   

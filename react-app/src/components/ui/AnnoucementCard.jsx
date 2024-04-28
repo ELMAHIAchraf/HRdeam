@@ -34,11 +34,11 @@ export const AnnoucementCard = ({announcement}) => {
 
   return (
     <div>
-        <div className=" w-[280px] h-[300px] shadow-slate-300 shadow-md rounded-lg ">
+        <div className=" w-[280px] h-[300px] shadow-slate-300 shadow-md rounded-lg mt-2 bg-white">
             <div className="flex items-center justify-between px-4 mt-2">
-                <p className="font-bold text-lg truncate">{announcement.title}</p>
+                <p className="font-bold text-lg truncate mt-4 text-[#007cff]">{announcement.title}</p>
                 <DropdownMenu>
-                <DropdownMenuTrigger className=" px-3 py-1 hover:bg-[#eeeeee] rounded-md"><i className="fa-regular fa-ellipsis-vertical"></i></DropdownMenuTrigger>
+                <DropdownMenuTrigger className=" px-3 py-1 hover:bg-[#eeeeee] rounded-md mt-4"><i className="fa-regular fa-ellipsis-vertical"></i></DropdownMenuTrigger>
                 <DropdownMenuContent >
                 <DropdownMenuItem className="focus:bg-red-100">
                             <AlertDialog>
@@ -62,7 +62,7 @@ export const AnnoucementCard = ({announcement}) => {
                 </DropdownMenu>             
             </div>
             <p className="text-[#6e7582] font-semibold ml-4 text-sm">{announcement.departement.name} department</p>
-            <p className=" font-semibold ml-4 text-sm mt-1">{announcement.salary} MAD</p>
+            <p className=" font-semibold ml-4 text-sm mt-1 text-green-600 flex items-center"><i className="fa-regular fa-sack-dollar pr-2 text-lg"></i>{announcement.salary} MAD</p>
             <hr className="w-11/12 ml-3 mt-2"/>
             <div className="w-11/12 ml-4 mt-3">
                 <p className="text-sm font-extrabold ">Job description</p>

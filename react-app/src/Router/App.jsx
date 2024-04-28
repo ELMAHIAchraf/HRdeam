@@ -9,6 +9,7 @@ import { Employees } from '@/Views/Employees'
 import { WhosAway } from '@/Views/WhosAway'
 import { Announcements } from '@/Views/Announcements'
 import { HrAnnouncements } from '@/Views/HrAnnouncements'
+import { EmployeeAcc } from '@/Views/EmployeeAcc'
 
 
 function App() {
@@ -17,7 +18,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Authentication/>} />
-        <Route path="/announcements" element={<Announcements/>} />
+        <Route path="announcements" element={<Announcements/>} />
+        <Route path="employee" element={<EmployeeAcc/>} />
         <Route path="/*" element={
           <>
             <NavBar />

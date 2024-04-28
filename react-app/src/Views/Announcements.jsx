@@ -11,8 +11,6 @@ export const Announcements = () => {
     
     const [search, setSearch] = useState([]);
     
-
-
     const getData=async()=>{
         try {
             const response=await axiosInstance.get('/announcements')
@@ -35,9 +33,10 @@ export const Announcements = () => {
             setSearch(announcements)
         }
     };
+    
   return (
     <div>
-        <div className='bg-[#111827] w-full h-[300px] flex items-center '>
+        <div className='bg-[#007cff] w-full h-[300px] flex items-center '>
             <div className="ml-24 space-y-6">
                 <p className="text-5xl text-white font-bold">Discover Your Next Role with Us!</p>
                 <p className="text-xl text-white font-bold">
@@ -45,7 +44,7 @@ export const Announcements = () => {
                 </p>
                 <div>
                     <input ref={title} type="text" className='w-[300px] h-[40px] rounded-md text-sm px-4'  placeholder='Search job titles...'/>
-                    <button className="px-4 py-2 bg-[#18181c] text-white rounded-md ml-2" onClick={()=>handleSearchClick()}>Search</button>
+                    <button className="px-4 py-2 bg-[#0d529b] text-white rounded-md ml-2" onClick={()=>handleSearchClick()}>Search</button>
                 </div>
             </div>
         </div>

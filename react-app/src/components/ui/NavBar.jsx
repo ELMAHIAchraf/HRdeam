@@ -106,7 +106,7 @@ export const NavBar = () => {
                     employees && employees.map((employee) => {
                         return (
                             <AlertDialog key={employee.id}>
-                                <AlertDialogTrigger className="h-[50px] w-full bg-white border-[1px]  flex items-center cursor-pointer" onClick={(e) => {e.stopPropagation();}}>                  
+                                <AlertDialogTrigger className="h-[50px] w-full hover:bg-gray-50 bg-white border-[1px]  flex items-center cursor-pointer" onClick={(e) => {e.stopPropagation();}}>                  
                                         <img className="w-10 h-10 rounded-full ml-4" src={`http://127.0.0.1:8000/storage/Avatars/${employee.id}.jpg`}/>
                                         <p className="ml-2">{employee.fname} {employee.lname}</p>
                                 </AlertDialogTrigger>
