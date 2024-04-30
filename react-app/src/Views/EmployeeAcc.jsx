@@ -1,7 +1,6 @@
-import React from 'react'
 
 export const EmployeeAcc = () => {
   return (
-    <div>EmployeeAcc</div>
+    <div>Employee Account Page</div>
   )
 }

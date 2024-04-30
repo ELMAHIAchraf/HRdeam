@@ -3,12 +3,19 @@ import { AbscenceCard } from "@/components/ui/AbscenceCard"
 import { DepartmentComp } from "@/components/ui/DepartmentComp"
 import { Loading } from "@/components/ui/Loading";
 import { Request } from "@/components/ui/Request";
-import { notify } from "@/components/ui/notify";
+import Echo from '@/pusher';
 import { useEffect, useState } from "react";
 
 export const Home = () => {
     const [absenceData, setAbsenceData] = useState({absenceRate: 0, absenceHours: 0, absenceCost: 0});
     const [isLoading, setIsLoading] = useState(false);
+
+      useEffect(() => {
+        Echo.channel('Notification')
+        .listen('NotificationEvent', (e) => {
+            console.log(e);
+        });
+      }, []);
 
     const getData = async () => {
         try {
@@ -25,6 +32,7 @@ export const Home = () => {
       getData();
       // notify("Welcome to your dashboard!")
     }, []);
+    
 
     const todayDate = () => {
       const today = new Date();

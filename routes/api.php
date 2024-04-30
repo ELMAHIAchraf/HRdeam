@@ -22,6 +22,9 @@ use App\Models\Applicant;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('/notify', function () {
+    event(new \App\Events\NotificationEvent("Hello World"));
+});
 Route::post('/login', [UserController::class, 'login']);
 Route::resource("/announcements", AnnouncementController::class)
 ->only(['index']);
