@@ -11,33 +11,27 @@ import { Announcements } from '@/Views/Announcements'
 import { HrAnnouncements } from '@/Views/HrAnnouncements'
 import { EmployeeAcc } from '@/Views/EmployeeAcc'
 
-
 function App() {
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Authentication/>} />
         <Route path="announcements" element={<Announcements/>} />
-        <Route path="employee" element={<EmployeeAcc/>} />
+        <Route path="employee" element={<PrivateRoutes role="employee"><EmployeeAcc /></PrivateRoutes>}  />
         <Route path="/*" element={
           <>
             <NavBar />
             <SideBar />
             <Routes>
-              <Route element={<PrivateRoutes/>}>
-                <Route path="home" element={<Home />} />
-                <Route path="announcement" element={<HrAnnouncements />} />
-                <Route path="applicant" element={<Applicant/>} />
-                <Route path="employees" element={<Employees/>} />
-                <Route path="away" element={<WhosAway/>} />
-              </Route>
+              <Route path="home" element={<PrivateRoutes role="hr"><Home /></PrivateRoutes>}/>
+              <Route path="announcement" element={<PrivateRoutes role="hr"><HrAnnouncements /></PrivateRoutes>}/>
+              <Route path="applicant" element={<PrivateRoutes role="hr"><Applicant /></PrivateRoutes>}/>
+              <Route path="employees" element={<PrivateRoutes role="hr"><Employees /></PrivateRoutes>}/>
+              <Route path="away" element={<PrivateRoutes role="hr"><WhosAway /></PrivateRoutes>}/>
             </Routes>
           </>
-        }
-
-        />
-        </Routes>
+        }/>
+      </Routes>
     </BrowserRouter>
   )
 }

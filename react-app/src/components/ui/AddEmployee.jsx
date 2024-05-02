@@ -1,9 +1,10 @@
 import { axiosInstance } from "@/Axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from 'react-hot-toast'
 import { addEmployee } from "@/State/EmployeeSlice";
 import { incrementCount } from "@/State/countSlice";
+import { addDepartment } from "@/State/departmentSlice";
 
 
 export const AddEmployee = () => {
@@ -23,6 +24,21 @@ export const AddEmployee = () => {
     const address = useRef(null);
 
     const departments = useSelector((state) => state.department);
+    const dispatch = useDispatch();
+  
+    const getDeps = async () => {
+        try {
+            const response = await axiosInstance.get('/departments');
+            response.data.data.forEach((department) => {
+                dispatch(addDepartment(department));
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+            if(departments.length === 0) getDeps();
+    }, []);
 
     const getData = () => {
         return {
@@ -39,7 +55,6 @@ export const AddEmployee = () => {
         }
     }
 
-    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
 
     const createEmployee = async () => {
@@ -139,7 +154,7 @@ export const AddEmployee = () => {
                                     <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
                                     <select id="countries" ref={department} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     {
-                                        departments.map((department) => (
+                                        departments.slice(1).map((department) => (
                                             <option value={department.id} key={department.id}>{department.name}</option>
                                         ))
                                     }

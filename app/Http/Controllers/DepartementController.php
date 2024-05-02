@@ -20,19 +20,16 @@ class DepartementController extends Controller
      */
    
 
-    public function index()
-    {
-        $departments = DB::select("SELECT d.id AS departement_id, d.name AS name, COUNT(u.id) AS total_employees 
-        FROM users u
-        JOIN departements d ON u.departement_id = d.id
-        GROUP BY d.id, d.name");
-
-        foreach($departments as $department){
-            $department->color=DepartmentHelper::getColor($department->departement_id);
-        }
-        
-        return ResponseHelper::success(null, $departments, 200);
-    }
+     public function index()
+     {
+         $departments = Departement::withCount('users as total_employees')->get();
+     
+         foreach($departments as $department){
+             $department->color = DepartmentHelper::getColor($department->id);
+         }
+     
+         return ResponseHelper::success(null, $departments, 200);
+     }
 
     /**
      * Store a newly created resource in storage.

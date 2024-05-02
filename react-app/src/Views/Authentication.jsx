@@ -39,7 +39,11 @@ export const Authentication = () => {
             dispatch(addUser(response.data.data.user))
             sessionStorage.setItem("user", JSON.stringify(response.data.data.user))
             toast.success(response.data.message)
-            navigate('/home')
+            if(response.data.data.user.role === 'hr'){
+                navigate('/home')
+            }else{
+                navigate('/employee')
+            }
         }catch(e){
             toast.error(e.response.data.message)
         }

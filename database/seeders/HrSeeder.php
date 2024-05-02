@@ -14,7 +14,7 @@ class HrSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $user = User::create([
             'cin' => 'G737492',
             'fname' => 'Achraf',
             'lname' => 'Elmahi',
@@ -24,10 +24,9 @@ class HrSeeder extends Seeder
             'salary' => 1200,
             'phone' => '0658852014',
             'address' => '123 Main St, Springfield, IL 62701',
-            'role' => 'HR',
             'email' => 'elmahi.achraf9@gmail.com',
             'password' => bcrypt('Killer04728'),
         ]);
-        
+        $user->assignRole('hr');
     }
 }

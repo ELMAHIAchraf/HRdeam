@@ -130,8 +130,7 @@ export const EmployeesTable = () => {
         const start = new Date(start_date);
         const end = new Date(end_date);
         const difference=end.getTime()-start.getTime();
-        console.log(Math.floor(difference/(1000*3600*24)));
-        return Math.floor(difference/(1000*3600*24));
+        return Math.floor(difference/(1000*3600*24)+2);
     }
 
     return (
@@ -243,6 +242,9 @@ export const EmployeesTable = () => {
                                     </TabsContent>
                                     <TabsContent value="vacancies" className="h-[420px] mt-8 overflow-auto space-y-2 custom-scrollbar">
                                         {
+                                            employee.absences.length==0?
+                                            <div className="bg-red-200 border-red-400 border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-center items-center">No Absences Recorded</div>
+                                            :
                                             employee.absences.map((absence) => (
                                                 <div key={`absence${absence.id}`} className="bg-[#f9fafb] hover:bg-[#e5e7eb] border-[#d1d5db] border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-between items-center" onClick={()=>{setIsOpen(true)}}>
                                                     <p>{convertDate(absence.start_date, true)}</p>

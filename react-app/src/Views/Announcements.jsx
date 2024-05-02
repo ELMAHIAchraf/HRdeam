@@ -13,7 +13,7 @@ export const Announcements = () => {
     
     const getData=async()=>{
         try {
-            const response=await axiosInstance.get('/announcements')
+            const response=await axiosInstance.get('/getJobs')
             dispatch(setAnnouncements(response.data.data))
             setSearch(response.data.data)
         } catch (error) {

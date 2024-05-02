@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('salary');
             $table->string('phone');
             $table->string('address');
-            $table->enum('role', ['hr', 'employee']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -30,6 +29,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('departement_id')->references('id')->on('departements')->onDelete('cascade');
+
         });
     }
 

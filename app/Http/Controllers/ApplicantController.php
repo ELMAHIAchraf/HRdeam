@@ -44,7 +44,7 @@ class ApplicantController extends Controller
             $validatedData = $request->validate([
                 'id' => 'required|integer',
                 'cin' => 'required|string',
-                'address' => 'required|string',
+                'address' => 'required|string|min:10',
                 'phone' => 'required|string',
                 'salary' => 'required|string',
                 'avatar' => 'required|image|mimes:jpg|max:2048',
@@ -64,7 +64,6 @@ class ApplicantController extends Controller
                     'fname' => $applicant->fname,
                     'lname' => $applicant->lname,
                     'email' => $applicant->email,
-                    'role' => 'employee',
                     'position' => $applicant->announcement->position,
                     'cin' => $validatedData['cin'],
                     'address' => $validatedData['address'],
@@ -75,7 +74,7 @@ class ApplicantController extends Controller
                     'departement_id' => $applicant->announcement->departement_id,
 
                 ]);
-                
+                $employee->assignRole('employee');
                 $request->file('avatar')->storeAs('public/Avatars', $employee->id.'.jpg');
 
                 Storage::disk('local')->delete("public/Resumes/$applicant->id.pdf");

@@ -15,6 +15,9 @@ class EmployeeSeeder extends Seeder
     {
         User::factory()
             ->count(10)
-            ->create();
+            ->create()
+            ->each(function (User $user) {
+                $user->assignRole('employee');
+            });
     }
 }

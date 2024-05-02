@@ -9,12 +9,18 @@ use App\Helpers\ResponseHelper;
 
 class AnnouncementController extends Controller
 {
+    public function getJobs(){
+        $announcements = Announcement::with('departement')->get();
+        unset($announcements['departement_id']);
+        return ResponseHelper::success(null, $announcements, 200);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $announcements = Announcement::with('departement')->get();
+        $user_id=request()->user()->id;
+        $announcements = Announcement::where('user_id',$user_id)->with('departement')->get();
         unset($announcements['departement_id']);
         return ResponseHelper::success(null, $announcements, 200);
     }

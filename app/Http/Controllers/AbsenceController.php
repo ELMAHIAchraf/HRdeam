@@ -18,7 +18,9 @@ class AbsenceController extends Controller
 
     public function dashboard(){
 
-        $employees = User::where('role', 'employee')->get();
+        $employees = User::whereHas('roles', function ($query) {
+            $query->where('name', 'employee');
+        })->get();
         
         foreach ($employees as $employee) {
             $currentMonthAbsences = Absence::where('user_id', $employee->id)
@@ -90,22 +92,24 @@ class AbsenceController extends Controller
     {
         try {
             $page = request()->input('page', 1);
-            $employees = User::where('role', 'employee')
-                ->with(['absences' => function ($query) {
+            $employees = User::whereHas('roles', function ($query) {
+                $query->where('name', 'employee');
+            })
+            ->with(['absences' => function ($query) {
                     $query->whereMonth('start_date', '=', date('m'))
                           ->whereYear('start_date', '=', date('Y'));
                 }])
                 ->paginate(5, ['*'], 'page', $page);
 
-                //TODO add it to response
-                $absentCount = User::where('role', 'employee')
+                $absentCount = User::whereHas('roles', function ($query) {
+                    $query->where('name', 'employee');
+                })
                 ->whereHas('absences', function ($query) {
                     $query->whereMonth('start_date', '=', date('m'))
                           ->whereYear('start_date', '=', date('Y'));
                 })
                 ->count();
             
-                // return ResponseHelper::success(null, $employees, 200);
                 return ResponseHelper::success(null, ["employees"=>$employees, "absentCount"=> $absentCount], 200);
 
         } catch (Exception $e) {
@@ -142,7 +146,8 @@ class AbsenceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
+        
     }
 
     /**

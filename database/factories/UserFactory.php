@@ -33,7 +33,6 @@ class UserFactory extends Factory
             'salary' => $this->faker->numberBetween(1000, 5000),
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
-            'role' => 'employee',
             'email' => $this->faker->unique()->safeEmail(),
             'password' => bcrypt('Killer04728'),
         ];

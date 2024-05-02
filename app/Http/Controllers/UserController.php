@@ -21,35 +21,40 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function search(){
-       try {
-        $name=request()->input('name');
-        $employees = User::where('role', 'employee')
-                         ->where(function($query) use ($name) {
-                             $query->where('fname', 'like', "%$name%")
-                                   ->orWhere('lname', 'like', "%$name%");
-                         })->with('departement')
-                         ->get();
-
-        foreach($employees as $employee){
-            $employee->departement->color=DepartmentHelper::getColor($employee->departement->id);
-            $employee->avatar=asset("storage/Avatars/{$employee->id}.jpg");
-
-            $absences = Absence::where('user_id', $employee->id)
-                ->whereMonth('start_date', '=', date('m'))
-                ->whereYear('start_date', '=', date('Y'))
-                ->get();
-            $employee->absences = $absences;
-        }
-        return ResponseHelper::success(null, $employees, 200);
-       } catch (Exception $e) {
+        try {
+            $name = strtolower(request()->input('name'));
+            $employees = User::whereHas('roles', function ($query) {
+                $query->where('name', 'employee');
+            })
+            ->where(function ($query) use ($name) {
+                $query->whereRaw('LOWER(fname) LIKE ?', ["%{$name}%"])
+                      ->orWhereRaw('LOWER(lname) LIKE ?', ["%{$name}%"]);
+            })
+            ->with(['departement', 'absences' => function ($query) {
+                $query->whereMonth('start_date', '=', date('m'))
+                      ->whereYear('start_date', '=', date('Y'));
+            }])
+            ->get();
+    
+            foreach($employees as $employee){
+                $employee->departement->color = DepartmentHelper::getColor($employee->departement->id);
+                $employee->avatar = asset("storage/Avatars/{$employee->id}.jpg");
+            }
+    
+            return ResponseHelper::success(null, $employees, 200);
+        } catch (Exception $e) {
             return ResponseHelper::error($e->getMessage(), 404);
-       }
+        }
     }
+    
+
 
     public function count() 
     {    
         try {
-            $count = User::where('role', 'employee')->count();
+            $count = User::whereHas('roles', function ($query) {
+                $query->where('name', 'employee');
+            })->count();
             return ResponseHelper::success(null, $count, 200);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -58,11 +63,16 @@ class UserController extends Controller
     public function getEmployees() 
     {    
         try {
-            $employees = User::where('role', 'employee')->select('id', 'fname', 'lname')->get();
+            $employees = User::whereHas('roles', function ($query) {
+                $query->where('name', 'employee');
+            })->select('id', 'fname', 'lname')->get();
             return ResponseHelper::success(null, $employees, 200);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
+    }
+    public function requestVacation(){
+
     }
 
     public function login(Request $request){
@@ -75,7 +85,9 @@ class UserController extends Controller
             if(Auth::attempt($credentials)){
                 $user=Auth::user();
                 $user->avatar=asset("storage/Avatars/".$user->id.".jpg");
-                $token=$user->createToken('hr_token')->plainTextToken;
+                $token=$user->createToken('token')->plainTextToken;
+                $user->role = $user->getRoleNames()[0];
+                unset($user->roles);    
                 return ResponseHelper::success('You are now logged in', [
                     'user' => $user,
                     'token' => $token
@@ -102,9 +114,13 @@ class UserController extends Controller
     public function index() 
     {    
         $page = request()->input('page', 1);
-        $employees=User::where('role', 'employee')->with('departement')->paginate(6, ['*'], 'page', $page);
+        $employees=User::whereHas('roles', function ($query) {
+            $query->where('name', 'employee');
+        })->with('departement')->paginate(6, ['*'], 'page', $page);
 
-        $count = User::where('role', 'employee')->count();
+        $count = User::whereHas('roles', function ($query) {
+            $query->where('name', 'employee');
+        })->count();
 
         foreach($employees as $employee){
             $employee->departement->color=DepartmentHelper::getColor($employee->departement->id);
@@ -139,7 +155,6 @@ class UserController extends Controller
     
             $password=Str::random(10);
             $validatedData['password']=bcrypt($password);
-            $validatedData['role']='employee';
             $validatedData['doj']=now();
             unset($validatedData['avatar']);
     
@@ -147,13 +162,15 @@ class UserController extends Controller
             $request->file('avatar')->storeAs('public/Avatars', $employee->id.'.jpg');
     
             $employee->avatar=asset("storage/Avatars/".$employee->id.".jpg");
+            $employee->assignRole('employee');
+
 
             $departement=Departement::find($employee->departement_id);
             $departement->color=DepartmentHelper::getColor($departement->id);
             if($departement){
                 $employee->departement=$departement;
             }
-    
+            $employee->absences = [];
             $message=Storage::disk('local')->get('Data/WelcomingEmail.txt');
             $message=str_replace('[Fname]', $employee->fname, $message);
             $message=str_replace('[Lname]', $employee->lname, $message);
@@ -205,11 +222,18 @@ class UserController extends Controller
             } else {
                 return ResponseHelper::error('The departement was not found', 404);
             }
-
+            $employee->assignRole('employee');
             $employee->update($validatedData);
 
             $employee->departement->color=DepartmentHelper::getColor($employee->departement->id);
             $employee->avatar=asset("storage/Avatars/".$employee->id.".jpg");
+
+            $absences = Absence::where('user_id', $employee->id)
+                ->whereMonth('start_date', '=', date('m'))
+                ->whereYear('start_date', '=', date('Y'))
+                ->get();
+            $employee->absences = $absences;
+
             return ResponseHelper::success('The employee was updated successfully', $employee, 200);
         }else{
             return ResponseHelper::error('The employee was not found', 404);
@@ -236,7 +260,9 @@ class UserController extends Controller
 
     public function dashboard()
 {
-    $employees = User::where('role', 'employee')->get();
+    $employees = User::whereHas('roles', function ($query) {
+        $query->where('name', 'employee');
+    })->get();
 
     $currentMonthAbsenceDays = 0;
     $previousMonthAbsenceDays = 0;
