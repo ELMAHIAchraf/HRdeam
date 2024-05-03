@@ -31,6 +31,8 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/getJobs', [AnnouncementController::class, 'getJobs']);
 
 
+
+
 Route::resource("/applicants", ApplicantController::class)
 ->only(['store']);
 
@@ -45,7 +47,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
 
     Route::get('/search', [UserController::class, 'search'])->middleware('permission:user.search');
-    Route::post('/vacation', [UserController::class, 'requestVacation'])->middleware('permission:user.requestVacation');
+    Route::post('/vacation', [AbsenceController::class, 'requestVacation'])->middleware('permission:absence.requestVacation');
+
 
     
     //Department routes

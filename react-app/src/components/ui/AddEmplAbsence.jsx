@@ -113,11 +113,11 @@ export const AddEmplAbsence = () => {
                             <div className="flex justify-between gap-4">
                                 <div className="w-1/2">
                                     <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Start Date</label>
-                                    <DatePicker onDateChange={(date) => setStartDate(date)} />                                
+                                    <DatePicker variant="outline" onDateChange={(date) => setStartDate(date)} />                                
                                 </div>
                                 <div className="w-1/2">
                                     <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date</label>
-                                    <DatePicker onDateChange={(date) => setEndDate(date)} />                                
+                                    <DatePicker variant="outline" onDateChange={(date) => setEndDate(date)} />                                
                                 </div>
                             </div>
 

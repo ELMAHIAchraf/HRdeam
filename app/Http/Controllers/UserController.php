@@ -88,6 +88,8 @@ class UserController extends Controller
                 $token=$user->createToken('token')->plainTextToken;
                 $user->role = $user->getRoleNames()[0];
                 unset($user->roles);    
+                $user->department= $user->departement->name;
+                unset($user->departement);
                 return ResponseHelper::success('You are now logged in', [
                     'user' => $user,
                     'token' => $token

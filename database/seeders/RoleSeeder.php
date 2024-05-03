@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
 
         $commonPermissions = Permission::whereIn('name', [
             'user.index',
-            'absence.index'
+            'absence.show',
         ])->get();
 
         $hrPermissions = Permission::whereIn('name', [
@@ -35,6 +35,7 @@ class RoleSeeder extends Seeder
             'departement.update',
             'departement.destroy',
             'absence.store',
+            'absence.index',
             'absence.show',
             'absence.update',
             'absence.destroy',
@@ -48,12 +49,12 @@ class RoleSeeder extends Seeder
             'applicant.show',
             'applicant.update',
             'applicant.destroy',
-            'applicant.onboard',
+            'applicant.onboard',    
             'applicant.changeStatus',
         ])->get();
 
         $employeePermissions = Permission::whereIn('name', [
-            'user.requestVacation'
+            'absence.requestVacation'
         ])->get();  
 
         $hrRole->givePermissionTo($hrPermissions);

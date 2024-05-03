@@ -97,7 +97,8 @@ class AbsenceController extends Controller
             })
             ->with(['absences' => function ($query) {
                     $query->whereMonth('start_date', '=', date('m'))
-                          ->whereYear('start_date', '=', date('Y'));
+                          ->whereYear('start_date', '=', date('Y'))
+                          ->where('status', 'approved');
                 }])
                 ->paginate(5, ['*'], 'page', $page);
 
@@ -132,6 +133,7 @@ class AbsenceController extends Controller
                 'user_id' => 'required|integer'
             ]);
             unset($validated['attachement']);
+            $validated['status']='approved';
             $absence=Absence::create($validated);
             $request->file('attachment')->storeAs('public/Attachments', $absence->id.'.pdf');
             return ResponseHelper::success('Absence has been successfully added', $absence, 201);
@@ -140,14 +142,39 @@ class AbsenceController extends Controller
         }
 
     }
+    public function requestVacation(Request $request){
+        try {
+            $validated = $request->validate([
+                'type' => 'required|string',
+                'start_date' => 'required|date',
+                'end_date' => 'required|date',
+                'reason' => 'required|string',
+                'attachment' => 'required|file|mimes:pdf',
+                'user_id' => 'required|integer'
+            ]);
+            unset($validated['attachement']);
+            $absence=Absence::create($validated);
+            $request->file('attachment')->storeAs('public/Attachments', $absence->id.'.pdf');
+            return ResponseHelper::success('Absence has been successfully added', $absence, 201);
+        } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 500);
+        }
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        
-        
+        try {
+            $absences = Absence::where('user_id', $id)
+            ->where('start_date', '>=', date('Y-01-01')) 
+            ->where('end_date', '<=', date('Y-12-31'))
+            ->get();
+        return ResponseHelper::success(null, $absences, 200);
+        } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 500);
+        }
     }
 
     /**

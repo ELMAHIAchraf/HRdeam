@@ -30,7 +30,6 @@ export const Home = () => {
     }
     useEffect(() => {
       getData();
-      // notify("Welcome to your dashboard!")
     }, []);
     
 

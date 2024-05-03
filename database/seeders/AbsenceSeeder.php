@@ -18,12 +18,13 @@ class AbsenceSeeder extends Seeder
             [
                 'id' => 1,
                 'type' => 'vacation',
-                'start_date' => '2024-04-01',
-                'end_date' => '2024-04-05',
+                'start_date' => '2024-05-01',
+                'end_date' => '2024-05-05',
                 'reason' => 'Annual leave',
                 'created_at' => now(),
                 'updated_at' => null,
-                'user_id' => 1,
+                'user_id' => 2,
+                'status' => 'approved'
             ],
             [
                 'id' => 2,
@@ -33,17 +34,19 @@ class AbsenceSeeder extends Seeder
                 'reason' => 'Family trip',
                 'created_at' => now(),
                 'updated_at' => null,
-                'user_id' => 1,
+                'user_id' => 2,
+                'status' => 'approved'
             ],
             [
                 'id' => 3,
                 'type' => 'sick',
-                'start_date' => '2024-04-03',
-                'end_date' => '2024-04-04',
+                'start_date' => '2024-05-03',
+                'end_date' => '2024-05-04',
                 'reason' => 'Flu',
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 2,
+                'status' => 'approved'
             ],
             [
                 'id' => 4,
@@ -54,6 +57,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 2,
+                'status' => 'approved'
             ],
             [
                 'id' => 5,
@@ -64,6 +68,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 3,
+                'status' => 'approved'
             ],
             [
                 'id' => 6,
@@ -74,6 +79,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 3,
+                'status' => 'approved'
             ],
             [
                 'id' => 7,
@@ -84,6 +90,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 4,
+                'status' => 'approved'
             ],
             [
                 'id' => 8,
@@ -94,6 +101,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 4,
+                'status' => 'approved'
             ],
             [
                 'id' => 9,
@@ -104,6 +112,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 5,
+                'status' => 'approved'
             ],
             [
                 'id' => 10,
@@ -114,6 +123,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 5,
+                'status' => 'approved'
             ],
             [
                 'id' => 11,
@@ -124,6 +134,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 6,
+                'status' => 'approved'
             ],
             [
                 'id' => 12,
@@ -134,6 +145,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 6,
+                'status' => 'approved'
             ],
             [
                 'id' => 13,
@@ -144,6 +156,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 7,
+                'status' => 'approved'
             ],
             [
                 'id' => 14,
@@ -154,6 +167,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 7,
+                'status' => 'approved'
             ],
             [
                 'id' => 15,
@@ -164,6 +178,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 8,
+                'status' => 'approved'
             ],
             [
                 'id' => 16,
@@ -174,6 +189,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 8,
+                'status' => 'approved'
             ],
             [
                 'id' => 17,
@@ -184,6 +200,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 9,
+                'status' => 'approved'
             ],
             [
                 'id' => 18,
@@ -194,6 +211,7 @@ class AbsenceSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => null,
                 'user_id' => 9,
+                'status' => 'approved'
             ],
             [
                 'id' => 19,
@@ -202,8 +220,9 @@ class AbsenceSeeder extends Seeder
                 'end_date' => '2024-04-20',
                 'reason' => 'Mountain retreat',
                 'created_at' => now(),
-                'updated_at' => null,
-                'user_id' => 10,
+                'updated_at' => null,                'user_id' => 10,
+                                'status' => 'approved'
+
             ],
             [
                 'id' => 20,
@@ -212,8 +231,9 @@ class AbsenceSeeder extends Seeder
                 'end_date' => '2024-04-28',
                 'reason' => 'Camping trip',
                 'created_at' => now(),
-                'updated_at' => null,
-                'user_id' => 10,
+                'updated_at' => null,                'user_id' => 10,
+                                'status' => 'approved'
+
             ],
         ];
 

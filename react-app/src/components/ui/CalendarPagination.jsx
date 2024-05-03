@@ -94,7 +94,7 @@ export const CalendarPagination = () => {
             <div onClick={()=>{setIsOpen(true)}} key={abs.id} style={{width : width+"px", position : "absolute", top : "25px", left: leftMargin+"px"}} className="cursor-pointer bg-[#ffd0d0] flex-none h-8 rounded-lg flex items-center">
                 <p className="text-[#b34949] ml-2 text-sm font-semibold">Away</p>    
             </div>
-            <div className={`${isOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#00000007]`} >
+            <div className={`${isOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >
                 <div className="relative p-4 w-full max-w-2xl max-h-2xl">
                     <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">

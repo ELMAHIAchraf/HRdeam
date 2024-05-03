@@ -37,6 +37,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'absence.show', 'guard_name' => 'web']);
         Permission::create(['name' => 'absence.update', 'guard_name' => 'web']);
         Permission::create(['name' => 'absence.destroy', 'guard_name' => 'web']);
+        Permission::create(['name' => 'absence.requestVacation', 'guard_name' => 'web']);
+
 
 
         Permission::create(['name' => 'announcement.index', 'guard_name' => 'web']);

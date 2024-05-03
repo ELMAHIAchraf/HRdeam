@@ -32,7 +32,6 @@ export const SideBar = () => {
         }catch(e){
             toast.error(e.response.data.message);  
         }   
-    
    }
    
   return (
