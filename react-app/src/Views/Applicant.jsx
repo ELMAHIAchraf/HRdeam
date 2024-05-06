@@ -19,7 +19,7 @@ export const Applicant = () => {
       try {
         setIsLoading(true)
         const hr_id = JSON.parse(sessionStorage.getItem('user')).id
-        const response = await axiosInstance.get(`/applicants?user_id=${hr_id}`);
+        const response = await axiosInstance.get(`/applicants`);
         dispatch(setApplicants(response.data.data));
         
       } catch (error) {

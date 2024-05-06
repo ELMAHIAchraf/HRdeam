@@ -9,6 +9,14 @@ window.Echo = new Echo({
     wsPort: 6001,
     forceTLS: false,
     disableStats: true,
+    authEndpoint: 'http://localhost:8000/api/broadcasting/auth',
     cluster: 'mt1',
+    csrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
+    auth: {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        url: '/api/broadcasting/auth',
+    },
 });
 export default window.Echo;

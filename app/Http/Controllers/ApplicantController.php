@@ -107,7 +107,7 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         try {
-            $user_id = $request->input('user_id');    
+            $user_id=request()->user()->id;
             $applicants = Applicant::with(['announcement' => function ($query) {
                 $query->select('id', 'position', 'departement_id')
                       ->with(['departement' => function ($query) {

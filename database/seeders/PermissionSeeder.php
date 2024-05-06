@@ -27,7 +27,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'user.search', 'guard_name' => 'web']);
         Permission::create(['name' => 'user.count', 'guard_name' => 'web']);
         Permission::create(['name' => 'user.getEmployees', 'guard_name' => 'web']);
-        Permission::create(['name' => 'user.requestVacation', 'guard_name' => 'web']);
 
 
 

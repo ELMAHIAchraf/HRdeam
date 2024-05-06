@@ -1,16 +1,18 @@
 <?php
 
+use App\Models\Applicant;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\AbsenceController;
-use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\DepartementController;
-use App\Models\Announcement;
-use App\Models\Applicant;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\BroadcastingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,7 @@ use App\Models\Applicant;
 |
 */
 Route::get('/notify', function () {
-    event(new \App\Events\NotificationEvent("Hello World"));
+    event(new \App\Events\ActionEvent("A department is created by HR", 2, "department"));
 });
 
 Route::post('/login', [UserController::class, 'login']);
@@ -44,11 +46,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', [UserController::class, 'logout']);
 
+
+    Route::post('/logout', [UserController::class, 'logout']);
+    
     Route::get('/search', [UserController::class, 'search'])->middleware('permission:user.search');
     Route::post('/vacation', [AbsenceController::class, 'requestVacation'])->middleware('permission:absence.requestVacation');
-
+    
+    // Broadcast::routes();
 
     
     //Department routes

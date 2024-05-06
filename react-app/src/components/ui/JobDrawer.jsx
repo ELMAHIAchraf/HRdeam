@@ -53,7 +53,7 @@ export const JobDrawer = ({announcement}) => {
     }
   return (
         <Drawer>
-        <DrawerTrigger className="p-2 border-[#e5e7eb] border text-sm  rounded-md ml-2">Details</DrawerTrigger>
+        <DrawerTrigger className="p-2 border-[#e5e7eb] border text-sm  rounded-md ml-2 mt-2">Details</DrawerTrigger>
         <DrawerContent>
             <div className="flex flex-col items-center">
                 <div className="w-2/3 ">

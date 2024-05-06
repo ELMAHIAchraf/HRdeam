@@ -108,8 +108,8 @@ const convertDate = (date, full) =>{
   }
 
   return (
-    <div className="flex gap-3 h-screen p-6  bg-white">
-      <div className="w-1/3 rounded-lg border-[#007cff] border-[1px] flex flex-col items-center relative">
+    <div className="flex gap-3 h-screen p-6  bg-[#fafafa]">
+      <div className="w-1/3 rounded-lg shadow-slate-300 shadow-md  border-[1px] flex flex-col items-center relative bg-white">
         <p className="font-semibold  absolute top-4 left-4 rounded-md p-2 hover:bg-[#e5e7eb] cursor-pointer" onClick={logout}><i className="fa-solid fa-right-from-bracket pr-2"></i>Log out</p>
         <img src={employee.avatar} className="w-36 rounded-full mt-8"/>
         <div className="w-[95%]">
@@ -119,12 +119,12 @@ const convertDate = (date, full) =>{
             <div className="flex justify-between gap-x-4">
               <div className="w-1/2 relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CIN</label>
-                <input ref={cin} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.cin} disabled/>
+                <input ref={cin} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={employee.cin} disabled/>
                 <div className="absolute top-9 right-4"  onClick={()=>copyToClipboard(cin)}><ClipBoard/></div>
               </div>
               <div className="w-1/2 relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of join</label>
-                <input ref={date} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.doj} disabled/>
+                <input ref={date} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={employee.doj} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(date)}><ClipBoard/></div>
               </div>            
             </div>
@@ -132,13 +132,13 @@ const convertDate = (date, full) =>{
             <div className="flex justify-between gap-x-4 mt-4">
               <div className="w-1/2 relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Department</label>
-                <input ref={dep} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.department} disabled/>
+                <input ref={dep} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={employee.department} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(dep)}><ClipBoard/></div>
 
               </div>
               <div className="w-1/2 relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
-                <input ref={pos} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.position} disabled/>
+                <input ref={pos} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={employee.position} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(pos)}><ClipBoard/></div>
               </div>
                          
@@ -147,13 +147,13 @@ const convertDate = (date, full) =>{
             <div className="flex justify-between gap-x-4 mt-4">
             <div className="w-1/2 relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salary</label>
-                <input ref={salary} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={`${employee.salary} MAD`} disabled/>
+                <input ref={salary} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={`${employee.salary} MAD`} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(salary)}><ClipBoard/></div>
               </div> 
               
               <div className="w-1/2 relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                <input ref={phone} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.phone} disabled/>
+                <input ref={phone} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={employee.phone} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(phone)}><ClipBoard/></div>
               </div>            
             </div>
@@ -162,7 +162,7 @@ const convertDate = (date, full) =>{
               
             <div className="w-full relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                <input ref={email} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.email} disabled/>
+                <input ref={email} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" defaultValue={employee.email} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(email)}><ClipBoard/></div>
             </div>  
             </div>
@@ -170,14 +170,14 @@ const convertDate = (date, full) =>{
             <div className="w-full mt-4">
             <div className="w-full relative">
                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-                <input ref={address} type="text" className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" defaultValue={employee.address} disabled/>
+                <input ref={address} type="text" className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300   block w-full p-2.5" defaultValue={employee.address} disabled/>
                 <div className="absolute top-9 right-4" onClick={()=>copyToClipboard(address)}><ClipBoard/></div>
             </div> 
             </div>         
           </div>
         </div>
       </div>
-      <div className="w-1/3 rounded-lg border-[#007cff] border-[1px]">
+      <div className="w-1/3 rounded-lg shadow-slate-300 shadow-md  border-[1px] bg-white">
         <p className="text-2xl font-bold mt-8 ml-4">Absence Records</p>
         <p className=" mt-2 ml-4">You have 8 vacation days remaining for allocation</p>
         <div className="flex flex-col items-center w-11/12 h-[550PX] mt-6 ml-5 overflow-auto custom-scrollbar space-y-4">
@@ -185,7 +185,7 @@ const convertDate = (date, full) =>{
           {
             absences && absences.map((absence, index) => (
               <>
-              <div className="bg-[#f9fafb] hover:bg-[#e2e9eb91] border-[#007cff] border-[1px] cursor-pointer rounded-lg w-[430px] flex p-4 justify-between items-center" onClick={()=>{setIsOpen(true)}}>
+              <div className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-[430px] flex p-4 justify-between items-center" onClick={()=>{setIsOpen(true)}}>
             <p>{convertDate(absence.start_date, true)}</p>
               <div className="ml-20 w-[170px] ">
                  <p>{absence.type}</p>
@@ -202,14 +202,14 @@ const convertDate = (date, full) =>{
         
       </div>
 
-      <div className="w-1/3 rounded-lg border-[#007cff] border-[1px]">
+      <div className="w-1/3 rounded-lg  border-[1px] bg-white shadow-slate-300 shadow-md ">
         <p className="text-2xl font-bold mt-8 ml-4">Request Vacation</p>
         <form className="space-y-4 w-[95%] mt-6 m-auto" action="#">
           <div className="flex justify-between gap-4">
           <div className="w-full"> 
               <input ref={employeeId} type="hidden" defaultValue={employee.id}/>
               <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Absence Type</label>
-              <select ref={type} className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer" >
+              <select ref={type} className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer" >
                   <option>Select Absence Type</option>
                   <option value="sick">Sick</option>
                   <option value="vacation">Vacation</option>
@@ -229,14 +229,14 @@ const convertDate = (date, full) =>{
           <div className="flex  gap-4">
               <div className="w-full">
                   <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Reason</label>
-                  <textarea rows={6} ref={reason} className="bg-gray-50 border border-[#007cff] text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" placeholder="Enter the reason for the absence"  required />                               
+                  <textarea rows={6} ref={reason} className="bg-gray-50 border shadow-slate-300 shadow-md  text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:shadow-slate-300 shadow-md  block w-full p-2.5" placeholder="Enter the reason for the absence"  required />                               
               </div>
           </div>
 
           <div className="flex  gap-4 cursor-pointer">
               <div className="w-full">
                   <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">attachment</label>
-                <div className='border rounded-lg border-[#007cff] h-11 cursor-pointe' onClick={()=>attachment.current.click()}>  
+                <div className='border rounded-lg shadow-slate-300 shadow-md  h-11 cursor-pointe' onClick={()=>attachment.current.click()}>  
                   <div className="flex divide-x-2 divide-[#007cff] h-full bg-[#f9fafb]">
                       <div className="w-9/12 h-full flex items-center"><p className="text-[#787a7b] text-sm ml-3 truncate">{file===1? fileName : 'Upload attachment here'}</p></div>
                       <div className="h-full flex items-center justify-center w-1/2"><img src="Add Image.png" className="md:ml-2 lg:w-6 w-4" /><span className="text-xs lg:text-sm lg ml-2 text-[#9ca3af]">Upload</span></div>

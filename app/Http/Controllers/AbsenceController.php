@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ResponseHelper;
+use Illuminate\Support\Facades\Log;
+use Exception;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Absence;
 use App\Models\Departement;
-use App\Models\User;
-use Carbon\Carbon;
-use Exception;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use GuzzleHttp\Psr7\Response;
+use App\Helpers\ResponseHelper;
 use Illuminate\Support\Facades\DB;
 
 class AbsenceController extends Controller
@@ -155,6 +156,8 @@ class AbsenceController extends Controller
             unset($validated['attachement']);
             $absence=Absence::create($validated);
             $request->file('attachment')->storeAs('public/Attachments', $absence->id.'.pdf');
+            $employee=['id'=>$request->user()->id, 'fname'=>$request->user()->fname, 'lname'=>$request->user()->lname];
+            event(new \App\Events\VacationRequestEvent("I would like to request a vacation", $employee));
             return ResponseHelper::success('Absence has been successfully added', $absence, 201);
         } catch (Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);
