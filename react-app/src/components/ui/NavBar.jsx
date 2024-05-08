@@ -184,11 +184,11 @@ export const NavBar = () => {
                                     <TabsContent value="vacancies" className="h-[420px] mt-8 overflow-auto space-y-2 custom-scrollbar">
                                         {
                                             employee.absences.map((absence) => (
-                                                <div key={`absence${absence.id}`} className="bg-[#f9fafb] hover:bg-[#e5e7eb] border-[#d1d5db] border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-between items-center" onClick={()=>{setIsOpen(true)}}>
+                                                <div key={`absence${absence.id}`} className="bg-[#f9fafb] hover:bg-[#e5e7eb] border-[#d1d5db] border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-between items-center h-[100px]" onClick={()=>{setIsOpen(true)}}>
                                                     <p>{convertDate(absence.start_date, true)}</p>
-                                                    <div className="ml-24 w-[200px] ">
+                                                    <div className="w-[250px] ">
                                                         <p>{absence.type}</p>
-                                                        <p className="font-light text-sm">{absence.reason}</p>
+                                                        <p className="font-light text-sm line-clamp-3">{absence.reason}</p>
                                                     </div>
                                                     <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>
                                                     

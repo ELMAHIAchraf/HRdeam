@@ -52,8 +52,12 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/search', [UserController::class, 'search'])->middleware('permission:user.search');
     Route::post('/vacation', [AbsenceController::class, 'requestVacation'])->middleware('permission:absence.requestVacation');
-    
-    // Broadcast::routes();
+    Route::get('/getVacationRequests', [AbsenceController::class, 'getVacationRequests'])->middleware('permission:absence.getVacationRequests');
+
+    Route::post('/assignVacationRequest/{id}', [AbsenceController::class, 'assignVacationRequest'])->middleware('permission:absence.assignVacationRequest');
+    Route::post('/vacationRequestReview/{id}', [AbsenceController::class, 'vacationRequestReview'])->middleware('permission:absence.vacationRequestReview');
+
+
 
     
     //Department routes

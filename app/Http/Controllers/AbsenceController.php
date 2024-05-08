@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class AbsenceController extends Controller
 {
-
-
     public function dashboard(){
 
         $employees = User::whereHas('roles', function ($query) {
@@ -27,6 +25,7 @@ class AbsenceController extends Controller
             $currentMonthAbsences = Absence::where('user_id', $employee->id)
                 ->whereMonth('start_date', '=', date('m'))
                 ->whereYear('start_date', '=', date('Y'))
+                ->where('status', 'approved')
                 ->get();
         
             $currentMonthAbsenceDays = 0;
@@ -39,6 +38,7 @@ class AbsenceController extends Controller
             $previousMonthAbsences = Absence::where('user_id', $employee->id)
                 ->whereMonth('start_date', '=', date('m', strtotime("-1 month")))
                 ->whereYear('start_date', '=', date('Y', strtotime("-1 month")))
+                ->where('status', 'approved')
                 ->get();
         
             $previousMonthAbsenceDays = 0;
@@ -114,6 +114,53 @@ class AbsenceController extends Controller
             
                 return ResponseHelper::success(null, ["employees"=>$employees, "absentCount"=> $absentCount], 200);
 
+        } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 500);
+        }
+    }
+
+    public function getVacationRequests()
+    {
+        try {
+            $absences = Absence::where('status', 'pending')
+            ->orWhere('status', 'in process')
+            ->with([
+                'user:id,fname,lname', 
+                'hr:id,fname,lname'
+            ])
+            ->get();
+            return ResponseHelper::success(null, $absences, 200);
+        } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 500);
+        }
+    }
+
+    public function assignVacationRequest(Request $request, string $id){
+        try {
+            $absence = Absence::find($id);
+            if(!$absence) return ResponseHelper::error('Absence request not found', 404);
+
+            if($absence->hr_id==null){
+                $absence->status = 'in process';
+                $absence->hr_id = $request->user()->id;
+                $absence->save();
+                return ResponseHelper::success('The request has been successfully assigned to you for review', null, 200);
+            }else{
+                return ResponseHelper::success(null, null, 200);
+            }
+        } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 500);
+        }
+    }
+
+    public function vacationRequestReview(Request $request, string $id)
+    {
+        try {
+            $absence = Absence::find($id);
+            $absence->status = $request->status;
+            $absence->review = $request->review;
+            $absence->save();
+            return ResponseHelper::success('Your review has been successfully submitted', $absence, 200);
         } catch (Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);
         }

@@ -11,6 +11,8 @@ export const Home = () => {
     const [absenceData, setAbsenceData] = useState({absenceRate: 0, absenceHours: 0, absenceCost: 0});
     const [isLoading, setIsLoading] = useState(false);
 
+    const [requests, setRequests] = useState([]);
+
     // useEffect(() => {
     //   Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
     //   .listen('ActionEvent', (e) => {
@@ -23,9 +25,21 @@ export const Home = () => {
       Echo.private(`vacation-request-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
       .listen('VacationRequestEvent', (e) => {
         console.log(e);
-          notify(e);
+        notify(e);
       });
     }, []);
+
+    const getVAcationRequests = async () => {
+      try {
+        setIsLoading(true)
+        const response = await axiosInstance.get('/getVacationRequests')
+        setRequests(response.data.data)
+      } catch (error) {
+        console.error(error)
+      }finally {
+        setIsLoading(false)
+      }
+    }
 
     const getData = async () => {
         try {
@@ -40,6 +54,7 @@ export const Home = () => {
     }
     useEffect(() => {
       getData();
+      getVAcationRequests();
     }, []);
     
 
@@ -65,14 +80,17 @@ export const Home = () => {
               <p className="font-bold  ml-4 text-lg">Vacation Requests</p>
               <p className="bg-[#c5e0ff] rounded-md h-8 px-2 flex justify-center items-center font-semibold text-sm mr-4">{todayDate()}</p>
           </div>
-          <p className="text-[#737373] text-sm ml-4 mt-2">2 active requests</p>
+          <p className="text-[#737373] text-sm ml-4 mt-2">{requests.length} active requests</p>
           <div className="h-[560px] overflow-auto custom-scrollbar">
-            <Request pending={true}/>
-            <Request pending={false}/> 
-            <Request pending={false}/>
-            <Request pending={false}/>
-            <Request pending={false}/>
-
+          {
+            requests.sort((a, b) => {
+              if (a.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return -1;
+              if (b.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return 1;
+              return b.status.localeCompare(a.status);
+            }).map(request => 
+              <Request key={request.id} pending={request.status==='pending' ? false : true} vacRequest={request} setRequests={setRequests} requests={requests} />
+            ) 
+          }
           </div>
         </div>
     </div>

@@ -86,7 +86,7 @@ export const DepartementManag = () => {
                 </button>
             </div>
             <div className="p-4 md:p-5">
-                <ul className="space-y-4 mb-4">
+                <ul className="space-y-4 mb-4" >
                 {
                     departments.map(department => (
                         <li key={department.departement_id}>

@@ -59,7 +59,7 @@ const convertDate = (date, full) =>{
     const start = new Date(start_date);
     const end = new Date(end_date);
     const difference=end.getTime()-start.getTime();
-    return Math.floor(difference/(1000*3600*24)+2);
+    return Math.floor(difference/(1000*3600*24)+1);
 }
   const navigate = useNavigate();
   const logout = async() =>{
@@ -106,6 +106,14 @@ const convertDate = (date, full) =>{
         toast.error(error.response.data.message)
     }
   }
+  const getAbsenceDays = (absences) => {
+    if (!absences) return 0;
+    let days=0;
+    absences.map((absence) => {
+        days+=differenceInDays(absence.start_date, absence.end_date);
+    })
+    return days;
+}
 
   return (
     <div className="flex gap-3 h-screen p-6  bg-[#fafafa]">
@@ -179,18 +187,18 @@ const convertDate = (date, full) =>{
       </div>
       <div className="w-1/3 rounded-lg shadow-slate-300 shadow-md  border-[1px] bg-white">
         <p className="text-2xl font-bold mt-8 ml-4">Absence Records</p>
-        <p className=" mt-2 ml-4">You have 8 vacation days remaining for allocation</p>
-        <div className="flex flex-col items-center w-11/12 h-[550PX] mt-6 ml-5 overflow-auto custom-scrollbar space-y-4">
+        <p className=" mt-2 ml-4">You have utilized {getAbsenceDays(absences)} days of absence to date.</p>
+        <div className="flex flex-col items-center w-[93%] h-[550PX] mt-6 ml-4 overflow-auto custom-scrollbar space-y-4">
 
           {
             absences && absences.map((absence, index) => (
               <>
-              <div className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-[430px] flex p-4 justify-between items-center" onClick={()=>{setIsOpen(true)}}>
+            <div className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-[450px] flex p-4 justify-between items-center h-[100px]" onClick={()=>{setIsOpen(true)}}>
             <p>{convertDate(absence.start_date, true)}</p>
-              <div className="ml-20 w-[170px] ">
-                 <p>{absence.type}</p>
-                 <p className="font-light text-sm">{absence.reason}</p>
-              </div>
+            <div className="w-[200px] ">
+                <p>{absence.type}</p>
+                <p className="font-light text-sm line-clamp-2">{absence.reason}</p>
+            </div>
            <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>                                         
           </div>
             </>

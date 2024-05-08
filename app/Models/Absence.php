@@ -14,13 +14,22 @@ class Absence extends Model
         'end_date',
         'reason',
         'description',
-        'user_id'
+        'created_at',
+        'user_id',
+        'hr_id',
+        'status',
+        'review'
     ];
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    
+    public function hr()
+    {
+        return $this->belongsTo(User::class, 'hr_id');
     }
     protected $hidden = [
-        'updated_at',
-        'created_at',
+        'updated_at'
     ];
 }

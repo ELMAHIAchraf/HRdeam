@@ -17,9 +17,11 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('reason');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending','in process',  'approved', 'rejected'])->default('pending');
+            $table->string('review')->nullable();
             $table->timestamps();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('hr_id')->nullable()->constrained('users')->onDelete('set null');
         });
     }
 
