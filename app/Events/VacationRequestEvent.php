@@ -20,11 +20,13 @@ class VacationRequestEvent implements ShouldBroadcast
      */
     public $message;
     public $employee;
+    public $request;
 
-   public function __construct($message, $employee)
+   public function __construct($message, $employee, $request)
     {
         $this->message = $message;
         $this->employee = $employee;
+        $this->request = $request;
     }
 
     /**
@@ -48,6 +50,6 @@ class VacationRequestEvent implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return ['message' => $this->message, 'employee' => $this->employee];
+        return ['message' => $this->message, 'employee' => $this->employee, 'request' => $this->request];
     }
 }

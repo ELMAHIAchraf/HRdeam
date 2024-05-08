@@ -190,6 +190,7 @@ class AbsenceController extends Controller
         }
 
     }
+
     public function requestVacation(Request $request){
         try {
             $validated = $request->validate([
@@ -202,9 +203,13 @@ class AbsenceController extends Controller
             ]);
             unset($validated['attachement']);
             $absence=Absence::create($validated);
+            $absence = Absence::with([
+                'user:id,fname,lname', 
+                'hr:id,fname,lname'
+            ])->find($absence->id);
             $request->file('attachment')->storeAs('public/Attachments', $absence->id.'.pdf');
             $employee=['id'=>$request->user()->id, 'fname'=>$request->user()->fname, 'lname'=>$request->user()->lname];
-            event(new \App\Events\VacationRequestEvent("I would like to request a vacation", $employee));
+            event(new \App\Events\VacationRequestEvent("I would like to request a vacation", $employee, $absence));
             return ResponseHelper::success('Absence has been successfully added', $absence, 201);
         } catch (Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);

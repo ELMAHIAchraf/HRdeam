@@ -5,6 +5,7 @@ import { Loading } from "@/components/ui/Loading";
 import { Request } from "@/components/ui/Request";
 import { notify } from "@/components/ui/notify";
 import Echo from '@/pusher';
+import { set } from "date-fns";
 import { useEffect, useState } from "react";
 
 export const Home = () => {
@@ -24,8 +25,8 @@ export const Home = () => {
     useEffect(() => {
       Echo.private(`vacation-request-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
       .listen('VacationRequestEvent', (e) => {
-        console.log(e);
         notify(e);
+        setRequests(requests => [e.request, ...requests]);
       });
     }, []);
 
@@ -81,7 +82,7 @@ export const Home = () => {
               <p className="bg-[#c5e0ff] rounded-md h-8 px-2 flex justify-center items-center font-semibold text-sm mr-4">{todayDate()}</p>
           </div>
           <p className="text-[#737373] text-sm ml-4 mt-2">{requests.length} active requests</p>
-          <div className="h-[560px] overflow-auto custom-scrollbar">
+          <div className="h-[560px] overflow-auto custom-scrollba mt-3 ">
           {
             requests.sort((a, b) => {
               if (a.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return -1;

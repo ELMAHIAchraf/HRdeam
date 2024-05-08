@@ -36,6 +36,6 @@ export const notify = (e) => {
           </div>
         </div>
       ),{
-        duration: 2000
+        duration: 3000
     });
     }

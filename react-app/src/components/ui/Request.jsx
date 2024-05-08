@@ -68,7 +68,7 @@ export const Request = ({pending, vacRequest, setRequests, requests}) => {
     <>
     <HoverCard>
     <HoverCardTrigger>
-        <div className='bg-white mt-3 w-11/12 h-32 rounded-lg border-2 ml-5'>
+        <div className='bg-white mb-3 w-11/12 h-32 rounded-lg border-2 ml-5'>
             <div className='flex justify-between mt-2 ml-2'>
                 <div className='flex justify-between items-center'>
                     <div className="relative">
