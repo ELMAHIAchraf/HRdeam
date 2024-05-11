@@ -184,7 +184,7 @@ export const EmployeesTable = () => {
                                         <TabsTrigger value="vacancies">Vacancies</TabsTrigger>
                                     </TabsList>
 
-                                    <TabsContent value="account" className="w-full ">
+                                    <TabsContent value="account" className="w-full">
                                         <div className="flex justify-between mt-2">
                                             <div className="w-52">
                                                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First name</label>

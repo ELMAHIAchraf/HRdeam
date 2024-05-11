@@ -15,7 +15,9 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $hrRole = Role::create(['name' => 'hr','guard_name' => 'web']);
+        $adminRole = Role::create(['name' => 'admin','guard_name' => 'web']);
         $employeeRole = Role::create(['name' => 'employee','guard_name' => 'web']);
+
 
         $commonPermissions = Permission::whereIn('name', [
             'user.index',
@@ -59,6 +61,16 @@ class RoleSeeder extends Seeder
         $employeePermissions = Permission::whereIn('name', [
             'absence.requestVacation'
         ])->get();  
+        
+        $adminPermissions = Permission::whereIn('name', [
+            'hr.index',
+            'hr.show',
+            'hr.store',
+            'hr.update',
+            'hr.destroy',
+        ])->get();
+
+        $adminRole->givePermissionTo($adminPermissions);
 
         $hrRole->givePermissionTo($hrPermissions);
         $hrRole->givePermissionTo($commonPermissions);

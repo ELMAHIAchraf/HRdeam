@@ -87,6 +87,7 @@ class UserController extends Controller
                 $user->avatar=asset("storage/Avatars/".$user->id.".jpg");
                 $token=$user->createToken('token')->plainTextToken;
                 $user->role = $user->getRoleNames()[0];
+                if(count($user->getRoleNames())>1)$user->admin=$user->getRoleNames()[1];
                 unset($user->roles);    
                 $user->department= $user->departement->name;
                 unset($user->departement);

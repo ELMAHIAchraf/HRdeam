@@ -13,6 +13,7 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\BroadcastingController;
+use App\Http\Controllers\HrController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,6 @@ use App\Http\Controllers\BroadcastingController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::get('/notify', function () {
-    event(new \App\Events\ActionEvent("A department is created by HR", 2, "department"));
-});
 
 Route::post('/login', [UserController::class, 'login']);
 
@@ -41,6 +39,7 @@ Route::resource("/applicants", ApplicantController::class)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     $user=$request->user();
     $user->role=$user->getRoleNames()[0];
+    if(count($user->getRoleNames())>1)$user->admin=$user->getRoleNames()[1];
     unset($user->roles);
     return $user;
 });
@@ -81,7 +80,26 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/departments/{department}', [DepartementController::class, 'destroy']);
     });
 
+    //HR routes
+    Route::middleware(['permission:hr.index'])->group(function () {
+        Route::get('/admin', [HrController::class, 'index']);
+    });
 
+    Route::middleware(['permission:hr.show'])->group(function () {
+        Route::get('/admin/{hr}', [HrController::class, 'show']);
+    });
+
+    Route::middleware(['permission:hr.store'])->group(function () {
+        Route::post('/admin', [HrController::class, 'store']);
+    });
+
+    Route::middleware(['permission:hr.update'])->group(function () {
+        Route::put('/admin/{hr}', [HrController::class, 'update']);
+    });
+
+    Route::middleware(['permission:hr.destroy'])->group(function () {
+        Route::delete('/admin/{hr}', [HrController::class, 'destroy']);
+    });
 
     //user routes
     Route::middleware(['permission:user.index'])->group(function () {

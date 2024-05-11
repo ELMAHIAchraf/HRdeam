@@ -73,7 +73,12 @@ export const SideBar = () => {
       });
     }, []);
 
-     
+     const [isAdmin, setIsAdmin] = useState(false);
+
+     useEffect(() => {
+      const userRole = JSON.parse(sessionStorage.getItem('user'))?.admin;
+      setIsAdmin(userRole === 'admin');
+    }, []);
 
   return (
     <>
@@ -132,7 +137,16 @@ export const SideBar = () => {
                <span className={`ms-3 ${selection=='Away'? 'text-[#007cff]' : 'text-[#081321]'}`}>Who&apos;s away</span>
             </Link>
          </li>
-         <li className="mt-56" onClick={logout}>
+         {
+            isAdmin &&
+            <li className="mt-2 cursor-pointer">
+            <Link to="/admin" className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group h-14 cursor-pointer ${selection =='Human Resources' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`}  onClick={()=>setSelection('Human Resources')}>
+            <i className={`fa-regular fa-user-tie fa-lg ${selection=='Human Resources'? 'text-[#007cff]' : 'text-[#081321]'} ml-2`}></i>           
+               <span className={`ms-3 ${selection=='Human Resources'? 'text-[#007cff]' : 'text-[#081321]'}`}>Human Resources</span>
+            </Link>
+         </li>
+         }
+         <li className={`${isAdmin ? "mt-40" : "mt-56"}`} onClick={logout}>
             <a href="#" className={`flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group h-14 cursor-pointer ${selection =='Logout' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`}  onClick={()=>setSelection('Logout')}>
             <i className={`fa-solid fa-arrow-right-from-bracket fa-lg ${selection=='Logout'? 'text-[#007cff]' : 'text-[#081321]'} ml-2`}></i>           
                <span className={`ms-3 ${selection=='Logout'? 'text-[#007cff]' : 'text-[#081321]'}`}>Log out</span>

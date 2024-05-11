@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 export const Employees = () => {
-  // const employee = useSelector((state) => state.employee)
+  
   const [isLoading, setIsLoading] = useState(false);
   
   const dispatch = useDispatch();

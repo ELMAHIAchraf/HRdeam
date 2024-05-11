@@ -10,8 +10,10 @@ import { WhosAway } from '@/Views/WhosAway'
 import { Announcements } from '@/Views/Announcements'
 import { HrAnnouncements } from '@/Views/HrAnnouncements'
 import { EmployeeAcc } from '@/Views/EmployeeAcc'
+import { Admin } from '@/Views/Admin'
 
 function App() {
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -28,6 +30,8 @@ function App() {
               <Route path="applicant" element={<PrivateRoutes role="hr"><Applicant /></PrivateRoutes>}/>
               <Route path="employees" element={<PrivateRoutes role="hr"><Employees /></PrivateRoutes>}/>
               <Route path="away" element={<PrivateRoutes role="hr"><WhosAway /></PrivateRoutes>}/>
+              <Route path="admin" element={<PrivateRoutes role="hr"><Admin /></PrivateRoutes>}/>
+
             </Routes>
           </>
         }/>

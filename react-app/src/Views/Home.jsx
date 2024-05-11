@@ -95,7 +95,6 @@ export const Home = () => {
               if (b.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return 1;
               return b.status.localeCompare(a.status);
             }).map(request => {
-              if(request.id==3)console.log("Prop", request);
               return <Request key={request.id} pending={request.status==='pending' ? false : true} vacRequest={request} setRequests={setRequests} requests={requests} />
             })
           }

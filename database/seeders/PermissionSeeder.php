@@ -18,6 +18,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'departement.show', 'guard_name' => 'web']);
         Permission::create(['name' => 'departement.update', 'guard_name' => 'web']);
         Permission::create(['name' => 'departement.destroy', 'guard_name' => 'web']);
+        
 
         Permission::create(['name' => 'user.index', 'guard_name' => 'web']);
         Permission::create(['name' => 'user.show', 'guard_name' => 'web']);
@@ -28,7 +29,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'user.count', 'guard_name' => 'web']);
         Permission::create(['name' => 'user.getEmployees', 'guard_name' => 'web']);
 
-
+        Permission::create(['name' => 'hr.index', 'guard_name' => 'web']);
+        Permission::create(['name' => 'hr.store', 'guard_name' => 'web']);
+        Permission::create(['name' => 'hr.show', 'guard_name' => 'web']);
+        Permission::create(['name' => 'hr.update', 'guard_name' => 'web']);
+        Permission::create(['name' => 'hr.destroy', 'guard_name' => 'web']);
 
         Permission::create(['name' => 'absence.dashboard', 'guard_name' => 'web']);
         Permission::create(['name' => 'absence.index', 'guard_name' => 'web']);
@@ -40,10 +45,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'absence.requestVacation', 'guard_name' => 'web']);
         Permission::create(['name' => 'absence.vacationRequestReview', 'guard_name' => 'web']);
         Permission::create(['name' => 'absence.assignVacationRequest', 'guard_name' => 'web']);
-
-
-
-
 
         Permission::create(['name' => 'announcement.index', 'guard_name' => 'web']);
         Permission::create(['name' => 'announcement.store', 'guard_name' => 'web']);
