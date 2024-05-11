@@ -4,13 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { removeUser } from '../../State/userSlice';
+import Echo from '@/pusher';
+import { notify } from "./notify";
+import { addDepartment, removeDepartment } from "@/State/departmentSlice";
+import { AddAbsence } from "@/State/absenceSlice";
 
 
 export const SideBar = () => {
 
    const [selection, setSelection] = useState('Dashboard');
    const [open, setOpen] = useState(null);
-//    const [toggleState, setToggleState] = useState(false);
+
    const [isLargeWidth, setIsLargeWidth] = useState(window.innerWidth > 786 ? true : false );
    const changeWidth = () => window.innerWidth > 786 ? setIsLargeWidth(true) : setIsLargeWidth(false)
    const changeStat = () => isLargeWidth ? setOpen(true) : setOpen(false) 
@@ -33,7 +37,44 @@ export const SideBar = () => {
             toast.error(e.response.data.message);  
         }   
    }
-   
+
+   useEffect(() => {
+      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('ManageDepartmentEvent', (e) => {
+          notify(e);
+         if(e.action == 'create'){
+            dispatch(addDepartment(e.data));
+         }else{
+            dispatch(removeDepartment(e.data));
+         }
+
+      });
+    }, []); 
+
+   useEffect(() => {
+      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('ManageAbsenceEvent', (e) => {
+         notify(e);
+         dispatch(AddAbsence(e.data));
+      });
+    }, []); 
+
+    useEffect(() => {
+      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('ManageVacationRequestEvent', (e) => {
+         if(!selection==='Dashboard') notify(e.data)
+      });
+    }, []); 
+
+    useEffect(() => {
+      Echo.private(`vacation-request-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('VacationRequestEvent', (e) => {
+        if(!selection==='Dashboard') notify(e.data)
+      });
+    }, []);
+
+     
+
   return (
     <>
         

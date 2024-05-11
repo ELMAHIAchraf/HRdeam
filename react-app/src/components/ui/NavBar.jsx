@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/Axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     AlertDialog,
     AlertDialogCancel,
@@ -9,6 +9,9 @@ import {
   import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
   import { Button } from "./button"
   import toast from "react-hot-toast";
+  import Echo from '@/pusher';
+import { notify } from "./notify";
+
 
 
 export const NavBar = () => {
@@ -24,7 +27,22 @@ export const NavBar = () => {
     const [employees, setEmployees] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
 
+    useEffect(() => {
+        Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+        .listen('ManageEmployeeEvent', (e) => {
+           notify(e);
+           if(e.action == 'create'){
+                setEmployees([...employees, e.data])
+           }else if(e.action == 'update'){
+            setEmployees(employees.map((employee) => employee.id == e.data.id ? e.data : employee));
+           }else{
+            setEmployees(employees.filter((employee) => employee.id !== e.data.id));
+           }
+        });
+      }, []);
 
+    const searchINP = useRef(null);
+    
     const convertDate = (date, full) =>{
         const doj = new Date(date);
         if(full){
@@ -97,8 +115,13 @@ export const NavBar = () => {
     <div className="bg-white w-full h-16 fixed top-0 flex items-center border-2 border-[#ebebeb]">
         <div className="flex ml-10 w-full justify-between lg:ml-84">
             <div className="bg-[#fafafa] w-1/2 md:w-1/2  lg:w-1/3 rounded-md border-2 border-[#e0e0e0] px-3 flex justify-between ">
-                <input className="bg-[#fafafa] outline-none text-sm w-full" type="text" placeholder="Search" onInput={(searchInp)=>search(searchInp.target.value)}/>
-                <button disabled><i className="fa-solid fa-magnifying-glass text-[#737373]"></i></button>
+                <input ref={searchINP} className="bg-[#fafafa] outline-none text-sm w-full" type="text" placeholder="Search" onInput={(searchInp)=>search(searchInp.target.value)}/>
+                {
+                    employees==null?
+                    <button><i className="fa-solid fa-magnifying-glass text-[#737373]"></i></button>
+                    :
+                    <button onClick={()=>{setEmployees(null); searchINP.current.value = '';}}><i className="fa-regular fa-xmark text-[#737373]"></i></button>
+                }
             </div>
 
             <div className={`w-[26%] max-h-[152px] custom-scrollbar overflow-auto ${employees!==null? "absolute" : "hidden"} top-[50px] rounded-lg`}>
@@ -183,6 +206,9 @@ export const NavBar = () => {
                                     </TabsContent>
                                     <TabsContent value="vacancies" className="h-[420px] mt-8 overflow-auto space-y-2 custom-scrollbar">
                                         {
+                                             employee.absences.length==0?
+                                             <div className="bg-red-200 border-red-400 border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-center items-center">No Absences Recorded</div>
+                                             :
                                             employee.absences.map((absence) => (
                                                 <div key={`absence${absence.id}`} className="bg-[#f9fafb] hover:bg-[#e5e7eb] border-[#d1d5db] border-[1px] cursor-pointer rounded-lg w-[500px] flex p-4 justify-between items-center h-[100px]" onClick={()=>{setIsOpen(true)}}>
                                                     <p>{convertDate(absence.start_date, true)}</p>

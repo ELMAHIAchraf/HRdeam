@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use PDO;
 use Exception;
+use App\Events\ActionEvent;
+
 use App\Models\Departement;
 use Illuminate\Http\Request;
-
 use GuzzleHttp\Psr7\Response;
 use App\Helpers\ResponseHelper;
 use App\Helpers\DepartmentHelper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class DepartementController extends Controller
 {
@@ -36,28 +38,31 @@ class DepartementController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name'=>['required', 'min:2']
-        ]);
         try {
-        $departement=Departement::create([
-            'name'=>$validatedData['name']
-        ]);
+            $validatedData = $request->validate([
+                'name'=>['required', 'min:2']
+            ]);
+            $departement = Departement::create([
+                'name' => $validatedData['name']
+            ]);
 
-        $jsonData=Storage::disk('local')->get('Data/DepartmentColor.json');
-        $jsonData=json_decode($jsonData, true);
+            $jsonData=Storage::disk('local')->get('Data/DepartmentColor.json');
+            $jsonData=json_decode($jsonData, true);
 
-        foreach($jsonData as $key=>$item){
-            if($item['departmentId']==0){
-                $jsonData[$key]['departmentId']=$departement->id;
-                $departement->color=$item['color'];
-                Storage::disk('local')->put('Data/DepartmentColor.json', json_encode($jsonData, JSON_PRETTY_PRINT));
-                break;
+            foreach($jsonData as $key=>$item){    
+                if($item['departmentId']==0){
+                    $jsonData[$key]['departmentId']=$departement->id;
+                    $departement->color=$item['color'];
+                    Storage::disk('local')->put('Data/DepartmentColor.json', json_encode($jsonData, JSON_PRETTY_PRINT));
+                    break;
+                }
             }
-        }
+            event(new \App\Events\ManageDepartmentEvent("create", "Created a new department named {$departement->name}", $request->user()->id, $departement));            
             return ResponseHelper::success('The department was created successfully', $departement, 201);
         }catch(Exception $e){
-            return ResponseHelper::error("Failed to create a department", 500);
+            return ResponseHelper::error($e->getMessage(), 500);
+            
+
         }
     }
     
@@ -86,7 +91,7 @@ class DepartementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         if($id == '1') { 
             return ResponseHelper::error('You cannot delete the HR department', 403);
@@ -96,6 +101,7 @@ class DepartementController extends Controller
         if($departement){
             $departement->delete();
             DepartmentHelper::removeId($id);
+            event(new \App\Events\ManageDepartmentEvent("delete", "Deleted  the {$departement->name} departement", $request->user()->id, $departement->id));            
             return ResponseHelper::success('The department was deleted successfully', null, 200);
         }else{
             return ResponseHelper::error('The department was not found', 404);

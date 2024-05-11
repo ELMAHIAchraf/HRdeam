@@ -1,27 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-    // Define your initial state here
-};
-
-const vacationRequestsSlice = createSlice({
+const VacationRequestsSlice = createSlice({
     name: 'vacationRequests',
-    initialState,
+    initialState : [],
     reducers: {
         setVacationRequests: (state, action) => {
-            state.push(action.payload);
+            return action.payload.sort((a, b) => a.status.localeCompare(b.status)).reverse();
+        },
+        addVacationRequest: (state, action) => {
+            state.unshift(action.payload);
         },
         removeVacationRequest: (state, action) => {
-            return state.filter(vacationRequest => vacationRequest.id !== action.payload);
-        },
-        assignVacationRequest: (state, action) => {
-            const { id, assignee } = action.payload;
-            const vacationRequest = state.find(vacationRequest => vacationRequest.id === id);
-            vacationRequest.assignee = assignee;
-        },
+            const requestId = action.payload;
+            const filteredRequests = state.filter(request => request.id !== requestId);
+            const sortedRequests = filteredRequests.sort((a, b) => a.status.localeCompare(b.status)).reverse();
+            return sortedRequests;
+        }
     }
 
 });
 
-export const { setVacationRequests, removeVacationRequest, assignVacationRequest } = vacationRequestsSlice;
-export default vacationRequestsSlice.reducer;
+export const { setVacationRequests, addVacationRequest, removeVacationRequest } = VacationRequestsSlice;
+export default VacationRequestsSlice.reducer;

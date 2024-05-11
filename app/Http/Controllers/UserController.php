@@ -179,6 +179,8 @@ class UserController extends Controller
             $message=str_replace('[Password]', $password, $message);
             MailHelper::sendEmail($employee->email, "Dev's Empire", $message);
 
+            event(new \App\Events\ManageEmployeeEvent("create", "Added a new employee: {$employee->fname} {$employee->lname}", $request->user()->id , $employee));
+
             return ResponseHelper::success('The employee was created successfully', $employee, 201);
 
     }
@@ -236,6 +238,8 @@ class UserController extends Controller
                 ->get();
             $employee->absences = $absences;
 
+            event(new \App\Events\ManageEmployeeEvent("update", "Updated the employee profile: {$employee->fname} {$employee->lname}", $request->user()->id , $employee));
+
             return ResponseHelper::success('The employee was updated successfully', $employee, 200);
         }else{
             return ResponseHelper::error('The employee was not found', 404);
@@ -248,12 +252,14 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
         $employee=User::find($id);
         if($employee){
+            event(new \App\Events\ManageEmployeeEvent("delete", "Deleted the employee: {$employee->fname} {$employee->lname}", $request->user()->id , $employee));
             $employee->delete();
             Storage::disk('local')->delete("public/Avatars/$id.jpg");
+
             return ResponseHelper::success('The employee was deleted successfully', null, 200);
         }else{
             return ResponseHelper::error('The employee was not found', 404);

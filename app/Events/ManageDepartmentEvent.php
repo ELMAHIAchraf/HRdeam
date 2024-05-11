@@ -10,16 +10,18 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ActionEvent implements ShouldBroadcast
+class ManageDepartmentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $action;
     public $notification;
     public $data;
     public $actionHrId;
 
-    public function __construct($notification,  $actionHrId, $data)
+    public function __construct($action, $notification,  $actionHrId, $data)
     {
+        $this->action = $action;
         $this->notification = $notification;
         $this->actionHrId = $actionHrId;
         $this->data = $data;
@@ -42,8 +44,10 @@ class ActionEvent implements ShouldBroadcast
     }
 
     public function broadcastWith()
-    {
-        return ['notification' => $this->notification, 'data' => $this->data];
+    {   
+        $hr=User::find($this->actionHrId);
+        $hr=['id'=>$hr->id, 'fname'=>$hr->fname, 'lname'=>$hr->lname];
+        return ['action' => $this->action, 'message' => $this->notification, 'employee' => $hr, 'data' => $this->data];
     }
 }
 ?>

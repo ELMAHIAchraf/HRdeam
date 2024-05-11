@@ -137,14 +137,21 @@ class AbsenceController extends Controller
 
     public function assignVacationRequest(Request $request, string $id){
         try {
-            $absence = Absence::find($id);
+            $absence = Absence::with([
+                'user:id,fname,lname', 
+            ])->find($id);
+
             if(!$absence) return ResponseHelper::error('Absence request not found', 404);
 
             if($absence->hr_id==null){
                 $absence->status = 'in process';
                 $absence->hr_id = $request->user()->id;
                 $absence->save();
-                return ResponseHelper::success('The request has been successfully assigned to you for review', null, 200);
+                $absence->load(['hr' => function ($query) {
+                    $query->select('id', 'fname', 'lname');
+                }]);
+                event(new \App\Events\ManageVacationRequestEvent("assign", "Is processing the vacation request of {$absence->user->fname} {$absence->user->lname}", $request->user()->id, $absence));
+                return ResponseHelper::success('The request has been successfully assigned to you for review', $absence, 200);
             }else{
                 return ResponseHelper::success(null, null, 200);
             }
@@ -156,10 +163,15 @@ class AbsenceController extends Controller
     public function vacationRequestReview(Request $request, string $id)
     {
         try {
-            $absence = Absence::find($id);
+            $absence = Absence::with('user')->find($id);
             $absence->status = $request->status;
             $absence->review = $request->review;
             $absence->save();
+            if($request->status=='approved'){
+                event(new \App\Events\ManageVacationRequestEvent("delete", "Approved the vacation request of {$absence->user->fname} {$absence->user->lname}", $request->user()->id, $absence));
+            }else{
+                event(new \App\Events\ManageVacationRequestEvent("delete", "Rejected the vacation request of {$absence->user->fname} {$absence->user->lname}", $request->user()->id, $absence));
+            }
             return ResponseHelper::success('Your review has been successfully submitted', $absence, 200);
         } catch (Exception $e) {
             return ResponseHelper::error($e->getMessage(), 500);

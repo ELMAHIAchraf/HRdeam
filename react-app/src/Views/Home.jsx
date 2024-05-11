@@ -5,7 +5,6 @@ import { Loading } from "@/components/ui/Loading";
 import { Request } from "@/components/ui/Request";
 import { notify } from "@/components/ui/notify";
 import Echo from '@/pusher';
-import { set } from "date-fns";
 import { useEffect, useState } from "react";
 
 export const Home = () => {
@@ -14,12 +13,6 @@ export const Home = () => {
 
     const [requests, setRequests] = useState([]);
 
-    // useEffect(() => {
-    //   Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
-    //   .listen('ActionEvent', (e) => {
-    //       console.log(e);
-    //   });
-    // }, []);
     
 
     useEffect(() => {
@@ -30,7 +23,20 @@ export const Home = () => {
       });
     }, []);
 
-    const getVAcationRequests = async () => {
+    useEffect(() => {
+      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('ManageVacationRequestEvent', (e) => {
+         notify(e);
+         if(e.action === 'delete'){
+          setRequests(requests => requests.filter(request => request.id !== e.data.id));
+         }else{
+          setRequests(requests => requests.map(request => request.id === e.data.id ? e.data : request));
+         }
+      });
+      
+    }, []); 
+
+    const getVacationRequests = async () => {
       try {
         setIsLoading(true)
         const response = await axiosInstance.get('/getVacationRequests')
@@ -55,7 +61,7 @@ export const Home = () => {
     }
     useEffect(() => {
       getData();
-      getVAcationRequests();
+      getVacationRequests();
     }, []);
     
 
@@ -84,13 +90,14 @@ export const Home = () => {
           <p className="text-[#737373] text-sm ml-4 mt-2">{requests.length} active requests</p>
           <div className="h-[560px] overflow-auto custom-scrollba mt-3 ">
           {
-            requests.sort((a, b) => {
+            [...requests].sort((a, b) => {
               if (a.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return -1;
               if (b.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return 1;
               return b.status.localeCompare(a.status);
-            }).map(request => 
-              <Request key={request.id} pending={request.status==='pending' ? false : true} vacRequest={request} setRequests={setRequests} requests={requests} />
-            ) 
+            }).map(request => {
+              if(request.id==3)console.log("Prop", request);
+              return <Request key={request.id} pending={request.status==='pending' ? false : true} vacRequest={request} setRequests={setRequests} requests={requests} />
+            })
           }
           </div>
         </div>

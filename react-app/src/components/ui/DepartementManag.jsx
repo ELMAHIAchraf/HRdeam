@@ -35,11 +35,16 @@ export const DepartementManag = () => {
   const departments=useSelector(state=>state.department);
 
   const createDepartment = async () => {
-    const departmentName = {"name" : name.current.value};
-    const response = await axiosInstance.post('/departments', departmentName);
-    dispatch(addDepartment(response.data.data));
-    toast.success(response.data.message);
+    try {
+        const departmentName = {"name" : name.current.value};
+        const response = await axiosInstance.post('/departments', departmentName);
+        dispatch(addDepartment(response.data.data));
+        toast.success(response.data.message);
     setIsOpen(false);
+    } catch (error) {
+        console.log(error.response);
+        toast.error(error.response.data.message);
+    }
   }
   const deleteDepartment = async (id) => {
     try{

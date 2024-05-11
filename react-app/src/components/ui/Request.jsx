@@ -24,12 +24,15 @@ export const Request = ({pending, vacRequest, setRequests, requests}) => {
   const [request, setRequest] = useState(vacRequest);
   const [isPending, setIsPending] = useState(pending);
 
+
     useEffect(() => {
+      setRequest(vacRequest)
+      setIsPending(pending)
+
       if(request.hr?.id == JSON.parse(sessionStorage.getItem('user')).id){
         setIsOwned(true);
       }
-    }, [])
-
+    }, [requests]);
 
 
     const convertDate = (date, full) => {

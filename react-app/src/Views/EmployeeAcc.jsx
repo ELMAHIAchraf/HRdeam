@@ -119,7 +119,7 @@ const convertDate = (date, full) =>{
     <div className="flex gap-3 h-screen p-6  bg-[#fafafa]">
       <div className="w-1/3 rounded-lg shadow-slate-300 shadow-md  border-[1px] flex flex-col items-center relative bg-white">
         <p className="font-semibold  absolute top-4 left-4 rounded-md p-2 hover:bg-[#e5e7eb] cursor-pointer" onClick={logout}><i className="fa-solid fa-right-from-bracket pr-2"></i>Log out</p>
-        <img src={employee.avatar} className="w-36 rounded-full mt-8"/>
+        <img src={employee.avatar} className="w-36 h-36 rounded-full mt-8"/>
         <div className="w-[95%]">
           <div className="text-2xl mt-2 text-center">{employee.fname} {employee.lname}</div>
 

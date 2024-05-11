@@ -78,12 +78,14 @@ export const EmployeesTable = () => {
     }
 
     const deleteEmployee = async (id) =>{
+        console.log(id);
         try {
             const response = await axiosInstance.delete(`employees/${id}`)
             dispatch(removeEmployee(id));
             dispatch(decrementCount());
             toast.success(response.data.message);
         } catch (error) {
+            console.log(error.response);
             toast.error(error.response.data.message);
         }
     }

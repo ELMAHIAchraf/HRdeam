@@ -19,6 +19,6 @@ export const store = configureStore({
         announcements : announcementsSlice,
         applicants : applicantsSlice,
         HrAnnouncement : HrAnnouncement,
-        VacationRequestsSlice : VacationRequestsSlice
+        vacationRequests : VacationRequestsSlice
     },
 });

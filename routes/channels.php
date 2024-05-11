@@ -22,9 +22,6 @@ Broadcast::channel('HR-channel.{id}', function ($user, $id) {
     return $user->hasRole('hr') && $user->id == $id; 
 });
 Broadcast::channel('vacation-request-channel.{id}', function ($user, $id) {
-    Log::info('User role: ' . $user->role);
-    Log::info('User id: ' . $user->id);
-    Log::info('Channel id: ' . $id);
     return $user->hasRole('hr') && $user->id == $id; 
 });
 
