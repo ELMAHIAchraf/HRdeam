@@ -18,6 +18,10 @@ const applicantsSlice = createSlice({
             state.Made_offer = applicants.filter(applicant => applicant.status === 'Made offer');
             state.Hired = applicants.filter(applicant => applicant.status === 'Hired');
         },
+        addApplicant: (state, action) => {
+            const applicant = action.payload;
+            state['Applied'].push(applicant);
+        },
         moveApplicant: (state, action) => {
             const { applicantId, source, destination } = action.payload;
             const applicant = state[source].find((applicant) => applicant.id === applicantId);
@@ -54,6 +58,6 @@ const applicantsSlice = createSlice({
     }
 });
 
-export const { moveApplicant, deleteApplicant, setApplicants, modifyStatus } = applicantsSlice.actions;
+export const { moveApplicant, deleteApplicant, setApplicants,addApplicant, modifyStatus } = applicantsSlice.actions;
 
 export default applicantsSlice.reducer;

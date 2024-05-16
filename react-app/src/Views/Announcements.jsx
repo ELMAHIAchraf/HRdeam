@@ -1,6 +1,7 @@
 import { axiosInstance } from "@/Axios"
 import { setAnnouncements } from "@/State/announcementsSlice";
 import { JobCard } from "@/components/ui/JobCard"
+import { Loading } from "@/components/ui/Loading";
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,15 +11,20 @@ export const Announcements = () => {
     const title = useRef(null);
     
     const [search, setSearch] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     
     const getData=async()=>{
         try {
+            setIsLoading(true)
             const response=await axiosInstance.get('/getJobs')
             dispatch(setAnnouncements(response.data.data))
             setSearch(response.data.data)
         } catch (error) {
             console.log(error)
-        }
+        }finally {
+            setIsLoading(false)
+          }
     }
     useEffect(()=>{
         getData()
@@ -35,6 +41,11 @@ export const Announcements = () => {
     };
     
   return (
+    isLoading?
+    <div className="flex justify-center items-center h-screen">
+        <i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i>
+    </div>:
+    
     <div>
         <div className='bg-[#007cff] w-full h-[300px] flex items-center '>
             <div className="ml-24 space-y-6">

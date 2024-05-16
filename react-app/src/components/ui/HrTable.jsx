@@ -50,11 +50,21 @@ export const HrTable = ({HRs, setHRs}) => {
             });
         }
     }
-    const calculateDaysPassed = (date) =>{
+    const calculateDaysPassed = (date) => {
         const doj = new Date(date);
         const today = new Date();
-        const difference=today.getTime()-doj.getTime();
-        return Math.floor(difference/(1000*3600*24));
+        const differenceInTime = today.getTime() - doj.getTime();
+    
+        const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+        if (differenceInDays < 30) {
+            return `${differenceInDays} days`;
+        }
+        const differenceInMonths = Math.floor(differenceInDays / 30);
+        if (differenceInMonths < 12) {
+            return `${differenceInMonths} month(s)`;
+        }
+        const differenceInYears = Math.floor(differenceInMonths / 12);
+        return `${differenceInYears} year(s)`;
     }
 
     const deleteHr = async (id) =>{
@@ -124,7 +134,7 @@ export const HrTable = ({HRs, setHRs}) => {
                     </TableCell>
                     <TableCell >
                         <p className="font-medium">Joined in {convertDate(hr.doj, false)}</p>
-                        <p className="text-xs font-light">{calculateDaysPassed(hr.doj)} days</p>
+                        <p className="text-xs font-light">{calculateDaysPassed(hr.doj)}</p>
                     </TableCell>
                     <TableCell>
                         <div className="flex justify-end">

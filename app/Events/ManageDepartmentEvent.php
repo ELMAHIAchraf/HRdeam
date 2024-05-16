@@ -45,6 +45,7 @@ class ManageDepartmentEvent implements ShouldBroadcast
 
     public function broadcastWith()
     {   
+        // $this->data->announcement->load('departement');
         $hr=User::find($this->actionHrId);
         $hr=['id'=>$hr->id, 'fname'=>$hr->fname, 'lname'=>$hr->lname];
         return ['action' => $this->action, 'message' => $this->notification, 'employee' => $hr, 'data' => $this->data];

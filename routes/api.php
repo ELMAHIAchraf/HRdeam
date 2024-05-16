@@ -48,6 +48,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::post('/logout', [UserController::class, 'logout']);
+
+    Route::post('/change-password', [UserController::class, 'changePassword'])->middleware('permission:user.changePassword');
+    
+
     
     Route::get('/search', [UserController::class, 'search'])->middleware('permission:user.search');
     Route::post('/vacation', [AbsenceController::class, 'requestVacation'])->middleware('permission:absence.requestVacation');

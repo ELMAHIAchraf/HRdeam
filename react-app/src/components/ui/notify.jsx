@@ -12,7 +12,7 @@ export const notify = (e) => {
               <div className="flex-shrink-0 pt-0.5">
                 <img
                   className="h-10 w-10 rounded-full"
-                  src={`http://127.0.0.1:8000/storage/Avatars/${e.employee.id}.jpg`}
+                  src={`http://127.0.0.1:8000/storage/Avatars/${e.employee.id ? e.employee.id : 0}.jpg`}
                   alt=""
                 />
               </div>

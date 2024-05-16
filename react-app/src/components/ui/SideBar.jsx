@@ -12,7 +12,7 @@ import { AddAbsence } from "@/State/absenceSlice";
 
 export const SideBar = () => {
 
-   const [selection, setSelection] = useState('Dashboard');
+   const [selection, setSelection] = useState(sessionStorage.getItem('selection') && sessionStorage.getItem('selection')!='Logout' ? sessionStorage.getItem('selection') : 'Dashboard');
    const [open, setOpen] = useState(null);
 
    const [isLargeWidth, setIsLargeWidth] = useState(window.innerWidth > 786 ? true : false );
@@ -23,10 +23,15 @@ export const SideBar = () => {
    }, [isLargeWidth]);
    addEventListener('resize', changeWidth)
 
+   useEffect(() => {
+      sessionStorage.setItem('selection', selection);
+   }, [selection]);
+
+
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
-   const logout = async() =>{
+const logout = async() =>{
         try{
             const response = await axiosInstance.post('/logout');
             localStorage.removeItem('token');
@@ -62,16 +67,23 @@ export const SideBar = () => {
     useEffect(() => {
       Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
       .listen('ManageVacationRequestEvent', (e) => {
-         if(!selection==='Dashboard') notify(e.data)
+         if(!selection==='Dashboard') notify(e)
       });
     }, []); 
 
     useEffect(() => {
       Echo.private(`vacation-request-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
       .listen('VacationRequestEvent', (e) => {
-        if(!selection==='Dashboard') notify(e.data)
+        if(!selection==='Dashboard') notify(e)
       });
     }, []);
+
+    useEffect(() => {
+      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('ManageApplicationsEvent', (e) => {
+         if(!selection==='Applicant') notify(e);
+      });
+    }, []); 
 
      const [isAdmin, setIsAdmin] = useState(false);
 

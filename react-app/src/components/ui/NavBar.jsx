@@ -11,6 +11,14 @@ import {
   import toast from "react-hot-toast";
   import Echo from '@/pusher';
 import { notify } from "./notify";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
 
 
 
@@ -109,6 +117,25 @@ export const NavBar = () => {
             setEmployees(null);
         }
     }
+
+    const [isRPOpen, setRPOpen] = useState(false);
+    const Opwd = useRef(null);
+    const Npwd = useRef(null);
+
+    const changePassword = async() => {
+        try {
+            const response = await axiosInstance.post('/change-password', {
+                old_password: Opwd.current.value,
+                new_password: Npwd.current.value
+            });
+            toast.success(response.data.message);
+            setRPOpen(false);
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
+      }
+
 
   return (
     <>
@@ -251,7 +278,14 @@ export const NavBar = () => {
             </div>
 
             <div className="flex items-center gap-4 mr-4">
-                <img className="w-10 h-10 rounded-full" src={data.avatar} alt=""/>
+                <DropdownMenu>
+                <DropdownMenuTrigger><img className="w-10 h-10 rounded-full" src={data.avatar} alt=""/></DropdownMenuTrigger>
+                <DropdownMenuContent>
+                    <DropdownMenuLabel>{data.email}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="focus:bg-blue-100 flex justify-center" onClick={()=>setRPOpen(true)}><i className="fa-regular fa-lock pr-2"></i>Change Password</DropdownMenuItem>
+                </DropdownMenuContent>
+                </DropdownMenu> 
                 <div className="font-medium dark:text-white">
                     <p>{data.lname} {data.fname}</p>
                     <div className="text-xs text-gray-500 dark:text-gray-400">Joined in {formattedDoj}</div>
@@ -260,6 +294,37 @@ export const NavBar = () => {
             
         </div>
     </div>
+            <div className={`${isRPOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >
+                <div className="relative p-4 w-full max-w-md max-h-full">
+                    <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <div className="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                Reset Password 
+                            </h3>
+                            <button type="button" className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onClick={()=>setRPOpen(false)}>
+                                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor"  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span className="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <div className="p-4 md:p-5">
+                            <form className="space-y-4" action="#">
+                                <div>
+                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Old Password</label>
+                                    <input ref={Opwd} type="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" placeholder="Old Pwd" required />
+                                </div>
+                                <div>
+                                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
+                                    <input ref={Npwd} type="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#007cff] focus:border-[#007cff] block w-full p-2.5" placeholder="New Pwd" required />
+                                </div>
+
+                                <button type="button" className="w-full text-white bg-[#007cff] hover:bg-[] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={changePassword}><i className="fa-regular fa-pen-to-square pr-2"></i>Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> 
     </>
 
   )

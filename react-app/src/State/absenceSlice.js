@@ -10,7 +10,10 @@ const absenceSlice = createSlice({
         AddAbsence: (state, action) => {
             const employee = state.employees.data.find(emp => emp.id == action.payload.user_id);
             employee && employee.absences.push(action.payload);
-        }
+        },
+        filterAbsence: (state, action) => {
+            return state.filter(absence => absence.id !== action.payload);
+        },
     },
 });
 

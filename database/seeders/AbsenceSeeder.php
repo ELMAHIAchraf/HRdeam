@@ -25,6 +25,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 3,
                 'status' => 'pending',
+                'review' => null,
                 'hr_id' => null
             ],
             [
@@ -37,6 +38,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 3,
                 'status' => 'approved',
+                'review' => 'Enjoy your trip!',
                 'hr_id' => null
             ],
             [
@@ -49,6 +51,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 4,
                 'status' => 'pending',
+                'review' => null,
                 'hr_id' => null
             ],
             [
@@ -61,6 +64,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 4,
                 'status' => 'approved',
+                'review' => 'Get well soon!',
                 'hr_id' => null
             ],
             [
@@ -73,6 +77,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 5,
                 'status' => 'in process',
+                'review' => null,
                 'hr_id' => 1
             ],
             [
@@ -85,6 +90,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 5,
                 'status' => 'approved',
+                'review' => 'Enjoy the workshop!',
                 'hr_id' => null
             ],
             [
@@ -97,6 +103,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 6,
                 'status' => 'in process',
+                'review' => null,
                 'hr_id' => 2
             ],
             [
@@ -109,6 +116,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 6,
                 'status' => 'pending',
+                'review' => null,
                 'hr_id' => null
             ],
             [
@@ -121,6 +129,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 7,
                 'status' => 'approved',
+                'review' => 'Take care and get well soon!',
                 'hr_id' => null
             ],
             [
@@ -133,6 +142,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 7,
                 'status' => 'pending',
+                'review' => null,
                 'hr_id' => null
             ],
             [
@@ -145,6 +155,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 7,
                 'status' => 'approved',
+                'review' => 'Enjoy the workshop!',
                 'hr_id' => null
             ],
             [
@@ -157,6 +168,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 8,
                 'status' => 'approved',
+                'review' => 'Best of luck with the seminar!',
                 'hr_id' => null
             ],
             [
@@ -169,6 +181,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 8,
                 'status' => 'approved',
+                'review' => 'Have a great time!',
                 'hr_id' => null
             ],
             [
@@ -181,6 +194,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 9,
                 'status' => 'approved',
+                'review' => 'Have a wonderful vacation!',
                 'hr_id' => null
             ],
             [
@@ -193,6 +207,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 9,
                 'status' => 'approved',
+                'review' => 'Take care and get well soon!',
                 'hr_id' => null
             ],
             [
@@ -205,6 +220,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 10,
                 'status' => 'approved',
+                'review' => 'Take care and get well soon!',
                 'hr_id' => null
             ],
             [
@@ -217,6 +233,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 10,
                 'status' => 'approved',
+                'review' => 'Enjoy the training program!',
                 'hr_id' => null
             ],
             [
@@ -229,6 +246,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,
                 'user_id' => 11,
                 'status' => 'approved',
+                'review' => 'Best of luck with the course!',
                 'hr_id' => null
             ],
             [
@@ -241,6 +259,7 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,                
                 'user_id' => 12,  
                 'status' => 'approved',
+                'review' => 'Have a great time!',
                 'hr_id' => null
 
             ],
@@ -254,9 +273,23 @@ class AbsenceSeeder extends Seeder
                 'updated_at' => null,                
                 'user_id' => 12,
                 'status' => 'in process',
+                'review' => null,
                 'hr_id' => 2
 
             ],
+            [
+                'id' => 21,
+                'type' => 'vacation',
+                'start_date' => '2024-05-10',
+                'end_date' => '2024-05-16',
+                'reason' => 'Planning a road trip to explore new destinations and experience different cultures.',
+                'created_at' => now(),
+                'updated_at' => null,
+                'user_id' => 4,
+                'status' => 'rejected',
+                'review' => 'High workload during the requested period.',
+                'hr_id' => null
+            ]
         ];
 
         DB::table('absences')->insert($absences);

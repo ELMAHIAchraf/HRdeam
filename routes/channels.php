@@ -24,5 +24,8 @@ Broadcast::channel('HR-channel.{id}', function ($user, $id) {
 Broadcast::channel('vacation-request-channel.{id}', function ($user, $id) {
     return $user->hasRole('hr') && $user->id == $id; 
 });
+Broadcast::channel('employee-channel.{id}', function ($user, $id) {
+    return $user->hasRole('employee') && $user->id == $id; 
+});
 
 

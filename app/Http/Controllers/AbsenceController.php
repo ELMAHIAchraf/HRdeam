@@ -169,8 +169,10 @@ class AbsenceController extends Controller
             $absence->save();
             if($request->status=='approved'){
                 event(new \App\Events\ManageVacationRequestEvent("delete", "Approved the vacation request of {$absence->user->fname} {$absence->user->lname}", $request->user()->id, $absence));
+                event(new \App\Events\VacationResponseEvent("Your vacation request has been approved", $request->user(), $absence, $absence->user->id));
             }else{
                 event(new \App\Events\ManageVacationRequestEvent("delete", "Rejected the vacation request of {$absence->user->fname} {$absence->user->lname}", $request->user()->id, $absence));
+                event(new \App\Events\VacationResponseEvent("Your vacation request has been rejected", $request->user(), $absence, $absence->user->id));
             }
             return ResponseHelper::success('Your review has been successfully submitted', $absence, 200);
         } catch (Exception $e) {

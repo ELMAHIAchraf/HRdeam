@@ -36,6 +36,7 @@ export const JobDrawer = ({announcement}) => {
                     'Content-Type':'multipart/form-data'
                 }
             })
+            console.log(response.data.data);
             toast.success(response.data.message)
         } catch (error) {
             toast.error(error.response.data.message)

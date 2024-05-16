@@ -1,10 +1,14 @@
 import { axiosInstance } from "@/Axios";
-import { setApplicants } from "@/State/applicantsSlice";
+import { addApplicant, setApplicants } from "@/State/applicantsSlice";
 import { ApplicantCard } from "@/components/ui/ApplicantCard"
 import { Loading } from "@/components/ui/Loading";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import Echo from '@/pusher';
+import { notify } from "@/components/ui/notify";
+
+
 
 
 export const Applicant = () => {
@@ -35,7 +39,13 @@ export const Applicant = () => {
     }, []);
 
 
-
+    useEffect(() => {
+      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      .listen('ManageApplicationsEvent', (e) => {
+        notify(e);
+        dispatch(addApplicant(e.data));
+      });
+    }, []); 
 
     return (
     isLoading?

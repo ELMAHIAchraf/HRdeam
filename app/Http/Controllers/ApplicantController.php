@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Helpers\ResponseHelper;
 use App\Helpers\DepartmentHelper;
 use Illuminate\Support\Facades\App;
+use App\Events\ManageApplicationsEvent;
 use function PHPUnit\Framework\isEmpty;
 use Illuminate\Support\Facades\Storage;
 
@@ -107,7 +108,7 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         try {
-            $user_id=request()->user()->id;
+            $user_id=$request->user()->id;
             $applicants = Applicant::with(['announcement' => function ($query) {
                 $query->select('id', 'position', 'departement_id')
                       ->with(['departement' => function ($query) {
@@ -143,11 +144,14 @@ class ApplicantController extends Controller
             
             $applicant = Applicant::where('announcement_id', $validatedData['announcement_id'])
                                   ->where('email', $validatedData['email'])
-                                  ->first();
+                                  ->first();            
             if(is_null($applicant)){
                 $applicant = Applicant::create($validatedData);
                 $request->file('resume')->storeAs('public/Resumes', $applicant->id.'.pdf');
                 unset($applicant->resume);
+                $applicant->announcement->load('departement');
+                $hr=Announcement::find($validatedData['announcement_id'])->user->id;
+                event(new ManageApplicationsEvent('Applied for the position of '.$applicant->announcement->position, $hr, $applicant));
                 return ResponseHelper::success('Your application has been submitted successfully', $applicant, 201);
 
             }
