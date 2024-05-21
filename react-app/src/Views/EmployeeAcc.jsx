@@ -285,7 +285,7 @@ const convertDate = (date, full) =>{
               <div className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-full flex p-4 justify-between items-center h-[100px]" onClick={()=>{setIsOpen(true)}} key={absence.id}>
                 <p>{convertDate(absence.start_date, true)}</p>
                 <div className="w-[200px] ">
-                  <div><p className="font-semibold">{absence.type} <span className={`pl-1 text-xs text-[#007cff] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
+                  <div><p className="font-semibold">{absence.type} <span className={`pl-1 text-xs text-[#409cfe] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
                     <p className="text-sm line-clamp-2">{absence.reason}</p>
                 </div>
               <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>                                         
@@ -295,7 +295,7 @@ const convertDate = (date, full) =>{
               <HoverCardTrigger className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-full flex p-4 justify-between items-center h-[100px] " onClick={()=>{setIsOpen(true)}}>
                   <p>{convertDate(absence.start_date, true)}</p>
                   <div className="w-[200px] ">
-                    <div><p className="font-semibold">{absence.type} <span className={`pl-1 text-xs text-[#007cff] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
+                    <div><p className="font-semibold">{absence.type} <span className={`pl-1 text-xs text-[#409cfe] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
                       <p className="text-sm line-clamp-2">{absence.reason}</p>
                   </div>
                 <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>                                         

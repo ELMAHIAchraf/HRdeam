@@ -45,7 +45,8 @@ export const Authentication = () => {
                 navigate('/employee')
             }
         }catch(e){
-            toast.error(e.response.data.message)
+            console.log(e)
+            // toast.error(e.response.data.message)
         }
     }
 

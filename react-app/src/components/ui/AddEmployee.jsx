@@ -63,7 +63,7 @@ export const AddEmployee = () => {
             const response = await axiosInstance.post('/employees', getData(),{
                 headers: {
                     'Content-Type': 'multipart/form-data'
-                },   timeout: 10000 
+                }
 
             });
             dispatch(addEmployee(response.data.data));

@@ -42,8 +42,7 @@ export const AddHr = ({setHRs}) => {
             const response = await axiosInstance.post('/admin', getData(),{
                 headers: {
                     'Content-Type': 'multipart/form-data'
-                },   timeout: 10000 
-
+                }
             });
             setHRs((prev)=>[...prev, response.data.data]);
             setIsLoading(false);

@@ -8,7 +8,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class EmployeeSeeder extends Seeder
 {
-    /**
+/**
      * Run the database seeds.
      */
     public function run(): void

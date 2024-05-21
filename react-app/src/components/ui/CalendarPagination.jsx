@@ -153,8 +153,8 @@ export const CalendarPagination = () => {
                         <div className="flex items-center w-[180px] mt-[1px] ml-8 py-4 border-b-[1px]" key={employee.id}>
                             <img className="w-12 h-12 rounded-full" src={`http://127.0.0.1:8000/storage/Avatars/${employee.id}.jpg`} alt=""/>
                             <div className="ml-3">
-                                <p className="font-bold truncate">{employee.fname} {employee.lname}</p>
-                                <p className="font-light text-xs truncate">{employee.position}</p>
+                                <div className="w-[110px]"><p className="font-bold truncate">{employee.fname} {employee.lname}</p></div>
+                                <div className="w-[110px]"><p className="font-light text-xs truncate">{employee.position}</p></div>
                             </div>
                         </div>
                     ))
