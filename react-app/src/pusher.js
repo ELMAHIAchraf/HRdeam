@@ -14,7 +14,7 @@ window.Echo = new Echo({
     csrfToken: document.head.querySelector('meta[name="csrf-token"]').content,
     auth: {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
         },
         url: '/api/broadcasting/auth',
     },

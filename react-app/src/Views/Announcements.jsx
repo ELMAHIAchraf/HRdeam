@@ -1,7 +1,6 @@
 import { axiosInstance } from "@/Axios"
 import { setAnnouncements } from "@/State/announcementsSlice";
 import { JobCard } from "@/components/ui/JobCard"
-import { Loading } from "@/components/ui/Loading";
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
@@ -46,9 +45,10 @@ export const Announcements = () => {
         <i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i>
     </div>:
     
+    <div className="flex">
     <div>
-        <div className='bg-[#007cff] w-full h-[300px] flex items-center '>
-            <div className="ml-24 space-y-6">
+        <div className='bg-[#007cff] w-full h-[330px] md:h-[300px] flex items-center '>
+            <div className="ml-4 md:ml-24 space-y-6">
                 <p className="text-5xl text-white font-bold">Discover Your Next Role with Us!</p>
                 <p className="text-xl text-white font-bold">
                     Discover Your Next Role with Us! Explore our curated list of job openings  across various fields <br/> and find the perfect fit for your skills and experience within our company.
@@ -62,7 +62,7 @@ export const Announcements = () => {
 
         {
             search!="" ? 
-                <div className="grid grid-cols-4 gap-6 w-10/12 m-auto mt-8">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-10/12 m-auto mt-8">
                 {
                     search.map((search)=>(
                         <JobCard key={search.id} announcement={search}/>
@@ -76,6 +76,7 @@ export const Announcements = () => {
                     </div>
                 </div>        
         }
+    </div>
     </div>
   )
 }

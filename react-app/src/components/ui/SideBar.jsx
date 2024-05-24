@@ -34,7 +34,7 @@ export const SideBar = () => {
 const logout = async() =>{
         try{
             const response = await axiosInstance.post('/logout');
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             dispatch(removeUser());
             navigate('/');
             toast.success(response.data.message);
@@ -98,15 +98,15 @@ const logout = async() =>{
    {
    !isLargeWidth &&
       <div className=" cursor-pointer py-5 fixed top-0 left-0 " onClick={()=>setOpen(1)}>
-         <i className="fa-solid fa-bars text-[#007cff] fa-lg ml-3" ></i>
+         <i className="fa-solid fa-bars text-[#007cff] fa-lg ml-3 z-40" ></i>
       </div>
    }
 
-<div id="drawer-navigation"  className={`fixed top-0 left-0  h-screen border-2 border-[#ebebeb] p-4 ${open ? '': 'overflow-y-auto transition-transform -translate-x-full'} bg-white w-80`}>
+<div id="drawer-navigation"  className={`fixed top-0 left-0  h-screen border-2 border-[#ebebeb] p-4 ${open ? '': 'overflow-y-auto transition-transform -translate-x-full'} bg-white w-80 z-50`}>
 
     {
       !isLargeWidth &&
-         <button type="button"  className="text-gray-500 bg-transparent hover:bg-[#007bff7b]  rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center" onClick={()=>setOpen(0)}>
+         <button type="button"  className="text-gray-500 bg-transparent hover:bg-[#007bff7b] rounded-lg text-sm w-8 h-8 float-right inline-flex items-center justify-center" onClick={()=>setOpen(0)}>
             <i className="fa-regular fa-xmark text-lg"></i>
             <span className="sr-only">Close menu</span>
          </button>

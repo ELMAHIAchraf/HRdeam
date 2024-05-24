@@ -129,17 +129,17 @@ export const CalendarPagination = () => {
   return (
     <div className="flex flex-col">
 
-        <div className="w-95 ml-8  border-[#e5e5e5] border-t-[1px] border-b-[1px] flex items-center py-2">
-            <p className="font-bold">{ new Date().toLocaleString('default', { month: 'long' })}</p>
-            <Pagination className="ml-12">
+        <div className="w-[1150px] ml-8  border-[#e5e5e5] border-t-[1px] border-b-[1px] flex items-center py-2">
+            <p className="font-bold ml-4">{ new Date().toLocaleString('default', { month: 'long' })}</p>
+            <Pagination className="ml-16">
                 <PaginationContent>
                     <PaginationItem>
                         <PaginationPrevious onClick={() => {handleClick(currentPage - 1); handleScroll("<-")}} disabled={currentPage === 1} />
-                            </PaginationItem>
-                            <div ref={scrollBarDiv} className="flex w-[920px] overflow-x-auto overflow-y-hidden scrollbar-hide">
-                                {createPaginationItems()}
-                            </div>
-                            <PaginationItem>
+                     </PaginationItem>
+                    <div ref={scrollBarDiv} className="flex w-[920px] overflow-x-auto overflow-y-hidden scrollbar-hide">
+                        {createPaginationItems()}
+                    </div>
+                    <PaginationItem>
                         <PaginationNext onClick={() => {handleClick(currentPage + 1); handleScroll("->")}} disabled={currentPage === totalPages} />
                     </PaginationItem>
                 </PaginationContent>

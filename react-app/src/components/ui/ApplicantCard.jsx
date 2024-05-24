@@ -116,7 +116,7 @@ export const ApplicantCard = ({applicant}) => {
                       </DropdownMenuContent>
                       </DropdownMenu> 
                   </div>
-                  <a href="mailto:elmahi.achraf9@gmail.com" className="text-[#737373] underline text-sm ">{applicant.email}</a>
+                  <div className="w-full truncate"><a href="mailto:elmahi.achraf9@gmail.com" className="text-[#737373] underline text-sm">{applicant.email}</a></div>
                  <div>
                  <div className="bg-[#ffd0d0] px-4 py-1 rounded-md mt-4 inline-block cursor-pointer" onClick={()=>{setIsOpen(true)}}>
                       <p className="text-[#b34949] text-sm font-bold"><i className="fa-regular fa-file-user pr-2 text-lg"></i>Resume</p>

@@ -34,7 +34,7 @@ export const AnnoucementCard = ({announcement}) => {
 
   return (
     <div>
-        <div className=" w-[280px] h-[300px] shadow-slate-300 shadow-md rounded-lg mt-2 bg-white">
+        <div className=" w-full h-[300px] shadow-slate-300 shadow-md rounded-lg mt-2 bg-white">
             <div className="flex items-center justify-between px-4 mt-2">
                 <p className="font-bold text-lg truncate mt-4 text-[#007cff]">{announcement.title}</p>
                 <DropdownMenu>

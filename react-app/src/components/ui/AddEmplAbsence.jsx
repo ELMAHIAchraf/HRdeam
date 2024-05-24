@@ -91,7 +91,7 @@ export const AddEmplAbsence = () => {
                             <div className="flex justify-between gap-4">
                             <div className="w-1/2"> 
                                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Employee Name</label>
-                                <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer" ref={employeeName}>
+                                <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer" ref={employeeName}>
                                     <option>Select Employee</option>
                                     {
                                         employees.map((employee)=>(
@@ -102,7 +102,7 @@ export const AddEmplAbsence = () => {
                             </div>
                             <div className="w-1/2"> 
                                 <label  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Absence Type</label>
-                                <select id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer" ref={type}>
+                                <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-pointer" ref={type}>
                                     <option>Select Absence Type</option>
                                     <option value="sick">Sick</option>
                                     <option value="vacation">Vacation</option>

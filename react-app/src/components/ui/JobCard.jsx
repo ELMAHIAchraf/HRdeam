@@ -3,7 +3,7 @@ import { JobDrawer } from "./JobDrawer"
 export const JobCard = ({announcement}) => {
   return (
     <div >
-        <div className=" w-[300px] h-[300px] shadow-slate-300 shadow-md rounded-lg  bg-white">
+        <div className=" w-full h-[300px] shadow-slate-300 shadow-md rounded-lg  bg-white">
             <div className="flex items-center justify-between px-4 mt-2">
             <p className="font-bold text-lg truncate mt- text-[#007cff]">{announcement.title}</p>
                 <JobDrawer announcement={announcement}/>

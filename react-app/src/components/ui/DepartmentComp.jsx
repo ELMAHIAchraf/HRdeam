@@ -79,7 +79,7 @@ export const DepartmentComp = () => {
 
 
   return (
-    <div className="bg-white h-[430px] shadow-slate-300 shadow-md ml-6 mt-6 w-55/100 rounded-md p-4 ">
+    <div className="bg-white pb-8 shadow-slate-300 shadow-md mt-6 w-full rounded-md p-4 ">
        <div className="flex justify-between items-center">
         <p className="font-bold">Employees by department</p>
           <DepartementManag />

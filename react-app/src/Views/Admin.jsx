@@ -26,16 +26,18 @@ export const Admin = () => {
     isLoading?
     <Loading />:
 
-    <div className="md:ml-80 mt-16 w-79 h-166 ">
+    <div className="flex">
+    <div className="h-screen md:w-[320px] flex-shrink-0"></div>
+    <div className="mt-16 md:w-[79%] lg:w-[79%] sm:w-full h-166 ">
         <p className="font-bold text-2xl ml-6 pt-4">Human Resources</p>
         <p className="text-[#737373] text-sm mt-2 ml-6">{HRs.length} Personnel</p>
         <div className="flex justify-end mr-6">
           <AddHr setHRs={setHRs}/>
         </div>
-        <div className="h-[485px] w-95 ml-8 border-t-[1px] border-b-[1px] overflow-auto custom-scrollbar">
+        <div className="h-[485px] w-95 ml-4 md:ml-8 border-t-[1px] border-b-[1px] overflow-auto custom-scrollbar">
           <HrTable HRs={HRs} setHRs={setHRs}/>
         </div>
-        
     </div>
+  </div>
   )
 }

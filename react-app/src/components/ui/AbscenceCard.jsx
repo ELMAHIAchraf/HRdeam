@@ -1,7 +1,7 @@
 
 export const AbscenceCard = ({title, value, metric, status}) => {
   return (
-    <div className="bg-white w-52 p-6 shadow-slate-300 shadow-md rounded-lg">
+    <div className="bg-white w-full p-6 shadow-slate-300 shadow-md rounded-lg">
         <div className="flex justify-between  items-center">
             <p className="font-semibold text sm">{title}</p>
             <i className={`fa-regular text-lg ${status==='up' ? 'fa-chart-line-up text-red-600' : 'fa-chart-line-down text-green-600'} `}></i>

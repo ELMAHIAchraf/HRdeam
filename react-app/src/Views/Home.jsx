@@ -74,21 +74,27 @@ export const Home = () => {
     isLoading?
     <Loading />:
 
-    <div className="md:ml-80 mt-16 w-79 h-166">
-        <p className="font-bold text-2xl ml-6 pt-4">Dashboard</p>
-        <div className="flex justify-between ml-6 mt-4 w-55/100">
-          <AbscenceCard title="Absence rate" value={Math.round(absenceData.absenceRate)} metric="%" status={`${absenceData.absenceRate > 0 ? "up" : "down"}`}/>
-          <AbscenceCard title="Absence hours" value={absenceData.absenceHours} metric="hours" status={`${absenceData.absenceHours > 0 ? "up" : "down"}`}/>
-          <AbscenceCard title="Absence cost" value={absenceData.absenceCost} metric="MAD" status={`${absenceData.absenceCost > 0 ? "up" : "down"}`}/>
-        </div>
-        <DepartmentComp />
-        <div className="bg-[#f4f4f4] border-l-2 w-[32.5%] h-[670px] fixed top-16 right-0">
+
+    <div className="flex">
+    <div className="h-screen md:w-[320px] flex-shrink-0"></div>
+    <div className="mt-16 w-full md:w-[79%] lg:w-[79%]  sm:w-full h-166 flex flex-col lg:flex-row">
+      <div className="w-full lg:w-[59%]">
+          <p className="font-bold text-2xl ml-6 pt-4">Dashboard</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-4 px-6">
+            <AbscenceCard title="Absence rate" value={Math.round(absenceData.absenceRate)} metric="%" status={`${absenceData.absenceRate > 0 ? "up" : "down"}`}/>
+            <AbscenceCard title="Absence hours" value={absenceData.absenceHours} metric="hours" status={`${absenceData.absenceHours > 0 ? "up" : "down"}`}/>
+            <AbscenceCard title="Absence cost" value={absenceData.absenceCost} metric="MAD" status={`${absenceData.absenceCost > 0 ? "up" : "down"}`}/>
+          </div>
+          <div className="px-6"><DepartmentComp /></div>
+      </div>
+
+        <div className="bg-[#f4f4f4] border-l-2 w-full lg:w-[495px] h-[670px] ">
           <div className="flex justify-between items-end h-12">
               <p className="font-bold  ml-4 text-lg">Vacation Requests</p>
               <p className="bg-[#c5e0ff] rounded-md h-8 px-2 flex justify-center items-center font-semibold text-sm mr-4">{todayDate()}</p>
           </div>
           <p className="text-[#737373] text-sm ml-4 mt-2">{requests.length} active requests</p>
-          <div className="h-[560px] overflow-auto custom-scrollba mt-3 ">
+          <div className="h-[560px] overflow-auto custom-scrollbar mt-3 ">
           {
             [...requests].sort((a, b) => {
               if (a.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return -1;
@@ -101,5 +107,6 @@ export const Home = () => {
           </div>
         </div>
     </div>
+  </div>
   )
 }

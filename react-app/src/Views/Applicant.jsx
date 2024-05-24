@@ -51,14 +51,17 @@ export const Applicant = () => {
     isLoading?
     <Loading />:
 
-    <div className="md:ml-80 mt-16 w-79 h-166 ">
+
+  <div className="flex">
+    <div className="h-screen md:w-[320px] flex-shrink-0"></div>
+    <div className="mt-16 w-full h-166">
         <p className="font-bold text-2xl ml-6 pt-4">Applicant tracker</p>
         <p className="text-[#737373] text-sm mt-2 ml-6">Her&apos;s your selection process overview.</p>
         
-        <div className="border-t-2 mt-8 w-96 ml-6 border-[#e7e7e7] flex h-[550px]">
-          <div className="w-1/4">
+        <div className="border-t-2 mt-8 w-96 ml-6 border-[#e7e7e7 h-[550px] grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+          <div className="w-full">
               <p className="font-bold text-lg ml-2 pt-4 mb-2">Applied</p>
-              <div className=" h-[480px] overflow-auto custom-scrollbar">
+              <div className="lg:h-[480px] overflow-auto custom-scrollbar">
                 {
                   applicants.Applied.map((applicant) => (
                     <ApplicantCard key={applicant.id} applicant={applicant} />
@@ -66,9 +69,9 @@ export const Applicant = () => {
                 }
               </div>    
           </div>
-          <div className="w-1/4">
+          <div className="w-full">
               <p className="font-bold text-lg ml-2 pt-4">Interviewed</p>
-              <div className=" h-[480px] overflow-auto custom-scrollbar">
+              <div className=" lg:h-[480px] overflow-auto custom-scrollbar">
                 {
                   applicants.Interviewed.map((applicant) => (
                     <ApplicantCard key={applicant.id} applicant={applicant} />
@@ -76,9 +79,9 @@ export const Applicant = () => {
                 }
               </div>  
           </div>
-          <div className=" w-1/4">
+          <div className=" w-full">
             <p className="font-bold text-lg ml-2 pt-4">Made offer</p>
-            <div className=" h-[480px] overflow-auto custom-scrollbar">
+            <div className=" lg:h-[480px] overflow-auto custom-scrollbar">
                 {
                   applicants.Made_offer.map((applicant) => (
                     <ApplicantCard key={applicant.id} applicant={applicant} />
@@ -86,9 +89,9 @@ export const Applicant = () => {
                 }
               </div>  
           </div>
-          <div className=" w-1/4">
+          <div className=" w-full">
             <p className="font-bold text-lg ml-2 pt-4">Hired</p>
-            <div className=" h-[480px] overflow-auto custom-scrollbar">
+            <div className=" lg:h-[480px] overflow-auto custom-scrollbar">
                 {
                   applicants.Hired.map((applicant) => (
                     <ApplicantCard key={applicant.id} applicant={applicant} />
@@ -99,5 +102,6 @@ export const Applicant = () => {
 
         </div>
     </div>
+  </div>  
   )
 }

@@ -7,7 +7,7 @@ export const PrivateRoutes = ({children, role}) => {
     const [userRole, setUserRole] = useState(null);
     const checkAuth = async () => { 
     try {
-      const token = `Bearer ${localStorage.getItem("token")}`
+      const token = `Bearer ${sessionStorage.getItem("token")}`
         const response = await axiosInstance.get("/user", {
           headers:{
             Authorization : token
@@ -24,7 +24,7 @@ export const PrivateRoutes = ({children, role}) => {
       checkAuth();
     }, []);
     
-    if(isAuth === null && userRole===null) return <div className='w-screen h-screen flex justify-center items-center bg-[#0000005e] fixed top-0'><i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i></div>
+    if(isAuth === null && userRole===null) return <div className='w-screen h-screen flex justify-center items-center bg-[#0000005e] fixed top-0 z-50'><i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i></div>
 
   
     return (isAuth && userRole === role ? children : <Navigate to='/'/>)

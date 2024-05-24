@@ -152,18 +152,18 @@ export const EmployeesTable = () => {
             {
               employees.slice(0, 6).map((employee) => (
                 <TableRow key={employee.id}>
-                    <TableCell className="w-44">
+                    <TableCell className="w-[42%]">
                         <div className="flex items-center">
                             <img className="w-12 h-12 rounded-full" src={employee.avatar} alt=""/>
-                            <div className="ml-3">
-                                <p className="font-bold">{employee.fname} {employee.lname}</p>
-                                <p className="font-light text-xs">{employee.position}</p>
+                            <div className="ml-3 truncate">
+                                <p className="font-bold truncate">{employee.fname} {employee.lname}</p>
+                                <p className="font-light text-xs truncate">{employee.position}</p>
                             </div>
                         </div>
                     </TableCell>
                     <TableCell >
-                        <p className="font-medium">Joined in {convertDate(employee.doj, false)}</p>
-                        <p className="text-xs font-light">{calculateDaysPassed(employee.doj)}</p>
+                        <p className="font-medium truncate">Joined in {convertDate(employee.doj, false)}</p>
+                        <p className="text-xs font-light truncate">{calculateDaysPassed(employee.doj)}</p>
                     </TableCell>
                     <TableCell>
                         <div className="flex justify-end">

@@ -57,7 +57,7 @@ export const JobDrawer = ({announcement}) => {
         <DrawerTrigger className="p-2 border-[#e5e7eb] border text-sm  rounded-md ml-2 mt-2">Details</DrawerTrigger>
         <DrawerContent>
             <div className="flex flex-col items-center">
-                <div className="w-2/3 ">
+                <div className="w-[80%] md:w-2/3 ">
                     <p className="font-bold text-4xl text-center mt-4">{announcement.title}</p>
                     <div className="w-[390px] flex justify-between">
                         <p className="font-bold  text-[#007cff] mt-2"><i className="fa-regular fa-building-user pr-2 text-lg"></i>{announcement.departement.name} department</p>

@@ -79,7 +79,7 @@ const convertDate = (date, full) =>{
   const logout = async() =>{
     try{
         const response = await axiosInstance.post('/logout');
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         navigate('/');
         toast.success(response.data.message);
     }catch(e){
@@ -162,7 +162,7 @@ const convertDate = (date, full) =>{
   }, []);
 
   return (
-    <div className="flex gap-3 h-screen p-6  bg-[#fafafa]">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 h-screen p-6 bg-[#fafafa]">
       <div className={`${isRPOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >
           <div className="relative p-4 w-full max-w-md max-h-full">
               <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -195,7 +195,7 @@ const convertDate = (date, full) =>{
           </div>
       </div> 
 
-      <div className="w-1/3 rounded-lg shadow-slate-300 shadow-md  border-[1px] flex flex-col items-center relative bg-white">
+      <div className="w-full rounded-lg shadow-slate-300 shadow-md  border-[1px] flex flex-col items-center relative bg-white">
         <p className="font-semibold  absolute top-4 left-4 rounded-md p-2 hover:bg-[#e5e7eb] cursor-pointer" onClick={()=>setRPOpen(true)}><i className="fa-solid fa-lock pr-2"></i>Change password</p>
         <p className="font-semibold  absolute top-14 left-4 rounded-md p-2 hover:bg-[#e5e7eb] cursor-pointer" onClick={logout}><i className="fa-solid fa-right-from-bracket pr-2"></i>Log out</p>
         <img src={employee.avatar} className="w-36 h-36 rounded-full mt-8"/>
@@ -265,7 +265,7 @@ const convertDate = (date, full) =>{
           </div>
         </div>
       </div>
-      <div className="w-1/3 rounded-lg shadow-slate-300 shadow-md  border-[1px] bg-white">
+      <div className="w-full rounded-lg shadow-slate-300 shadow-md  border-[1px] bg-white">
         <p className="text-2xl font-bold mt-8 ml-4">Absence Records</p>
         <p className=" mt-2 ml-4">You have utilized {getAbsenceDays(absencesState)} days of absence to date.</p>
         <select  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-[110px] p-2.5 cursor-pointer float-right mr-4 mb-2 shadow-slate-300 shadow-sm" onChange={filterAbsences}>
@@ -310,7 +310,7 @@ const convertDate = (date, full) =>{
         
       </div>
 
-      <div className="w-1/3 rounded-lg  border-[1px] bg-white shadow-slate-300 shadow-md ">
+      <div className="w-full rounded-lg  border-[1px] bg-white shadow-slate-300 shadow-md ">
         <p className="text-2xl font-bold mt-8 ml-4">Request Vacation</p>
         <form className="space-y-4 w-[95%] mt-6 m-auto" action="#">
           <div className="flex justify-between gap-4">

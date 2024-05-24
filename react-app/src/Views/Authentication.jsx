@@ -35,7 +35,7 @@ export const Authentication = () => {
     const login = async() => {
         try{
             const response = await axiosInstance.post('/login', getData());
-            localStorage.setItem("token" , response.data.data.token);
+            sessionStorage.setItem("token" , response.data.data.token);
             dispatch(addUser(response.data.data.user))
             sessionStorage.setItem("user", JSON.stringify(response.data.data.user))
             toast.success(response.data.message)
@@ -46,7 +46,7 @@ export const Authentication = () => {
             }
         }catch(e){
             console.log(e)
-            // toast.error(e.response.data.message)
+            toast.error(e.response.data.message)
         }
     }
 

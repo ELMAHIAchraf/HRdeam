@@ -32,19 +32,22 @@ export const Employees = () => {
     isLoading?
     <Loading />:
 
-    <div className="md:ml-80 mt-16 w-79 h-166">
+    <div className="flex">
+    <div className="h-screen md:w-[320px] flex-shrink-0"></div>
+    <div className="mt-16 md:w-[79%] lg:w-[79%] w-full h-166">
         <p className="font-bold text-2xl ml-6 pt-4">Employees</p>
         <p className="text-[#737373] text-sm mt-2 ml-6">{count} Personnel</p>
         <div className="flex justify-end mr-6">
           <AddEmployee />
         </div>
-        <div className="h-[485px] w-95 ml-8 border-t-[1px] border-b-[1px]">
+        <div className="h-[485px] w-[95%] md:w-[97%] ml-3 md:ml-4 overflow-hidden   border-t-[1px] border-b-[1px]">
           <EmployeesTable />
         </div>
         <div className="flex h-16">
           <EmployeePagination />
         </div>
     </div>
+  </div>
 
   )
 }

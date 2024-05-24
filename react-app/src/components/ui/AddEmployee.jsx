@@ -41,6 +41,7 @@ export const AddEmployee = () => {
     }, []);
 
     const getData = () => {
+
         return {
             fname: fname.current.value,
             lname: lname.current.value,

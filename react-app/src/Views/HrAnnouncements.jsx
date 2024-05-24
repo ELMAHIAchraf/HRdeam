@@ -61,8 +61,10 @@ export const HrAnnouncements = () => {
   return (
     isLoading?
     <Loading/>:
-    
-    <div className="md:ml-80 mt-16 w-79 h-166">
+
+    <div className="flex">
+    <div className="h-screen md:w-[320px] flex-shrink-0"></div>
+    <div className="mt-16 md:w-[79%] lg:w-[79%] sm:w-full h-166">
          <p className="font-bold text-2xl ml-6 pt-4">Announcements</p>
         <p className="text-[#737373] text-sm mt-2 ml-6">{announcements.length} Announcements</p>
         <div className="flex justify-end -mt-2">
@@ -129,13 +131,14 @@ export const HrAnnouncements = () => {
         </div> 
           
         </div>
-        <div className=" h-[550px] border-t-2 grid grid-cols-4 gap-x-6  w-[99%] m-auto overflow-auto custom-scrollbar py-4 px-6">
+        <div className=" h-[550px] border-t-2 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6  w-[99%] m-auto overflow-auto custom-scrollbar py-4 px-6">
             {
                 announcements?.map((announcement)=>(
                     <AnnoucementCard key={announcement.id} announcement={announcement}/>
                 ))
             }
         </div>
+    </div>
     </div>
   )
 }
