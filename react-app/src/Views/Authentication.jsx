@@ -35,9 +35,9 @@ export const Authentication = () => {
     const login = async() => {
         try{
             const response = await axiosInstance.post('/login', getData());
-            sessionStorage.setItem("token" , response.data.data.token);
+            localStorage.setItem("token" , response.data.data.token);
             dispatch(addUser(response.data.data.user))
-            sessionStorage.setItem("user", JSON.stringify(response.data.data.user))
+            localStorage.setItem("user", JSON.stringify(response.data.data.user))
             toast.success(response.data.message)
             if(response.data.data.user.role === 'hr'){
                 navigate('/home')

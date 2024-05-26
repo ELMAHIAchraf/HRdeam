@@ -28,7 +28,7 @@ export const HrAnnouncements = () => {
         position: position.current.value,
         departement_id: department.current.value,
         salary: salary.current.value,
-        user_id: JSON.parse(sessionStorage.getItem('user')).id
+        user_id: JSON.parse(localStorage.getItem('user')).id
       }
     }
     const createAnnouncement = async () => {

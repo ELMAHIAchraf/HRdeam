@@ -34,7 +34,7 @@ export const SideBar = () => {
 const logout = async() =>{
         try{
             const response = await axiosInstance.post('/logout');
-            sessionStorage.removeItem('token');
+            localStorage.removeItem('token');
             dispatch(removeUser());
             navigate('/');
             toast.success(response.data.message);
@@ -44,7 +44,7 @@ const logout = async() =>{
    }
 
    useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('ManageDepartmentEvent', (e) => {
           notify(e);
          if(e.action == 'create'){
@@ -57,7 +57,7 @@ const logout = async() =>{
     }, []); 
 
    useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('ManageAbsenceEvent', (e) => {
          notify(e);
          dispatch(AddAbsence(e.data));
@@ -65,21 +65,21 @@ const logout = async() =>{
     }, []); 
 
     useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('ManageVacationRequestEvent', (e) => {
          if(!selection==='Dashboard') notify(e)
       });
     }, []); 
 
     useEffect(() => {
-      Echo.private(`vacation-request-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`vacation-request-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('VacationRequestEvent', (e) => {
         if(!selection==='Dashboard') notify(e)
       });
     }, []);
 
     useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('ManageApplicationsEvent', (e) => {
          if(!selection==='Applicant') notify(e);
       });
@@ -88,7 +88,7 @@ const logout = async() =>{
      const [isAdmin, setIsAdmin] = useState(false);
 
      useEffect(() => {
-      const userRole = JSON.parse(sessionStorage.getItem('user'))?.admin;
+      const userRole = JSON.parse(localStorage.getItem('user'))?.admin;
       setIsAdmin(userRole === 'admin');
     }, []);
 

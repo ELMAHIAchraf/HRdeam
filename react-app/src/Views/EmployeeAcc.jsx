@@ -38,7 +38,7 @@ export const EmployeeAcc = () => {
   const [endDate, setEndDate] = useState(null);
   const [isRPOpen, setRPOpen] = useState(false);
 
-  const [employee, setEmployee] = useState(JSON.parse(sessionStorage.getItem('user')));
+  const [employee, setEmployee] = useState(JSON.parse(localStorage.getItem('user')));
   const [absences, setAbsences] = useState([]);
   const [absencesState, setAbsencesState] = useState(null);
 
@@ -79,7 +79,7 @@ const convertDate = (date, full) =>{
   const logout = async() =>{
     try{
         const response = await axiosInstance.post('/logout');
-        sessionStorage.removeItem('token');
+        localStorage.removeItem('token');
         navigate('/');
         toast.success(response.data.message);
     }catch(e){
@@ -153,7 +153,7 @@ const convertDate = (date, full) =>{
   }
 
   useEffect(() => {
-    Echo.private(`employee-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+    Echo.private(`employee-channel.${JSON.parse(localStorage.getItem('user')).id}`)
     .listen('VacationResponseEvent', (e) => {
         notify(e);
         setAbsences(prevAbsences => prevAbsences.map((absence) => absence.id==e.absence.id ? e.absence : absence));  
@@ -162,6 +162,7 @@ const convertDate = (date, full) =>{
   }, []);
 
   return (
+    
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 h-screen p-6 bg-[#fafafa]">
       <div className={`${isRPOpen==false?'hidden' : "flex"} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-screen bg-[#0000005e]`} >
           <div className="relative p-4 w-full max-w-md max-h-full">
@@ -278,6 +279,9 @@ const convertDate = (date, full) =>{
         <div className="flex flex-col items-center w-[93%] h-[520PX] mt-6 ml-4 overflow-auto custom-scrollbar space-y-4">
 
           {
+             absences.length==0?
+             <div className="bg-red-200 border-red-400 border-[1px] cursor-pointer rounded-lg w-full mt-2 flex p-4 justify-center items-center">No Absences Recorded</div>
+             :
             absences && absences.sort((a, b) => a.status.localeCompare(b.status))
             .map((absence) => (
 
@@ -285,7 +289,7 @@ const convertDate = (date, full) =>{
               <div className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-full flex p-4 justify-between items-center h-[100px]" onClick={()=>{setIsOpen(true)}} key={absence.id}>
                 <p>{convertDate(absence.start_date, true)}</p>
                 <div className="w-[200px] ">
-                  <div><p className="font-semibold">{absence.type} <span className={`pl-1 text-xs text-[#409cfe] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
+                  <div><p className="font-semibold">{absence.type.charAt(0).toUpperCase()+absence.type.slice(1)} <span className={`pl-1 text-xs text-[#409cfe] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
                     <p className="text-sm line-clamp-2">{absence.reason}</p>
                 </div>
               <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>                                         
@@ -295,12 +299,12 @@ const convertDate = (date, full) =>{
               <HoverCardTrigger className="bg-[#f9fafb] hover:bg-[#e2e9eb91] shadow-slate-300 shadow-md  border-[1px] cursor-pointer rounded-lg w-full flex p-4 justify-between items-center h-[100px] " onClick={()=>{setIsOpen(true)}}>
                   <p>{convertDate(absence.start_date, true)}</p>
                   <div className="w-[200px] ">
-                    <div><p className="font-semibold">{absence.type} <span className={`pl-1 text-xs text-[#409cfe] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
+                    <div><p className="font-semibold">{absence.type.charAt(0).toUpperCase()+absence.type.slice(1)} <span className={`pl-1 text-xs text-[#409cfe] ${absence.status}`}>({absence.status.charAt(0).toUpperCase()+absence.status.slice(1)})</span></p></div>
                       <p className="text-sm line-clamp-2">{absence.reason}</p>
                   </div>
                 <p>{differenceInDays(absence.start_date, absence.end_date)} day</p>                                         
               </HoverCardTrigger>
-              <HoverCardContent className="flex justify-center items-center bg-[#f9f9f9] text-sm -mt-4">{absence.review}</HoverCardContent>
+              <HoverCardContent className="flex justify-center items-center bg-[#f9f9f9] text-sm -mt-4">{absence.review.charAt(0).toUpperCase()+absence.review.slice(1)}</HoverCardContent>
               </HoverCard>
             ))
           }

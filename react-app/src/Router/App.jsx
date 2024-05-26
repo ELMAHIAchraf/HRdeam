@@ -11,7 +11,7 @@ import { Announcements } from '@/Views/Announcements'
 import { HrAnnouncements } from '@/Views/HrAnnouncements'
 import { EmployeeAcc } from '@/Views/EmployeeAcc'
 import { Admin } from '@/Views/Admin'
-import { NotFound } from '@/Views/NotFound'
+// import { NotFound } from '@/Views/NotFound'
 
 function App() {
   
@@ -23,8 +23,12 @@ function App() {
         <Route path="employee" element={<PrivateRoutes role="employee"><EmployeeAcc /></PrivateRoutes>}  />
         <Route path="/*" element={
           <>
-            <NavBar />
-            <SideBar />
+            {window.location.pathname !== "*" && (
+              <>
+                <NavBar />
+                <SideBar />
+              </>
+            )}
             <Routes>
               <Route path="home" element={<PrivateRoutes role="hr"><Home /></PrivateRoutes>}/>
               <Route path="announcement" element={<PrivateRoutes role="hr"><HrAnnouncements /></PrivateRoutes>}/>
@@ -32,7 +36,7 @@ function App() {
               <Route path="employees" element={<PrivateRoutes role="hr"><Employees /></PrivateRoutes>}/>
               <Route path="away" element={<PrivateRoutes role="hr"><WhosAway /></PrivateRoutes>}/>
               <Route path="admin" element={<PrivateRoutes role="hr"><Admin /></PrivateRoutes>}/>
-              <Route path="*" element={<NotFound/>} />  
+              {/* <Route path="*" element={<NotFound/>} />   */}
             </Routes>
           </>
         }/>

@@ -29,7 +29,7 @@ export const Request = ({pending, vacRequest, setRequests, requests}) => {
       setRequest(vacRequest)
       setIsPending(pending)
 
-      if(request.hr?.id == JSON.parse(sessionStorage.getItem('user')).id){
+      if(request.hr?.id == JSON.parse(localStorage.getItem('user')).id){
         setIsOwned(true);
       }
     }, [requests]);

@@ -16,7 +16,7 @@ export const Home = () => {
     
 
     useEffect(() => {
-      Echo.private(`vacation-request-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`vacation-request-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('VacationRequestEvent', (e) => {
         notify(e);
         setRequests(requests => [e.request, ...requests]);
@@ -24,7 +24,7 @@ export const Home = () => {
     }, []);
 
     useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('ManageVacationRequestEvent', (e) => {
          notify(e);
          if(e.action === 'delete'){
@@ -97,8 +97,8 @@ export const Home = () => {
           <div className="h-[560px] overflow-auto custom-scrollbar mt-3 ">
           {
             [...requests].sort((a, b) => {
-              if (a.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return -1;
-              if (b.hr?.id === JSON.parse(sessionStorage.getItem('user')).id) return 1;
+              if (a.hr?.id === JSON.parse(localStorage.getItem('user')).id) return -1;
+              if (b.hr?.id === JSON.parse(localStorage.getItem('user')).id) return 1;
               return b.status.localeCompare(a.status);
             }).map(request => {
               return <Request key={request.id} pending={request.status==='pending' ? false : true} vacRequest={request} setRequests={setRequests} requests={requests} />

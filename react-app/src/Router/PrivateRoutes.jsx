@@ -7,7 +7,7 @@ export const PrivateRoutes = ({children, role}) => {
     const [userRole, setUserRole] = useState(null);
     const checkAuth = async () => { 
     try {
-      const token = `Bearer ${sessionStorage.getItem("token")}`
+      const token = `Bearer ${localStorage.getItem("token")}`
         const response = await axiosInstance.get("/user", {
           headers:{
             Authorization : token

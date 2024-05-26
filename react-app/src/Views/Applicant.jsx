@@ -22,7 +22,7 @@ export const Applicant = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true)
-        const hr_id = JSON.parse(sessionStorage.getItem('user')).id
+        const hr_id = JSON.parse(localStorage.getItem('user')).id
         const response = await axiosInstance.get(`/applicants`);
         dispatch(setApplicants(response.data.data));
         
@@ -40,7 +40,7 @@ export const Applicant = () => {
 
 
     useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('ManageApplicationsEvent', (e) => {
         notify(e);
         dispatch(addApplicant(e.data));

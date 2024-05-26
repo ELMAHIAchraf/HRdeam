@@ -24,7 +24,7 @@ import {
 
 export const NavBar = () => {
 
-    const data = JSON.parse(sessionStorage.getItem('user'));
+    const data = JSON.parse(localStorage.getItem('user'));
     const dojStr = data.doj
     const doj = new Date(dojStr);
     const formattedDoj = doj.toLocaleDateString('en-GB', {
@@ -36,7 +36,7 @@ export const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        Echo.private(`HR-channel.${JSON.parse(sessionStorage.getItem('user')).id}`)
+        Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
         .listen('ManageEmployeeEvent', (e) => {
            notify(e);
            if(e.action == 'create'){
