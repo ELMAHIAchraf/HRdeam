@@ -23,6 +23,7 @@ export const AddEmplAbsence = () => {
 
 
     const getData = () => {
+        
         return {
             type: type.current.value,
             start_date: startDate,

@@ -61,7 +61,7 @@ export const Applicant = () => {
         <div className="border-t-2 mt-8 w-96 ml-6 border-[#e7e7e7 h-[550px] grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
           <div className="w-full">
               <p className="font-bold text-lg ml-2 pt-4 mb-2">Applied</p>
-              <div className="lg:h-[480px] overflow-auto custom-scrollbar">
+              <div className="lg:h-[480px] overflow-auto custom-scrollbar -mt-2">
                 {
                   applicants.Applied.map((applicant) => (
                     <ApplicantCard key={applicant.id} applicant={applicant} />

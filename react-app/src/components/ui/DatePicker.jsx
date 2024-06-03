@@ -16,8 +16,11 @@ export function DatePicker({onDateChange, variant}) {
 
     
     const handleDateChange = (newDate) => {
-        setDate(newDate);
-        onDateChange(new Date(newDate).toISOString().split("T")[0]);
+        setDate(new Date(newDate));
+        let localDate = new Date(newDate);
+        let dateWithoutTimezone = new Date(Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate()));
+        console.log(dateWithoutTimezone.toISOString().split("T")[0]);
+        onDateChange(dateWithoutTimezone.toISOString().split("T")[0]);
     };
     return (
         <Popover>

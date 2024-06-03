@@ -34,7 +34,7 @@ export const Admin = () => {
         <div className="flex justify-end mr-6">
           <AddHr setHRs={setHRs}/>
         </div>
-        <div className="h-[485px] w-95 ml-4 md:ml-8 border-t-[1px] border-b-[1px] overflow-auto custom-scrollbar">
+        <div className="max-h-[485px] w-95 ml-4 md:ml-8 border-t-[1px] border-b-[1px] overflow-auto custom-scrollbar ">
           <HrTable HRs={HRs} setHRs={setHRs}/>
         </div>
     </div>

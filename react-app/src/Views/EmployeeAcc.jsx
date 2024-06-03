@@ -41,6 +41,7 @@ export const EmployeeAcc = () => {
   const [employee, setEmployee] = useState(JSON.parse(localStorage.getItem('user')));
   const [absences, setAbsences] = useState([]);
   const [absencesState, setAbsencesState] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -88,9 +89,11 @@ const convertDate = (date, full) =>{
   }
   const getAbsences = async(id) => {
     try{
+        setIsLoading(true);
         const response = await axiosInstance.get(`/absences/${id}`);
         setAbsences(response.data.data);
         setAbsencesState(response.data.data);
+        setIsLoading(false)
     }catch(e){
         toast.error(e.response.data.message);  
     }   
@@ -279,6 +282,9 @@ const convertDate = (date, full) =>{
         <div className="flex flex-col items-center w-[93%] h-[520PX] mt-6 ml-4 overflow-auto custom-scrollbar space-y-4">
 
           {
+            isLoading?
+            <div className="flex justify-center items-center w-full h-full"><i className="fa-duotone fa-spinner-third fa-spin text-6xl text-[#007cff]"></i></div>:
+
              absences.length==0?
              <div className="bg-red-200 border-red-400 border-[1px] cursor-pointer rounded-lg w-full mt-2 flex p-4 justify-center items-center">No Absences Recorded</div>
              :

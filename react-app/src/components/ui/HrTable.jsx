@@ -122,7 +122,7 @@ export const HrTable = ({HRs, setHRs}) => {
         <TableBody>
             {
               HRs.map((hr) => (
-                <TableRow key={hr.id}>
+                <TableRow key={hr.id} >
                     <TableCell className="w-44">
                         <div className="flex items-center">
                             <img className="w-12 h-12 rounded-full" src={`http://127.0.0.1:8000/storage/Avatars/${hr.id}.jpg`} alt=""/>
