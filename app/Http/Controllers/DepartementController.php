@@ -48,16 +48,17 @@ class DepartementController extends Controller
 
             $jsonData=Storage::disk('local')->get('Data/DepartmentColor.json');
             $jsonData=json_decode($jsonData, true);
-
+            $color=0;
             foreach($jsonData as $key=>$item){    
                 if($item['departmentId']==0){
                     $jsonData[$key]['departmentId']=$departement->id;
                     $departement->color=$item['color'];
+                    $color=$item['color'];
                     Storage::disk('local')->put('Data/DepartmentColor.json', json_encode($jsonData, JSON_PRETTY_PRINT));
                     break;
                 }
             }
-            event(new \App\Events\ManageDepartmentEvent("create", "Created a new department named {$departement->name}", $request->user()->id, $departement));            
+            event(new \App\Events\ManageDepartmentEvent("create", "Created a new department named {$departement->name}", $request->user()->id, $departement, $color));            
             return ResponseHelper::success('The department was created successfully', $departement, 201);
         }catch(Exception $e){
             return ResponseHelper::error($e->getMessage(), 500);
@@ -101,7 +102,7 @@ class DepartementController extends Controller
         if($departement){
             $departement->delete();
             DepartmentHelper::removeId($id);
-            event(new \App\Events\ManageDepartmentEvent("delete", "Deleted  the {$departement->name} departement", $request->user()->id, $departement->id));            
+            event(new \App\Events\ManageDepartmentEvent("delete", "Deleted  the {$departement->name} departement", $request->user()->id, $departement->id, null));            
             return ResponseHelper::success('The department was deleted successfully', null, 200);
         }else{
             return ResponseHelper::error('The department was not found', 404);

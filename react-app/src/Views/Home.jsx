@@ -94,7 +94,7 @@ export const Home = () => {
               <p className="bg-[#c5e0ff] rounded-md h-8 px-2 flex justify-center items-center font-semibold text-sm mr-4">{todayDate()}</p>
           </div>
           <p className="text-[#737373] text-sm ml-4 mt-2">{requests.length} active requests</p>
-          <div className="h-[560px] overflow-auto custom-scrollbar mt-3 ">
+          <div className="h-[560px] overflow-auto custom-scrollbar mt-3">
           {
             [...requests].sort((a, b) => {
               if (a.hr?.id === JSON.parse(localStorage.getItem('user')).id) return -1;

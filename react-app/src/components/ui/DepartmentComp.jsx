@@ -32,7 +32,7 @@ export const DepartmentComp = () => {
     const names = departments.map(department => department.name);
     const colors = departments.map(department => department.color);
     const employeesCount = departments.map(department => department.total_employees);
-
+    
     
     const data = {
         labels: names,

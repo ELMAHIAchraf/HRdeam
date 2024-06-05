@@ -119,7 +119,7 @@ const logout = async() =>{
             <p className="font-semibold ml-3 text-2xl">HRdream</p>
         </div>
       <ul className="relative  font-medium ">
-         <li className="mt-8 cursor-pointer">
+         <li className="mt-8 hover:cursor-pointer">
             <Link to="/home" className={`flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group h-14 cursor-pointer ${selection =='Dashboard' ? 'bg-gray-100 border-[#007cff] border-2' : ''}`} onClick={()=>setSelection('Dashboard')}>
                <i className={`fa-sharp fa-regular fa-grid-2 fa-lg ${selection=='Dashboard'? 'text-[#007cff]' : 'text-[#081321]'}  ml-2`}></i>
                <span className={`ms-3 ${selection=='Dashboard'? 'text-[#007cff]' : 'text-[#081321]'}`}>Dashboard</span>

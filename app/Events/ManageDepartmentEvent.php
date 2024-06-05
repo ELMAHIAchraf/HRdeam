@@ -18,13 +18,15 @@ class ManageDepartmentEvent implements ShouldBroadcast
     public $notification;
     public $data;
     public $actionHrId;
+    public $departementColor;
 
-    public function __construct($action, $notification,  $actionHrId, $data)
+    public function __construct($action, $notification,  $actionHrId, $data, $departementColor)
     {
         $this->action = $action;
         $this->notification = $notification;
         $this->actionHrId = $actionHrId;
         $this->data = $data;
+        $this->departementColor = $departementColor;
     }
 
     public function broadcastOn(): array
@@ -48,6 +50,7 @@ class ManageDepartmentEvent implements ShouldBroadcast
         // $this->data->announcement->load('departement');
         $hr=User::find($this->actionHrId);
         $hr=['id'=>$hr->id, 'fname'=>$hr->fname, 'lname'=>$hr->lname];
+        if($this->action == 'create') $this->data->color=$this->departementColor;
         return ['action' => $this->action, 'message' => $this->notification, 'employee' => $hr, 'data' => $this->data];
     }
 }
