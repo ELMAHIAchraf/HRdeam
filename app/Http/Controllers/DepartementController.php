@@ -62,8 +62,6 @@ class DepartementController extends Controller
             return ResponseHelper::success('The department was created successfully', $departement, 201);
         }catch(Exception $e){
             return ResponseHelper::error($e->getMessage(), 500);
-            
-
         }
     }
     

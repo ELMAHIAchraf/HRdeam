@@ -35,6 +35,7 @@ const logout = async() =>{
         try{
             const response = await axiosInstance.post('/logout');
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
             dispatch(removeUser());
             navigate('/');
             toast.success(response.data.message);
@@ -97,12 +98,12 @@ const logout = async() =>{
         
    {
    !isLargeWidth &&
-      <div className=" cursor-pointer py-5 fixed top-0 left-0 " onClick={()=>setOpen(1)}>
-         <i className="fa-solid fa-bars text-[#007cff] fa-lg ml-3 z-40" ></i>
+      <div className=" cursor-pointer py-5 fixed top-0 left-0  z-30" onClick={()=>setOpen(1)}>
+         <i className="fa-solid fa-bars text-[#007cff] fa-lg ml-3" ></i>
       </div>
    }
 
-<div id="drawer-navigation"  className={`fixed top-0 left-0  h-screen border-2 border-[#ebebeb] p-4 ${open ? '': 'overflow-y-auto transition-transform -translate-x-full'} bg-white w-80 z-50`}>
+<div id="drawer-navigation"  className={`fixed top-0 left-0  h-screen border-2 border-[#ebebeb] p-4 ${open ? '': 'overflow-y-auto transition-transform -translate-x-full'} bg-white w-80 z-40`}>
 
     {
       !isLargeWidth &&

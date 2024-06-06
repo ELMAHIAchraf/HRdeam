@@ -166,7 +166,7 @@ class UserController extends Controller
                     'salary' => ['required', 'numeric'],
                     'phone' => ['required'],
                     'address' => ['required', 'min:10'],
-                    'email' => ['required', 'email'],
+                    'email' => ['required', 'email', 'unique:users,email'],
                     'avatar' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048']
             ]);
     

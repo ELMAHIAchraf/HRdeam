@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'cin' => $this->faker->unique()->randomNumber(8), 
             'fname' => $this->faker->firstName(),
             'lname' => $this->faker->lastName(),
-            'doj' => $this->faker->date(),
+            'doj' => $this->faker->dateTimeBetween($startDate = '2015-01-01', $endDate = 'now')->format('Y-m-d'),
             'departement_id' => 2,
             'position' => $this->faker->jobTitle(),
             'salary' => $this->faker->numberBetween(1000, 5000),

@@ -38,14 +38,14 @@ class AnnouncementController extends Controller
                 'departement_id' => 'required|integer',
                 'position' => 'required|string',
                 'advantages' => 'required|string',
-                'salary' => 'required|string',
+                'salary' => 'required|numeric',
                 'user_id' => 'required|integer',
             ]);
             $announcement = Announcement::create($validatedData); 
             $announcement->load('departement');
             return ResponseHelper::success('Announcement created successfully', $announcement, 201);  
            } catch (Exception $e) {
-             echo $e->getMessage();
+            return ResponseHelper::error($e->getMessage(), 500);
            }    
     }
 

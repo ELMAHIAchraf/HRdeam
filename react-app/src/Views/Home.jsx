@@ -16,7 +16,7 @@ export const Home = () => {
     
 
     useEffect(() => {
-      Echo.private(`vacation-request-channel.${JSON.parse(localStorage.getItem('user')).id}`)
+      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
       .listen('VacationRequestEvent', (e) => {
         notify(e);
         setRequests(requests => [e.request, ...requests]);

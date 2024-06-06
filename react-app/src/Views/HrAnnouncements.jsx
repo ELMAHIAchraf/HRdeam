@@ -34,10 +34,11 @@ export const HrAnnouncements = () => {
     const createAnnouncement = async () => {
       try {
         const response = await axiosInstance.post('/announcements', getData());
+        console.log(response.data.data);
         dispatch(addAnnouncement(response.data.data));
         toast.success(response.data.message);
       } catch (error) {
-        toast.error("Failed to create announcement");
+        toast.error(error.response.data.message);
       }
     }
     const announcements=useSelector(state=>state.HrAnnouncement);

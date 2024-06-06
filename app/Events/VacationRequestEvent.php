@@ -42,7 +42,7 @@ class VacationRequestEvent implements ShouldBroadcast
         })->pluck('id');       
         
         foreach ($HRemployees as $HRemployee) {
-                $channelName = 'vacation-request-channel.' . $HRemployee;
+                $channelName = 'HR-channel.' . $HRemployee;
                 $channels[] = new PrivateChannel($channelName);
         }
         return $channels;

@@ -139,7 +139,7 @@ export const NavBar = () => {
 
   return (
     <>
-    <div className="bg-white w-full h-16 fixed top-0 flex items-center border-2 border-[#ebebeb] ">
+    <div className="bg-white w-full h-16 fixed top-0 flex items-center border-2 border-[#ebebeb] z-10">
         <div className="flex ml-10 w-full justify-between md:ml-84">
             <div className="bg-[#fafafa] w-1/2 md:w-1/2  lg:w-1/3 rounded-md border-2 border-[#e0e0e0] px-3 flex justify-between ">
                 <input ref={searchINP} className="bg-[#fafafa] outline-none text-sm w-full" type="text" placeholder="Search" onInput={(searchInp)=>search(searchInp.target.value)}/>

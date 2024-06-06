@@ -73,7 +73,8 @@ export const AddEmployee = () => {
             setIsOpen(false);
             toast.success('Employee added successfully');
         } catch (error) {
-            console.log(error.message);
+            toast.error(error.response.data.message);
+            setIsLoading(false);
         }
     }
 

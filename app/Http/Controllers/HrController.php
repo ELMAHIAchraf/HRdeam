@@ -31,7 +31,8 @@ class HrController extends Controller
      */
     public function store(Request $request)
     {
-            $validatedData=$request->validate([
+            try {
+                $validatedData=$request->validate([
                     'cin' => ['required', 'min:7'],
                     'fname' => ['required', 'min:3'],
                     'lname' => ['required', 'min:3'],
@@ -40,7 +41,7 @@ class HrController extends Controller
                     'salary' => ['required', 'numeric'],
                     'phone' => ['required'],
                     'address' => ['required', 'min:10'],
-                    'email' => ['required', 'email'],
+                    'email' => ['required', 'email', 'unique:users,email'],
                     'avatar' => ['required', 'file', 'mimes:jpeg,jpg,png', 'max:2048']
             ]);
     
@@ -62,6 +63,9 @@ class HrController extends Controller
             MailHelper::sendEmail($employee->email, "Dev's Empire", $message);
 
             return ResponseHelper::success('The HR was created successfully', $employee, 201);
+        } catch (Exception $e) {
+            return ResponseHelper::error($e->getMessage(), 500);
+        }  
 
     }
 

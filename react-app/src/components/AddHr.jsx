@@ -49,7 +49,8 @@ export const AddHr = ({setHRs}) => {
             setIsOpen(false);
             toast.success('HR added successfully');
         } catch (error) {
-            console.log(error.message);
+            toast.error(error.response.data.message);
+            setIsLoading(false);
         }
     }
 
