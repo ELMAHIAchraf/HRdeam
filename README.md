@@ -1,7 +1,7 @@
 <h1 align="center">HRdream<h1/>
-<p align="center">
+<div align="center">
   <img src="https://github.com/user-attachments/assets/51b90f08-d6a3-4729-b020-6758592cdc75" width="200px" alt="Logo">
-</p>
+</div>
 
 ## Description
 
@@ -38,14 +38,14 @@ The application includes features such as:
 
 ## Conception Diagrams (UML)
 ### Use Case Diagram
-<p align="center">
+<div align="center">
   <img src="https://github.com/user-attachments/assets/0f424bfd-0077-4552-9177-02d5d3832931" width="600px" alt="Logo">
-</p>
+</div>
 
 ### Class Diagram
-<p align="center">
+<div align="center">
   <img src="https://github.com/user-attachments/assets/95a5f001-f42f-4ce7-bc09-fc1ec1d9462c" width="600px" alt="Logo">
-</p>
+</div>
 
 ## Technology Stack
 ### Frontend
