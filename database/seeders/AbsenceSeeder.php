@@ -23,7 +23,7 @@ class AbsenceSeeder extends Seeder
                 'reason' => 'Taking an annual leave for a family reunion and some personal relaxation time.',
                 'created_at' => now(),
                 'updated_at' => null,
-                'user_id' => 3,
+                'user_id' => 5,
                 'status' => 'pending',
                 'review' => null,
                 'hr_id' => null
@@ -36,7 +36,7 @@ class AbsenceSeeder extends Seeder
                 'reason' => 'Going on a family trip to explore historical sites and spend quality time together.',
                 'created_at' => now(),
                 'updated_at' => null,
-                'user_id' => 3,
+                'user_id' => 5,
                 'status' => 'approved',
                 'review' => 'Enjoy your trip!',
                 'hr_id' => null
@@ -62,7 +62,7 @@ class AbsenceSeeder extends Seeder
                 'reason' => 'Suffered from food poisoning, likely due to some contaminated food. Need time to recover and ensure I\'m not contagious before returning to work.',
                 'created_at' => now(),
                 'updated_at' => null,
-                'user_id' => 4,
+                'user_id' => 5,
                 'status' => 'approved',
                 'review' => 'Get well soon!',
                 'hr_id' => null

@@ -131,7 +131,6 @@ export const NavBar = () => {
             toast.success(response.data.message);
             setRPOpen(false);
         } catch (error) {
-            console.log(error);
             toast.error(error.response.data.message);
         }
       }

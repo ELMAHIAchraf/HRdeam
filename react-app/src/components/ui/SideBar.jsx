@@ -37,6 +37,7 @@ const logout = async() =>{
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             dispatch(removeUser());
+            Echo.disconnect();
             navigate('/');
             toast.success(response.data.message);
         }catch(e){
@@ -53,7 +54,6 @@ const logout = async() =>{
          }else{
             dispatch(removeDepartment(e.data));
          }
-
       });
     }, []); 
 
@@ -65,26 +65,26 @@ const logout = async() =>{
       });
     }, []); 
 
-    useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
-      .listen('ManageVacationRequestEvent', (e) => {
-         if(!selection==='Dashboard') notify(e)
-      });
-    }, []); 
+   //  useEffect(() => {
+   //    Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
+   //    .listen('ManageVacationRequestEvent', (e) => {
+   //       if(selection!=='Dashboard') notify(e)
+   //    });
+   //  }, []); 
 
-    useEffect(() => {
-      Echo.private(`vacation-request-channel.${JSON.parse(localStorage.getItem('user')).id}`)
-      .listen('VacationRequestEvent', (e) => {
-        if(!selection==='Dashboard') notify(e)
-      });
-    }, []);
+   //  useEffect(() => {
+   //    Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
+   //    .listen('VacationRequestEvent', (e) => {
+   //      if(selection!=='Dashboard') notify(e)
+   //    });
+   //  }, []);
 
-    useEffect(() => {
-      Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
-      .listen('ManageApplicationsEvent', (e) => {
-         if(!selection==='Applicant') notify(e);
-      });
-    }, []); 
+   //  useEffect(() => {
+   //    Echo.private(`HR-channel.${JSON.parse(localStorage.getItem('user')).id}`)
+   //    .listen('ManageApplicationsEvent', (e) => {
+   //       if(selection!=='Applicant') notify(e);
+   //    });
+   //  }, []); 
 
      const [isAdmin, setIsAdmin] = useState(false);
 

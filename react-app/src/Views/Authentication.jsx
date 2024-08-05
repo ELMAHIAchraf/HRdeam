@@ -39,6 +39,8 @@ export const Authentication = () => {
             dispatch(addUser(response.data.data.user))
             localStorage.setItem("user", JSON.stringify(response.data.data.user))
             toast.success(response.data.message)
+            window.Echo.connector.options.auth.headers['Authorization'] = `Bearer ${response.data.data.token}`;
+            window.Echo.connect();
             if(response.data.data.user.role === 'hr'){
                 navigate('/home')
             }else{
@@ -53,7 +55,8 @@ export const Authentication = () => {
   return (
     <div className="h-screen flex justify-center items-center flex-col ">
     <div className="bg-white shadow-slate-300 shadow-md rounded-lg w-4/6 md:w-1/2 lg:w-1/3 p-8">
-        <div className="ml-5">
+        <div className="flex flex-col items-center">
+            <img src="Logo.svg" alt="logo" className="w-20" />
             <p className="text-3xl font-bold">Welcome back!</p>
         </div>
         <div>

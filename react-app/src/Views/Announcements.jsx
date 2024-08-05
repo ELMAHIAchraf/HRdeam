@@ -47,7 +47,7 @@ export const Announcements = () => {
     
     <div className="flex">
     <div>
-        <div className='bg-[#007cff] w-full h-[330px] md:h-[300px] flex items-center '>
+        <div className='bg-[#007cff] w-screen h-[330px] md:h-[300px] flex items-center '>
             <div className="ml-4 md:ml-24 space-y-6">
                 <p className="text-5xl text-white font-bold">Discover Your Next Role with Us!</p>
                 <p className="text-xl text-white font-bold">
@@ -70,8 +70,8 @@ export const Announcements = () => {
                 }
                 </div>:
                 
-                <div className=" w-10/12 h-[370px] m-auto mt-8 flex justify-center items-center">
-                    <div className="flex justify-center items-center w-11/19 h-[40px] text-[#ef4444] px-4 bg-[#fef2f2] border-[#ef4444] border-2 rounded-md font-bold">
+                <div className=" w-10/12 h-[370px] md:h-[400px] m-auto mt-8 flex justify-center items-center">
+                    <div className="flex justify-center items-center w-11/19 py-2 text-[#ef4444] px-4 bg-[#fef2f2] border-[#ef4444] border-2 rounded-md font-bold">
                         <i className="fa-regular fa-triangle-exclamation text-[#ef4444] pr-2 text-xl"></i>Sorry, there are currently no positions available matching that description. Please try again later.
                     </div>
                 </div>        

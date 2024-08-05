@@ -162,6 +162,9 @@ const convertDate = (date, full) =>{
         setAbsences(prevAbsences => prevAbsences.map((absence) => absence.id==e.absence.id ? e.absence : absence));  
         setAbsencesState(prevAbsencesState => prevAbsencesState.map((absence) => absence.id==e.absence.id ? e.absence : absence));          
     });
+    return () => {
+      Echo.leave(`employee-channel.${JSON.parse(localStorage.getItem('user')).id}`);
+    };
   }, []);
 
   return (
