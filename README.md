@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
+<h1 align="center">HRdream<h1/>
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://github.com/user-attachments/assets/51b90f08-d6a3-4729-b020-6758592cdc75" width="200px" alt="Logo">
 </p>
 
-## About Laravel
+## Description
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+HRdream is a web application specifically designed for the **Human Resources department**. This application aims to simplify employee management, including absence tracking, job postings, and candidate tracking. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**(Note: the application synchronizes actions performed by different HR employees in real time, allowing instant visibility and notifications through WebSockets.)**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The application includes features such as:
 
-## Learning Laravel
++ Features for HR Employees:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - **Authentication:** Allows HR employees to securely access the system and their specific features.
+    - **Department Management:** Allows HR employees to manage employee records by adding, modifying, or deleting personal information, ensuring up-to-date and accurate records.
+    - **Employee Management:** Manage employee records by updating personal information.
+    - **Leave Request Processing:** Process and manage employee leave requests and view the list of employees on leave.
+    - **Job Posting and Deletion:** Post and delete job announcements to meet recruitment needs.
+    - **Candidate Management:** Manage candidates by hiring or rejecting applications.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
++ Features for HR Managers:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    - **Authentication:** Securely access the system.
+    - **HR Employee Management:** Manage HR employees by adding, modifying, or deleting accounts, along with all HR employee features.
 
-## Laravel Sponsors
++ Features for Employees:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    - **Authentication:** Securely access personal space.
+    - **Leave Request Review:** Review and track the status of leave requests.
+    - **Leave Request Submission:** Submit leave requests through an intuitive interface.
 
-### Premium Partners
++ Features for Candidates:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    - **Job Announcement Review:** Review and filter available job postings.
+    - **Job Application Submission:** Apply for job postings with a user-friendly interface.
 
-## Contributing
+## Conception Diagrams (UML)
+### Use Case Diagram
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0f424bfd-0077-4552-9177-02d5d3832931" width="600px" alt="Logo">
+</p>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Class Diagram
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/95a5f001-f42f-4ce7-bc09-fc1ec1d9462c" width="600px" alt="Logo">
+</p>
 
-## Code of Conduct
+## Technology Stack
+### Frontend
++ ![react](https://github.com/user-attachments/assets/fd6f75c7-a8fc-43c2-a7a0-7455222cd702) **React**
++ ![tailwindcss](https://github.com/user-attachments/assets/e70dc9bf-6882-46dd-95b3-37a45b67862f) **Tailwind**
++ <a href='https://github.com/shivamkapasia0' target="_blank"><img alt='shadcn/ui' src='https://img.shields.io/badge/shadcn/ui-100000?style=plastic&logo=shadcn/ui&logoColor=000000&labelColor=FFFFFF&color=000000'/></a> **shadcn/ui**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Backend
++ <a href='https://github.com/shivamkapasia0' target="_blank"><img alt='Laravel' src='https://img.shields.io/badge/Laravel-100000?style=plastic&logo=Laravel&logoColor=FF0000&labelColor=FFFFFF&color=FF0000'/></a> **Laravel**
+  
+### Database
++ <a href='https://github.com/shivamkapasia0' target="_blank"><img alt='mysql' src='https://img.shields.io/badge/MySQL-100000?style=plastic&logo=mysql&logoColor=08668e&labelColor=FFFFFF&color=e59208'/></a>  **MySQL**
+## Project UIs
 
-## Security Vulnerabilities
+### Authentication page
+![Login](https://github.com/user-attachments/assets/0c958187-67e7-43ef-8e98-b5667eb2c60f)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Employee home page
+![Employee Account](https://github.com/user-attachments/assets/258555e1-9c76-444a-9d01-67d8dab00995)
 
-## License
+### HR employee home page
+![Dashboard](https://github.com/user-attachments/assets/aca73f44-d66f-4cd5-8022-df15e7dff539)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Job listings
+![Announcements](https://github.com/user-attachments/assets/98ee7539-45ac-4332-acd8-6a3f8baba986)
+
+### Application list
+![Applicants](https://github.com/user-attachments/assets/de8e2c77-ffbc-4828-8455-97a06f8a04f4)
+
+### Employee list
+![Employees](https://github.com/user-attachments/assets/83c17712-a5ca-49ae-a469-127ae2062543)
+
+### Leave calendar
+![Whos Away](https://github.com/user-attachments/assets/e479a27e-e12b-40b5-b452-3995ad0348e1)
+
+### HR employee list (visible only to the HR manager)
+![HR Management](https://github.com/user-attachments/assets/392352b6-ece6-4eb6-90c3-fc6abc9afb25)
+
+### Job offers to apply for (public page)
+![Applications Page](https://github.com/user-attachments/assets/ee98c2e4-3adc-49fe-95a5-0f3f2c6e1598)
+
+### Job offer details
+![Announcement Details](https://github.com/user-attachments/assets/37cd52e3-dd26-423a-a87c-b35b4cbd5dc4)
+
